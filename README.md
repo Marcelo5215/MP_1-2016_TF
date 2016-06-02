@@ -1,9 +1,41 @@
 # MP_1-2016_TF
 Trabalho Final de MP(Métodos de Programação)  
 
-***TO DO***
+***Alunos:***
+Marcelo de Araújo Lopes Júnior - 150016794  
+Davi Roubbouni de Carvalho Freitas - 150033010  
+Pedro Henrique Pires Egler - 150044615  
+
+***Instruções:***
 ```
-  lista.h
-    -Função buscaLista;
-    -Checar se a função insereLista está funcionando;
+	$ cd src
+	$ make && make clean
+	$ ./gVertix
+```
+
+***TO DO:***
+```
+	-Criar o MakeFile
+
+	Lista
+  		lista.c
+    		-Função buscaLista;
+    		-Checar se a função insereLista está funcionando;
+
+    Gerenciador
+    	-criar o .h;
+    	-TUDO;
+
+    Grafo
+    	grafo.c
+    		-criar funções descritas no .h (MUITAS DEVEM SER ADAPTADAS A NOVA ESTRUTURA DE LISTAS E GRAFOS);
+
+    MÓdulo de testes (Gtest):
+    	-TUDO;
+
+    Interface (Parte 2)
+    	-TUDO;
+
+    Documentação (Parte 2)
+    	-TUDO;
 ```
