@@ -19,7 +19,7 @@ Pedro Henrique Pires Egler - 150044615
 
 	Lista
   		lista.c
-    		-Função buscaLista;
+    		-(OK)Função buscaLista;
     		-Checar se a função insereLista está funcionando;
 
     Gerenciador
@@ -28,9 +28,10 @@ Pedro Henrique Pires Egler - 150044615
 
     Grafo
     	grafo.c
-    		-criar funções descritas no .h (MUITAS DEVEM SER ADAPTADAS A NOVA ESTRUTURA DE LISTAS E GRAFOS);
+    		-(OK)criar funções descritas no .h (MUITAS DEVEM SER ADAPTADAS A NOVA ESTRUTURA DE LISTAS E GRAFOS);
+            -Fazer as funções de busca em grafo
 
-    MÓdulo de testes (Gtest):
+    Módulo de testes (Gtest):
     	-TUDO;
 
     Interface (Parte 2)

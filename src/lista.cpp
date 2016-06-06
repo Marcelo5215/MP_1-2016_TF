@@ -67,8 +67,14 @@ int estaVazia(TipoLista *lista){
 	return (lista->inicio == lista->final);
 }
 //procura na lista o elemento desejado(X) e retorna um ponteiro para a Celula que contém ele
-Celula* buscaLista(TipoLista* lista, t_item item){
-	//TODO
+Celula* buscaLista(TipoLista* lista, int ID){
+	Celula *AUX;
+	for(AUX = lista->inicio->prox; AUX != NULL ; AUX = AUX->prox){
+		if(AUX->item.ID == ID){
+			return AUX;
+		}
+	}
+	return NULL;
 }
 
 // limpa as celula cabeça que restará após a execução do programa, e pode ser usada pra limpa uma lista inteira

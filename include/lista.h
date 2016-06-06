@@ -18,7 +18,6 @@
 	lista_ret retiraLista(TipoLista *lista, Celula *AUX);
 	int estaVazia(TipoLista *lista);
 	void limpaLista(TipoLista *lista);
-	Celula* buscaLista(TipoLista* lista, t_item item);
-
+	Celula* buscaLista(TipoLista* lista, int ID);
 
 #endif
