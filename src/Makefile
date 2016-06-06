@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -I$(IDIR) -g 
+CXXFLAGS = -I$(IDIR) -g -Wall
 IDIR = ../include
 ODIR = ../obj
 LIBS = -lgtest -lgtest_main -lpthread

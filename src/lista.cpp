@@ -76,11 +76,31 @@ Celula* buscaLista(TipoLista* lista, int ID){
 }
 
 // limpa as celula cabeça que restará após a execução do programa, e pode ser usada pra limpa uma lista inteira
-void limpaLista(TipoLista *lista){
+lista_ret limpaLista(TipoLista *lista){
+	if(lista == NULL){
+		return LISTA_ERR;
+	}
 	Celula* AUX;
 	for(AUX=lista->inicio->prox ; AUX!=NULL ; AUX=AUX->prox){
 		free(AUX->anter);
 	}
 	free(lista->final);
 	free(lista);
+	return LISTA_OK;
+}
+
+int tamanhoLista(TipoLista* lista){
+	int tam = 0;
+	Celula *AUX;
+	for(AUX = lista->inicio->prox; AUX != NULL ; AUX = AUX->prox){
+		tam++;
+	}
+	return tam;
+}
+
+void imprimeLista(TipoLista* lista){
+	Celula *AUX;
+	for(AUX = lista->inicio->prox; AUX != NULL ; AUX = AUX->prox){
+		printf(" %d ", AUX->item.ID);
+	}
 }

@@ -47,8 +47,12 @@ grafo_ret insereOrigem(t_grafo* g, int ID){
 	if(g == NULL){
 		return GRAFO_ERR;
 	}
-	//verifica se o elemento existe
-	else if(buscaLista(g->origens, ID) == NULL){
+	//verifica se o elemento ja e uma origem 
+	else if(buscaLista(g->origens, ID) != NULL){
+		return GRAFO_ERR;
+	}
+	//verifica se o elemento e um vertice
+	else if(buscaVertice(g->vertices, ID) == NULL){
 		return GRAFO_ERR;
 	}
 	else{
@@ -93,14 +97,12 @@ t_vertix* criaVertice(t_grafo* g, t_prop v){
 	vert->adjacentes = criaLista();
 	vert->prox = NULL;
 	vert->propriedades = v;
+	vert->anter = NULL;
 
 	return vert;
 }
 
 grafo_ret insereVertice(t_grafo* g, t_prop v){
-	t_item X;
-	X.ID = v.ID;
-	X.peso = 0;
 	//assertivas de entrada
 	if(g == NULL){
 		return GRAFO_ERR;
@@ -126,6 +128,8 @@ grafo_ret insereVertice(t_grafo* g, t_prop v){
 		AUX->prox = (t_vertix*)malloc(sizeof(t_vertix));
 		AUX->prox->propriedades = v;
 		AUX->prox->adjacentes = criaLista();
+		AUX->prox->prox = NULL;
+		AUX->prox->anter = AUX;
 
 		return GRAFO_OK;
 	}
@@ -136,33 +140,35 @@ grafo_ret retiraVertice(t_grafo* g, int ID){
 	if(g == NULL){
 		return GRAFO_ERR;
 	}
-	//verifica se o grafo existe
+	//verifica se existe o vertice
 	else if(buscaVertice(g->vertices, ID) == NULL){
 		return GRAFO_ERR;
 	}
 
 	t_vertix* AUX;
-	// retira todas as arestas com ele como adjacente
+	//remove todas as aresta com ele
 	for(AUX = g->vertices ; AUX != NULL; AUX = AUX->prox){
 		retiraAresta(g, AUX->propriedades.ID, ID);
 	}
 
 	//AUX e o vertice a ser retirado e AUXAnter o vertice antes dele
 	t_vertix* AUXAnter;
-	//procura pelo vertice a ser retirado e usa o anterior a aquele de interesse 
-	for(AUX = g->vertices ; AUX != NULL; AUX = AUX->prox){
-		if(AUX->propriedades.ID == ID){
-			break;
-		}
-		AUXAnter = AUX; 
-	}
+	AUX = buscaVertice(g->vertices, ID);
+	//busca o vertice anterior
+	AUXAnter = AUX->anter;
 
 	//se AUX for o ultimo
 	if(AUX == NULL){
 		return GRAFO_OK;
 	}
 	//retira o elemento da lista
-	AUXAnter->prox = AUX->prox;
+	if(AUXAnter != NULL){
+		AUXAnter->prox = AUX->prox;
+	}
+	else{
+		g->vertices = AUX->prox;
+	}
+
 	limpaLista(AUX->adjacentes);
 	free(AUX);
 	//assertiva de saida
@@ -212,10 +218,10 @@ grafo_ret insereAresta(t_grafo *g, int IDOrigem, int IDDestino, int peso){
 	else{
 		insereLista(origem->adjacentes, X);
 		//assertiva de saida, verifica que o elemento foi inserido
-		if(buscaLista(origem->adjacentes, X.ID) == NULL){
-			return GRAFO_ERR;
+		if(buscaLista(origem->adjacentes, X.ID) != NULL){
+			return GRAFO_OK;
 		}
-		return GRAFO_OK;
+		return GRAFO_ERR;
 	}
 }
 
@@ -256,4 +262,13 @@ void limpaVertices(t_grafo* g){
 	}
 	//na ultima iteracao o penultimo elemento AUX nao foi desalocado pois o looping sera terminado antes disso
 	free(AUX);
+}
+
+void imprimeGrafo(t_grafo* g){
+	t_vertix* AUX;
+	for(AUX = g->vertices ; AUX != NULL; AUX = AUX->prox){
+		printf("%d  -> ", AUX->propriedades.ID);
+		imprimeLista(AUX->adjacentes);
+		printf("\n");
+	}
 }

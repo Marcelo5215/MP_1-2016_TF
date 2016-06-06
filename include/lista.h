@@ -21,7 +21,9 @@
 	lista_ret insereLista(TipoLista *lista, t_item X);
 	lista_ret retiraLista(TipoLista *lista, Celula *AUX);
 	int estaVazia(TipoLista *lista);
-	void limpaLista(TipoLista *lista);
+	lista_ret limpaLista(TipoLista *lista);
 	Celula* buscaLista(TipoLista* lista, int ID);
+	int tamanhoLista(TipoLista* lista);
+	void imprimeLista(TipoLista* lista);
 
 #endif

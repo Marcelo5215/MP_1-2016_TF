@@ -16,7 +16,7 @@
 	//Lista de adjacencia
 	typedef struct t_vertix{
 		TipoLista* adjacentes;
-		t_vertix *prox;
+		t_vertix *prox, *anter;
 		t_vertix *pai;       //vetice de onde veio para funções de busca, ou Djikstra
 		t_prop propriedades;
 		int cor;   
@@ -39,7 +39,7 @@
 	grafo_ret retiraVertice(t_grafo* g, int ID);            // Retira um vertice do grafo
 	grafo_ret insereOrigem(t_grafo* g, int ID);             // Insere um vertice origem no grafo
 	grafo_ret retiraOrigem(t_grafo* g, int ID);             // Retira um vertice origem no grafo
- 	//void imprimeGrafo(t_grafo* g);                          // Imprime o grafo na tela
+ 	void imprimeGrafo(t_grafo* g);                          // Imprime o grafo na tela
 	//grafo_ret imprimeGrafoArq(t_grafo* g, char *nomeArq);   // Gera um arquivo de saida como especificado com o grafo
 
 	grafo_ret insereAresta(t_grafo* g, int IDOrigem, int IDDestino, int peso);   // Insere uma aresta
