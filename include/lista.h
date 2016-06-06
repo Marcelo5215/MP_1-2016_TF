@@ -3,10 +3,14 @@
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
-	#include "grafo.h"
 
-	typedef struct Celula;
+	typedef struct Celula_P Celula;
 	typedef struct TipoLista_P TipoLista;
+
+	typedef  struct t_item{
+		int ID, peso;    //peso e o peso da aresta
+	                     //Identificador de tarefas ID
+	}t_item;
 
 	typedef enum{
 		LISTA_OK,

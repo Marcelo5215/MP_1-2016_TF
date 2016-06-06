@@ -3,16 +3,15 @@
 //----------------------------------------
 //Estruturas da Lista                    |
 //----------------------------------------
-typedef struct Celula* apontador;
 
-struct Celula{
+struct Celula_P{
 	Celula* anter;
 	t_item item;
 	Celula* prox;
-}Celula;
+};
 
 struct TipoLista_P{
-	Celula* inicio, final;
+	Celula* inicio, *final;
 };
 
 //----------------------------------------
@@ -22,7 +21,7 @@ struct TipoLista_P{
 //Cria uma lista duplamente encadeada vazia
 TipoLista* criaLista(){
 	TipoLista *lista = (TipoLista*)malloc(sizeof(TipoLista));
-	lista->inicio =(apontador)malloc(sizeof(Celula));
+	lista->inicio =(Celula*)malloc(sizeof(Celula));
 	lista->final = lista->inicio;
 	lista->final->prox = NULL;
 	lista->final->anter = NULL;  
@@ -32,14 +31,13 @@ TipoLista* criaLista(){
 
 //insere um elemento a lista, levando em consideração uma célula cabeça.
 lista_ret insereLista(TipoLista *lista, t_item X){
-	if(lista == NULL || X == NULL){
+	if(lista == NULL){
 		return LISTA_ERR;
 	}
-	lista->final->prox = (apontador)malloc(sizeof(Celula));
+	lista->final->prox = (Celula*)malloc(sizeof(Celula));
 	lista->final->prox->anter = lista->final;
 	lista->final = lista->final->prox;
 	lista->final->item = X;
-	lista->final->peso = peso;
 	lista->final->prox = NULL; 
 	return LISTA_OK;
 }
@@ -79,7 +77,7 @@ Celula* buscaLista(TipoLista* lista, int ID){
 
 // limpa as celula cabeça que restará após a execução do programa, e pode ser usada pra limpa uma lista inteira
 void limpaLista(TipoLista *lista){
-	apontador AUX;
+	Celula* AUX;
 	for(AUX=lista->inicio->prox ; AUX!=NULL ; AUX=AUX->prox){
 		free(AUX->anter);
 	}
