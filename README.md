@@ -15,7 +15,7 @@ Pedro Henrique Pires Egler - 150044615
 
 ***TO DO:***
 ```
-	-Criar o MakeFile
+	-(OK)Criar o MakeFile
 
 	Lista
   		lista.c
@@ -32,7 +32,8 @@ Pedro Henrique Pires Egler - 150044615
             -Fazer as funções de busca em grafo
 
     Módulo de testes (Gtest):
-    	-TUDO;
+        -(OK)Teste de Criação
+    	-Completar os testes;
 
     Interface (Parte 2)
     	-TUDO;
