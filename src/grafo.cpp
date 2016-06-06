@@ -164,6 +164,7 @@ grafo_ret retiraVertice(t_grafo* g, int ID){
 	//retira o elemento da lista
 	if(AUXAnter != NULL){
 		AUXAnter->prox = AUX->prox;
+		AUX->prox->anter = AUXAnter;
 	}
 	else{
 		g->vertices = AUX->prox;
