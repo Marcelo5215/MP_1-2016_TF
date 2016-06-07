@@ -28,15 +28,29 @@ TEST(List_Tests, Inserting){
 	//inserindo elementos, pode haver elementos repetidos
 	EXPECT_EQ(LISTA_OK, insereLista(lista, AUX));
 	EXPECT_EQ(LISTA_OK, insereLista(lista, AUX));
-	AUX.ID = 2;
+	AUX.ID = 2;	
+	EXPECT_EQ(LISTA_OK, insereLista(lista, AUX));
+	AUX.ID = 3;
 	EXPECT_EQ(LISTA_OK, insereLista(lista, AUX));
 
 	//buscando os elementos na lista
 	EXPECT_NE(null2, buscaLista(lista, 1));
 	EXPECT_NE(null2, buscaLista(lista, 2));
+	//busca
+	t_item test= buscaListaInd(lista, 0);
+	EXPECT_EQ(1, test.ID);
+	test= buscaListaInd(lista, 1);
+	EXPECT_EQ(1, test.ID);
+	test= buscaListaInd(lista, 2);
+	EXPECT_EQ(2, test.ID);
+	test= buscaListaInd(lista, 3);
+	EXPECT_EQ(3, test.ID);
+	//busca de um indice maior que o tamanho
+	test= buscaListaInd(lista, 4);
+	EXPECT_EQ(-1, test.ID);
 
 	//verificando o tamanho
-	EXPECT_EQ(3, tamanhoLista(lista));
+	EXPECT_EQ(4, tamanhoLista(lista));
 
 	EXPECT_EQ(0, estaVazia(lista));	
 
@@ -151,44 +165,27 @@ TEST(Graph_Tests, Removing){
 	EXPECT_EQ(GRAFO_OK , limpaGrafo(g));
 }
 
-// TEST(Graph_Tests, Tracks){
-// 	t_grafo* g = criaGrafoArq((char*)"entrada.txt");
-// 	t_grafo* test = NULL;
-// 	ASSERT_NE(test, g);
+TEST(Graph_Tests, Tracks){
+	t_grafo* g = criaGrafo();
+	t_grafo* null = NULL;
+	ASSERT_NE(null, g);
 
-// 	//caminhos possiveis com origens
-// 	EXPECT_EQ(3.0, percursoEntre(g, (char*)"U", (char*)"X"));
-// 	EXPECT_EQ(2.0, percursoEntre(g, (char*)"U", (char*)"Y"));
-// 	EXPECT_EQ(1.0, percursoEntre(g, (char*)"U", (char*)"V"));
-// 	EXPECT_EQ(2.0, percursoEntre(g, (char*)"V", (char*)"X"));
-// 	EXPECT_EQ(1.0, percursoEntre(g, (char*)"V", (char*)"Y"));
-// 	EXPECT_EQ(1.0, percursoEntre(g, (char*)"W", (char*)"Z"));
-// 	EXPECT_EQ(3.0, percursoEntre(g, (char*)"W", (char*)"V"));
-// 	//caminhos que devem falhar
-// 	//não é possivel chegar em U a partir de outro vertices
-// 	EXPECT_EQ(-1.0, percursoEntre(g, (char*)"W", (char*)"U"));
-// 	EXPECT_EQ(-1.0, percursoEntre(g, (char*)"V", (char*)"U"));
-// 	EXPECT_EQ(-1.0, percursoEntre(g, (char*)"X", (char*)"U"));
-// 	EXPECT_EQ(-1.0, percursoEntre(g, (char*)"Y", (char*)"U"));
-// 	EXPECT_EQ(-1.0, percursoEntre(g, (char*)"Z", (char*)"U"));
-// 	//não é possivel chegar em X a partir de outro vertices
-// 	EXPECT_EQ(-1.0, percursoEntre(g, (char*)"X", (char*)"W"));
-// 	EXPECT_EQ(-1.0, percursoEntre(g, (char*)"U", (char*)"W"));
-// 	EXPECT_EQ(-1.0, percursoEntre(g, (char*)"Z", (char*)"W"));
-// 	//caminhos com vertices inexistentes
-// 	EXPECT_EQ(-1.0, percursoEntre(g, (char*)"G", (char*)"X"));
-// 	EXPECT_EQ(-1.0, percursoEntre(g, (char*)"Y", (char*)"P"));
-// 	EXPECT_EQ(-1.0, percursoEntre(g, (char*)"HJK", (char*)"9"));
+	montaGrafoTeste(g);
 
-// 	EXPECT_EQ(GRAFO_OK , limpaGrafo(g));
+	//menores caminhos
+	EXPECT_EQ(1, menorCaminho(g, 1, 3));
+	EXPECT_EQ(1, menorCaminho(g, 1, 2));
+	EXPECT_EQ(2, menorCaminho(g, 1, 4));
+	EXPECT_EQ(3, menorCaminho(g, 5, 1));
+	//vertices que nao sao conectados
+	EXPECT_EQ(-1, menorCaminho(g, 6, 1));
+	//vertices que n existam
+	EXPECT_EQ(-1, menorCaminho(g, 9, 1));
+	EXPECT_EQ(-1, menorCaminho(g, 1, 9));
+	EXPECT_EQ(-1, menorCaminho(null, 6, 1));
 
-// 	t_grafo* g1 = criaGrafoArq((char*)"entrada1.txt");
-// 	ASSERT_NE(test, g1);
-// 	EXPECT_EQ(7.0, percursoEntre(g, (char*)"A", (char*)"C"));
-// 	EXPECT_EQ(4.0, percursoEntre(g, (char*)"A", (char*)"B"));
-// 	EXPECT_EQ(3.0, percursoEntre(g, (char*)"B", (char*)"C"));
-// 	EXPECT_EQ(GRAFO_OK , limpaGrafo(g1));
-// }
+	EXPECT_EQ(GRAFO_OK , limpaGrafo(g));
+}
 
 // TEST(Graph_Tests, Writing){
 // 	t_grafo* g = criaGrafoArq((char*)"entrada.txt");
@@ -218,10 +215,10 @@ int main(int argc, char** argv){
 	return RUN_ALL_TESTS();
 }
 
-
-
+//cria um grafo de teste
+//como as funcoes utilizao o ID do vertice(tarefa), não usaremos outros campos para os testes além de ID
 void montaGrafoTeste(t_grafo* g){
-		t_prop prop;
+	t_prop prop;
 	prop.ID = 1;
 	//inserindo vertices 
 	insereVertice(g, prop);

@@ -5,7 +5,10 @@
 //-------------------------------------------------------------
 void limpaVertices(t_grafo* g);   //TODO
 t_vertix* buscaVertice(t_vertix* v, int ID);
-grafo_ret retiraAresta(t_grafo* g, int IDOrigem, int IDDestino);
+t_vertix* buscaVerticeMinimo(t_grafo* g);
+void Relax(t_grafo* g, t_vertix* u, t_vertix* v);
+int peso(t_grafo *g, int IDOrigem, int IDDestino);
+grafo_ret Dijkstra(t_grafo* g, int IDInicial);
 
 //----------------------------------------
 //Estruturas do grafo                    |
@@ -180,7 +183,7 @@ grafo_ret retiraVertice(t_grafo* g, int ID){
 	return GRAFO_OK;
 }
 
-//busca o vertice com determinado ID
+//busca o vertice com determinado ID, funcao privada a esse modulo
 t_vertix* buscaVertice(t_vertix* v, int ID){
 	t_vertix* AUX;
 	for(AUX = v ; AUX != NULL; AUX = AUX->prox){
@@ -189,6 +192,11 @@ t_vertix* buscaVertice(t_vertix* v, int ID){
 		}
 	}
 	return AUX;
+}
+
+//busca o vertice com determinado ID 
+t_vertix* buscaVertice(t_grafo *g, int ID){
+	return buscaVertice(g->vertices, ID);
 }
 
 grafo_ret insereAresta(t_grafo *g, int IDOrigem, int IDDestino, int peso){
@@ -272,4 +280,102 @@ void imprimeGrafo(t_grafo* g){
 		imprimeLista(AUX->adjacentes);
 		printf("\n");
 	}
+}
+
+//--------------------------------
+//Funcoes para utilizar Djikstra |
+//--------------------------------
+
+grafo_ret Dijkstra(t_grafo* g, int IDInicial){
+	if(g == NULL){
+		return GRAFO_ERR;
+	}
+
+	t_vertix* AUX, *inicial;
+	t_item interesse;
+	for(AUX = g->vertices ; AUX != NULL; AUX = AUX->prox){
+		AUX->caminho = (int)INFINITY;
+		AUX->pai = NULL;
+		AUX->cor = G_BRANCO;
+	}
+	inicial = buscaVertice(g->vertices, IDInicial);
+	inicial->caminho = 0;
+
+	//enquanto ainda existir vertices brancos e pega o menor
+	while((AUX = buscaVerticeMinimo(g)) !=  NULL){
+		//para cada adjacente a esse vertice
+		for(int i = 0; i < tamanhoLista(AUX->adjacentes) ; i++){
+			interesse = buscaListaInd(AUX->adjacentes, i);
+			Relax(g, AUX, buscaVertice(g->vertices, interesse.ID));
+		}
+	}
+
+	return GRAFO_OK;
+}
+
+t_vertix* buscaVerticeMinimo(t_grafo* g){
+	t_vertix* AUX, *MIN = NULL;
+	int min = (int)INFINITY;
+	for(AUX = g->vertices ; AUX != NULL; AUX = AUX->prox){
+		if(AUX->cor == G_BRANCO){
+			if(AUX->caminho < min){
+				min = AUX->caminho;
+				MIN = AUX;
+			}
+		}
+	}
+	if(MIN != NULL){
+		MIN->cor = G_PRETO; 
+	}
+
+	return MIN;
+}
+void Relax(t_grafo* g, t_vertix* u, t_vertix* v){
+	if(v->caminho > u->caminho + peso(g, u->propriedades.ID, v->propriedades.ID)){
+		v->caminho = u->caminho + peso(g, u->propriedades.ID, v->propriedades.ID);
+		v->pai = u;
+	}
+}
+
+int peso(t_grafo *g, int IDOrigem, int IDDestino){
+	t_vertix* AUX;
+	t_item interesse;
+	AUX = buscaVertice(g->vertices, IDOrigem);
+	for(int i = 0; i < tamanhoLista(AUX->adjacentes) ; i++){
+		interesse = buscaListaInd(AUX->adjacentes, i);
+		if(interesse.ID == IDDestino){
+			return interesse.peso;
+		}
+	}
+
+	return -1;	
+}
+
+int menorCaminho(t_grafo *g, int IDOrigem, int IDDestino){
+	//assertivas de entrada
+	if(g == NULL){
+		return -1;
+	}
+	else if(buscaVertice(g->vertices, IDOrigem) == NULL){
+		return -1;
+	}
+	else if(buscaVertice(g->vertices, IDDestino) == NULL){
+		return -1;
+	}
+
+	Dijkstra(g, IDOrigem);
+	t_vertix* destino = buscaVertice(g->vertices, IDDestino);
+
+	//assetivas de saida
+	//tenta formar um caminho até o vertice de origem
+	//verifica se existe um caminho ate a origem
+	t_vertix* AUX = destino;
+	while(AUX != NULL && AUX->propriedades.ID != IDOrigem){
+		AUX = AUX->pai;
+	}
+	if(AUX == NULL){
+		return -1;
+	}
+
+	return(destino->caminho);
 }

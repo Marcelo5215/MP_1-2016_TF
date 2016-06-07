@@ -23,6 +23,7 @@
 	int estaVazia(TipoLista *lista);
 	lista_ret limpaLista(TipoLista *lista);
 	Celula* buscaLista(TipoLista* lista, int ID);
+	t_item buscaListaInd(TipoLista* lista, int Ind);
 	int tamanhoLista(TipoLista* lista);
 	void imprimeLista(TipoLista* lista);
 

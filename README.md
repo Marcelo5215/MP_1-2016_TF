@@ -29,12 +29,13 @@ Pedro Henrique Pires Egler - 150044615
     Grafo
     	grafo.c
     		-(OK)criar funções descritas no .h (MUITAS DEVEM SER ADAPTADAS A NOVA ESTRUTURA DE LISTAS E GRAFOS);
-            -Fazer as funções de busca em grafo;
+            -(OK)Fazer as funções de busca em grafo;
 
     Módulo de testes (Gtest):
         -(OK)Teste de Criação, lista e grafo;
         -(OK)Teste de Inserção, lista e grafo;
-        -(OK)Teste de Remoção, lista e grafo;
+        -(OK)Teste de Remoção, lista e grafo;;
+        -(OK)Teste de Caminhos, grafo;
     	-Completar os testes;
 
     Interface

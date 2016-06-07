@@ -104,3 +104,21 @@ void imprimeLista(TipoLista* lista){
 		printf(" %d ", AUX->item.ID);
 	}
 }
+
+t_item buscaListaInd(TipoLista *lista, int ind){
+	if(lista == NULL || ind > tamanhoLista(lista)){
+		printf("ERRO\n");
+	}
+	t_item o;
+	o.ID = -1;
+	Celula* AUX;
+	int i = 0;
+	for(AUX = lista->inicio->prox; AUX != NULL; AUX = AUX->prox){
+		if(i == ind){
+			return AUX->item;
+		}
+		i++;
+	}
+
+	return o;
+}

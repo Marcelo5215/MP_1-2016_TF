@@ -3,6 +3,7 @@
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
+	#include <math.h>
 	#include "lista.h"
 
 	typedef struct t_prop{
@@ -37,6 +38,7 @@
 	grafo_ret limpaGrafo(t_grafo* g);                        
 	grafo_ret insereVertice(t_grafo* g, t_prop v);            // Insere um vertice no grafo com as determinadas propriedades
 	grafo_ret retiraVertice(t_grafo* g, int ID);            // Retira um vertice do grafo
+	t_vertix* buscaVertice(t_grafo *g, int ID);
 	grafo_ret insereOrigem(t_grafo* g, int ID);             // Insere um vertice origem no grafo
 	grafo_ret retiraOrigem(t_grafo* g, int ID);             // Retira um vertice origem no grafo
  	void imprimeGrafo(t_grafo* g);                          // Imprime o grafo na tela
@@ -44,5 +46,6 @@
 
 	grafo_ret insereAresta(t_grafo* g, int IDOrigem, int IDDestino, int peso);   // Insere uma aresta
 	grafo_ret retiraAresta(t_grafo* g, int IDOrigem, int IDDestino);            // Retira a aresta desejada
+	int menorCaminho(t_grafo *g, int IDOrigem, int IDDestino);
 
 #endif
