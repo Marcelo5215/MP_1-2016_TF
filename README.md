@@ -2,7 +2,7 @@
 Trabalho Final de MP(Métodos de Programação)  
 
 ***Alunos:***
-Marcelo de Araújo Lopes Júnior - 150016794  
+Marcelo de Araújo Lopes Júnior - 150016794 08 - 30min 05 - 3h 06 - 2h  
 Davi Roubbouni de Carvalho Freitas - 150033010  
 Pedro Henrique Pires Egler - 150044615  
 
@@ -23,7 +23,8 @@ Pedro Henrique Pires Egler - 150044615
     		-(OK)Checar se a função insereLista está funcionando;
 
     Gerenciador
-    	-criar o .h; (OK);
+    	-(OK)criar o .h;
+	-(OK)Funções de adicionar, retirar e editar tarefas;
         -TUDO (quase);
         - Verificar a insercao do peso na leitura
 
