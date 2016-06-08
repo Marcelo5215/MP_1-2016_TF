@@ -10,6 +10,12 @@ void Relax(t_grafo* g, t_vertix* u, t_vertix* v);
 int peso(t_grafo *g, int IDOrigem, int IDDestino);
 grafo_ret Dijkstra(t_grafo* g, int IDInicial);
 
+//Cabeca do Grafo
+struct Grafo_P{
+	TipoLista* origens;
+	t_vertix*  vertices; //vertice inicial
+	int tempo_atual;
+};
 
 //----------------------------------------
 //Funcoes para a Utilizacao do Grafo     |
@@ -384,4 +390,21 @@ TipoLista* getOrigens(t_grafo *g){
 
 t_vertix* getVertices(t_grafo* g){
 	return g->vertices;
+}
+
+int getTempo(t_grafo *g){
+	return g->tempo_atual;
+}
+
+grafo_ret setTempo(t_grafo *g, int tempo){
+	if(g == NULL){
+		return GRAFO_ERR;
+	}
+	else if(tempo < 0){
+		return GRAFO_ERR;
+	}
+
+	g->tempo_atual = tempo;
+
+	return GRAFO_OK;
 }

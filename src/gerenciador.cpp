@@ -79,7 +79,7 @@ man_ret escrita_arquivo(t_grafo *g, char *arq){
     t_vertix* atual;
 
     //laco que percorre todos os vertices do grafo
-    for(atual = g->vertices; atual!=NULL; atual = atual->prox){
+    for(atual = getVertices(g); atual!=NULL; atual = atual->prox){
         n_req = tamanhoLista(atual->adjacentes);
         fprintf(fp, "%d '%s' %d %d %d %d", atual->propriedades.ID, atual->propriedades.nome,
         atual->propriedades.esta_concluida, atual->propriedades.inicio, atual->propriedades.duracao, n_req);

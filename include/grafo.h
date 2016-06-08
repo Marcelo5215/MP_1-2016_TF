@@ -29,12 +29,7 @@
 		int caminho;         //peso total para chegar ao vertice
 	}t_vertix;
 
-	//Cabeca do Grafo
-	typedef struct Grafo_P{
-		TipoLista* origens;
-		t_vertix*  vertices; //vertice inicial
-		int tempo_atual;
-	}t_grafo;
+	typedef struct Grafo_P t_grafo;
 
 	typedef enum{
 		GRAFO_OK,
