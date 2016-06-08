@@ -23,8 +23,9 @@ Pedro Henrique Pires Egler - 150044615
     		-(OK)Checar se a função insereLista está funcionando;
 
     Gerenciador
-    	-criar o .h;
-    	-TUDO;
+    	-criar o .h; (OK);
+        -TUDO (quase);
+        - Verificar a insercao do peso na leitura
 
     Grafo
     	grafo.c

@@ -6,13 +6,18 @@
 	#include <math.h>
 	#include "lista.h"
 
+	//----------------------------------------
+	//Estruturas do grafo                    |
+	//----------------------------------------
+	
+	// propriedades do vertice
 	typedef struct t_prop{
-		char nome[100];      //nome da tarefa
+		char nome[101];      //nome da tarefa
 		int ID;              //identificador da tarefa
-		bool esta_concluida; 
+		bool esta_concluida;
 		int inicio;          //tempo de comeco da tarefa
 		int duracao;         //tempo de duracao da tarefa
-	}t_prop;
+	}t_prop;	
 
 	//Lista de adjacencia
 	typedef struct t_vertix{
@@ -20,11 +25,16 @@
 		t_vertix *prox, *anter;
 		t_vertix *pai;       //vetice de onde veio para funções de busca, ou Djikstra
 		t_prop propriedades;
-		int cor;   
+		int cor;
 		int caminho;         //peso total para chegar ao vertice
 	}t_vertix;
 
-	typedef struct Grafo_P t_grafo;
+	//Cabeca do Grafo
+	typedef struct Grafo_P{
+		TipoLista* origens;
+		t_vertix*  vertices; //vertice inicial
+		int tempo_atual;
+	}t_grafo;
 
 	typedef enum{
 		GRAFO_OK,

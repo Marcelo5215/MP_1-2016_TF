@@ -105,6 +105,14 @@ void imprimeLista(TipoLista* lista){
 	}
 }
 
+void imprimeLista_arq(TipoLista* lista, FILE *fp){
+	Celula *AUX;
+	for(AUX = lista->inicio->prox; AUX != NULL ; AUX = AUX->prox){
+		fprintf(fp," %d", AUX->item.ID);
+	}
+}
+
+
 t_item buscaListaInd(TipoLista *lista, int ind){
 	if(lista == NULL || ind > tamanhoLista(lista)){
 		printf("ERRO\n");

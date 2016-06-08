@@ -10,16 +10,6 @@ void Relax(t_grafo* g, t_vertix* u, t_vertix* v);
 int peso(t_grafo *g, int IDOrigem, int IDDestino);
 grafo_ret Dijkstra(t_grafo* g, int IDInicial);
 
-//----------------------------------------
-//Estruturas do grafo                    |
-//----------------------------------------
-
-//Cabeca do Grafo
-struct Grafo_P{
-	TipoLista* origens;
-	t_vertix*  vertices; //vertice inicial
-	int tempo_atual;
-};
 
 //----------------------------------------
 //Funcoes para a Utilizacao do Grafo     |
@@ -279,7 +269,11 @@ void imprimeGrafo(t_grafo* g){
 		printf("%d  -> ", AUX->propriedades.ID);
 		imprimeLista(AUX->adjacentes);
 		printf("\n");
+
 	}
+		printf("Origens: ");
+		imprimeLista(g->origens);
+		printf("\n");
 }
 
 //--------------------------------

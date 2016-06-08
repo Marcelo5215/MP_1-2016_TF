@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "grafo.h"
+#include "gerenciador.h"
 #include "gtest/gtest.h"
 
 TEST(List_Tests, Creating){
@@ -185,6 +186,25 @@ TEST(Graph_Tests, Tracks){
 	EXPECT_EQ(-1, menorCaminho(null, 6, 1));
 
 	EXPECT_EQ(GRAFO_OK , limpaGrafo(g));
+}
+
+TEST(File_Tests, Reading){
+	t_grafo *g = leitura_arquivo((char*)"entrada.txt");
+	t_grafo *g0 = NULL;
+
+	ASSERT_NE(g0, g);
+	EXPECT_EQ(GRAFO_OK, limpaGrafo(g));
+
+}
+
+TEST(File_Tests, Writing){
+	t_grafo *g = leitura_arquivo((char*)"entrada.txt");
+		imprimeGrafo(g);
+		ASSERT_NE(GRAFO_ERR, escrita_arquivo(g, (char*)"saida.txt"));
+		EXPECT_EQ(GRAFO_OK, limpaGrafo(g));
+
+
+
 }
 
 // TEST(Graph_Tests, Writing){

@@ -26,5 +26,6 @@
 	t_item buscaListaInd(TipoLista* lista, int Ind);
 	int tamanhoLista(TipoLista* lista);
 	void imprimeLista(TipoLista* lista);
+	void imprimeLista_arq(TipoLista* lista, FILE *fp);
 
 #endif
