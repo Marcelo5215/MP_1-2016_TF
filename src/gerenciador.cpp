@@ -95,20 +95,27 @@ man_ret escrita_arquivo(t_grafo *g, char *arq){
 //Funcoes para manipulacao de tarefas    |
 //----------------------------------------
 
-man_ret insereTarefa(t_grafo *g, char tarefa[]){
+man_ret insereTarefa(t_grafo *g, char* tarefa){
+    if(g == NULL || tarefa == NULL){
+        return MAN_ERR;
+    }
     t_prop prop;
-    char* campo;
+    char *campo, string[121];
+    strcpy(string, tarefa);
     int i, pre, reqID;
 
     //separa a tarefa em campos
     //ID da tarefa
-    campo = strtok(tarefa, " '");
+    campo = strtok(string, " '");
+    if(campo == NULL) return MAN_ERR;
     prop.ID = atoi(campo);
     //nome da tarefa
-    campo = strtok(NULL, " '");
+    campo = strtok(NULL, "'");
+    if(campo == NULL) return MAN_ERR;
     strcpy(prop.nome, campo);
     //se esta concluida ou nao
     campo = strtok(NULL, " '");
+    if(campo == NULL) return MAN_ERR;
     if(atoi(campo)){
         prop.esta_concluida = true;
     }
@@ -117,12 +124,21 @@ man_ret insereTarefa(t_grafo *g, char tarefa[]){
     }
     //quando a tarefa inicia
     campo = strtok(NULL, " '");
+    if(campo == NULL) return MAN_ERR;
     prop.inicio = atoi(campo);
     //qual sua duracao
     campo = strtok(NULL, " '");
+    if(campo == NULL) return MAN_ERR;
     prop.duracao = atoi(campo);
+
+
+    if(insereVertice(g, prop) != GRAFO_OK){
+        return MAN_ERR; 
+    }
+
     // quantos prerequisitos
     campo = strtok(NULL, " '");
+    if(campo == NULL) return MAN_ERR;
     pre = atoi(campo);
 
     for(i = 0 ; i < pre ; i++){
@@ -143,10 +159,10 @@ man_ret retiraTarefa(t_grafo *g, int ID){
 }
 
 man_ret editaTarefa(t_grafo *g, int IDMod, char tarefaNova[]){
-    if(retiraTarefa(g, IDMod) != MAN_OK){
+    if(insereTarefa(g, tarefaNova) != MAN_OK){
         return MAN_ERR;
     }
-    if(insereTarefa(g, tarefaNova) != MAN_OK){
+    if(retiraTarefa(g, IDMod) != MAN_OK){
         return MAN_ERR;
     }
 

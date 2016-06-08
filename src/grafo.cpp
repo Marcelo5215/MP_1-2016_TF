@@ -157,7 +157,8 @@ grafo_ret retiraVertice(t_grafo* g, int ID){
 	//retira o elemento da lista
 	if(AUXAnter != NULL){
 		AUXAnter->prox = AUX->prox;
-		AUX->prox->anter = AUXAnter;
+		if(AUX->prox != NULL)
+			AUX->prox->anter = AUXAnter;
 	}
 	else{
 		g->vertices = AUX->prox;
@@ -175,6 +176,9 @@ grafo_ret retiraVertice(t_grafo* g, int ID){
 
 //busca o vertice com determinado ID, funcao privada a esse modulo
 t_vertix* buscaVertice(t_vertix* v, int ID){
+	if(v == NULL){
+		return NULL;
+	}
 	t_vertix* AUX;
 	for(AUX = v ; AUX != NULL; AUX = AUX->prox){
 		if(AUX->propriedades.ID == ID){

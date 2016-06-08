@@ -194,13 +194,57 @@ TEST(File_Tests, Reading){
 
 	ASSERT_NE(g0, g);
 	EXPECT_EQ(GRAFO_OK, limpaGrafo(g));
-
 }
 
 TEST(File_Tests, Writing){
 	t_grafo *g = leitura_arquivo((char*)"entrada.txt");
 	ASSERT_NE(MAN_ERR, escrita_arquivo(g, (char*)"saida.txt"));
 	EXPECT_EQ(GRAFO_OK, limpaGrafo(g));
+}
+
+TEST(Manager, Inserting){
+	t_grafo* tarefa = leitura_arquivo((char*)"entrada.txt");
+	t_grafo *g0 = NULL;
+	ASSERT_NE(g0, tarefa);
+
+	EXPECT_EQ(MAN_ERR, insereTarefa(tarefa, (char*)"100 'oitava tarefa' 0 0 1 0"));  // inserindo tarefa com ID repetido
+	EXPECT_EQ(MAN_OK, insereTarefa(tarefa, (char*)"103 'quarta tarefa' 1 1 1 1 105"));  // inserindo tarefa
+	EXPECT_EQ(MAN_ERR, insereTarefa(g0, (char*)"103 'quarta tarefa' 1 1 1 1 105"));  // inserindo tarefa em um grafo nulo
+	EXPECT_EQ(MAN_ERR, insereTarefa(tarefa, (char*)NULL));  // inserindo tarefa em uma string nula
+
+	ASSERT_NE(MAN_ERR, escrita_arquivo(tarefa, (char*)"saida.txt"));
+
+	EXPECT_EQ(GRAFO_OK, limpaGrafo(tarefa));
+}
+
+TEST(Manager, Removing){
+	t_grafo* tarefa = leitura_arquivo((char*)"entrada.txt");
+	t_grafo *g0 = NULL;
+	ASSERT_NE(g0, tarefa);
+
+	EXPECT_EQ(MAN_OK, retiraTarefa(tarefa, 100));  // retirando tarefa
+	EXPECT_EQ(MAN_ERR, retiraTarefa(tarefa, 100));  // retirando tarefa inexistente
+	EXPECT_EQ(MAN_ERR, retiraTarefa(g0, 101));  // inserindo tarefa em uma string nula
+
+	ASSERT_NE(MAN_ERR, escrita_arquivo(tarefa, (char*)"saida.txt"));
+
+	EXPECT_EQ(GRAFO_OK, limpaGrafo(tarefa));
+}
+
+TEST(Manager, Editing){
+	t_grafo* tarefa = leitura_arquivo((char*)"entrada.txt");
+	t_grafo *g0 = NULL;
+	ASSERT_NE(g0, tarefa);
+
+	EXPECT_EQ(MAN_OK, editaTarefa(tarefa, 101, (char*)"120 'vigesima tarefa' 20 0 8 0"));
+	EXPECT_EQ(MAN_OK, editaTarefa(tarefa, 105, (char*)"112 'ola tarefa' 20 0 8 0"));
+	EXPECT_EQ(MAN_ERR, editaTarefa(tarefa, 89, (char*)"100 'vigesima tarefa' 20 0 8 0")); // tentando modificar uma tarefa que nao existe
+	EXPECT_EQ(MAN_ERR, editaTarefa(tarefa, 112, (char*)"120 'vigesima tarefa' 20 0 8 0"));  // tentando modificar a tarefa para uma ja existente
+	
+
+	ASSERT_NE(MAN_ERR, escrita_arquivo(tarefa, (char*)"saida.txt"));
+
+	EXPECT_EQ(GRAFO_OK, limpaGrafo(tarefa));
 }
 
 // TEST(Graph_Tests, Writing){
