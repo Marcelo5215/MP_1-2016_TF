@@ -137,7 +137,7 @@ grafo_ret retiraVertice(t_grafo* g, int ID){
 	else if(buscaVertice(g->vertices, ID) == NULL){
 		return GRAFO_ERR;
 	}
-
+	retiraOrigem(g, ID);
 	t_vertix* AUX;
 	//remove todas as aresta com ele
 	for(AUX = g->vertices ; AUX != NULL; AUX = AUX->prox){
@@ -372,4 +372,12 @@ int menorCaminho(t_grafo *g, int IDOrigem, int IDDestino){
 	}
 
 	return(destino->caminho);
+}
+
+TipoLista* getOrigens(t_grafo *g){
+	return g->origens;
+}
+
+t_vertix* getVertices(t_grafo* g){
+	return g->vertices;
 }

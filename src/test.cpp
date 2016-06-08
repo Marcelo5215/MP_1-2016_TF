@@ -199,12 +199,8 @@ TEST(File_Tests, Reading){
 
 TEST(File_Tests, Writing){
 	t_grafo *g = leitura_arquivo((char*)"entrada.txt");
-		imprimeGrafo(g);
-		ASSERT_NE(GRAFO_ERR, escrita_arquivo(g, (char*)"saida.txt"));
-		EXPECT_EQ(GRAFO_OK, limpaGrafo(g));
-
-
-
+	ASSERT_NE(MAN_ERR, escrita_arquivo(g, (char*)"saida.txt"));
+	EXPECT_EQ(GRAFO_OK, limpaGrafo(g));
 }
 
 // TEST(Graph_Tests, Writing){

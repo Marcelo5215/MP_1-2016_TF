@@ -58,4 +58,7 @@
 	grafo_ret retiraAresta(t_grafo* g, int IDOrigem, int IDDestino);            // Retira a aresta desejada
 	int menorCaminho(t_grafo *g, int IDOrigem, int IDDestino);
 
+	TipoLista* getOrigens(t_grafo *g);
+	t_vertix* getVertices(t_grafo* g);
+
 #endif
