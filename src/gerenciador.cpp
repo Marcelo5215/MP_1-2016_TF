@@ -81,11 +81,11 @@ man_ret escrita_arquivo(t_grafo *g, char *arq){
 
     //laco que percorre todos os vertices do grafo
     for(atual = getVertices(g); atual!=NULL; atual = atual->prox){
-        n_req = tamanhoLista(atual->adjacentes);
+        n_req = tamanhoLista(atual->antecessores);
         fprintf(fp, "%d '%s' %d %d %d %d", atual->propriedades.ID, atual->propriedades.nome,
         atual->propriedades.esta_concluida, atual->propriedades.inicio, atual->propriedades.duracao, n_req);
         //imprime todos os elementos requisitos de dado vertice
-        imprimeLista_arq(atual->adjacentes, fp);
+        imprimeLista_arq(atual->antecessores, fp);
         fprintf(fp,"\n");      
     }
     fclose(fp);

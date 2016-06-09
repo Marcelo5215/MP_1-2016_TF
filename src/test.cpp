@@ -192,12 +192,21 @@ TEST(File_Tests, Reading){
 	t_grafo *g = leitura_arquivo((char*)"entrada.txt");
 	t_grafo *g0 = NULL;
 
+	//testa a consistencia da funcao para uma string valida
+	ASSERT_EQ(g0, leitura_arquivo((char*)NULL));
 	ASSERT_NE(g0, g);
 	EXPECT_EQ(GRAFO_OK, limpaGrafo(g));
 }
 
 TEST(File_Tests, Writing){
 	t_grafo *g = leitura_arquivo((char*)"entrada.txt");
+	t_grafo *g0 = NULL;
+
+	//testa a consistencia da funcao para um grafo vazio
+	ASSERT_EQ(MAN_ERR, escrita_arquivo(g0, (char*)"saida.txt"));
+	//testa a consistencia da funcao para uma string valida
+	ASSERT_EQ(MAN_ERR, escrita_arquivo(g,(char*)NULL));
+	//testa a funcao com casos validos
 	ASSERT_NE(MAN_ERR, escrita_arquivo(g, (char*)"saida.txt"));
 	EXPECT_EQ(GRAFO_OK, limpaGrafo(g));
 }
