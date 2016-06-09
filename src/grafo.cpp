@@ -94,6 +94,7 @@ t_vertix* criaVertice(t_grafo* g, t_prop v){
 		return NULL;
 	}
 	vert->adjacentes = criaLista();
+	vert->antecessores = criaLista();
 	vert->prox = NULL;
 	vert->propriedades = v;
 	vert->anter = NULL;
@@ -127,6 +128,7 @@ grafo_ret insereVertice(t_grafo* g, t_prop v){
 		AUX->prox = (t_vertix*)malloc(sizeof(t_vertix));
 		AUX->prox->propriedades = v;
 		AUX->prox->adjacentes = criaLista();
+		AUX->prox->antecessores = criaLista();
 		AUX->prox->prox = NULL;
 		AUX->prox->anter = AUX;
 
@@ -148,6 +150,7 @@ grafo_ret retiraVertice(t_grafo* g, int ID){
 	//remove todas as aresta com ele
 	for(AUX = g->vertices ; AUX != NULL; AUX = AUX->prox){
 		retiraAresta(g, AUX->propriedades.ID, ID);
+		retiraArestaAnter(g, ID, AUX->propriedades.ID);
 	}
 
 	//AUX e o vertice a ser retirado e AUXAnter o vertice antes dele
@@ -234,6 +237,41 @@ grafo_ret insereAresta(t_grafo *g, int IDOrigem, int IDDestino, int peso){
 	}
 }
 
+grafo_ret insereArestaAnter(t_grafo *g, int IDOrigem, int IDDestino, int peso){
+	//assertivas de entrada
+	if(g == NULL){
+		return GRAFO_ERR;
+	}
+	else if(buscaVertice(g->vertices, IDOrigem) == NULL){
+		return GRAFO_ERR;
+	}
+	else if(buscaVertice(g->vertices, IDDestino) == NULL){
+		return GRAFO_ERR;
+	}
+	else if(peso < 0){
+		return GRAFO_ERR;
+	}
+	t_vertix* origem;   
+	t_item X;        //item a ser inserido
+	X.ID = IDDestino;
+	X.peso = peso;
+	//vertice de origem
+	origem = buscaVertice(g->vertices, IDOrigem);
+
+	//verifica se o elemento já está como adjacente a ele
+	if(buscaLista(origem->antecessores, IDDestino) != NULL){
+		return GRAFO_ERR;
+	}
+	else{
+		insereLista(origem->antecessores, X);
+		//assertiva de saida, verifica que o elemento foi inserido
+		if(buscaLista(origem->antecessores, X.ID) != NULL){
+			return GRAFO_OK;
+		}
+		return GRAFO_ERR;
+	}
+}
+
 grafo_ret retiraAresta(t_grafo* g, int IDOrigem, int IDDestino){
 	//assertivas de entrada
 	if(g == NULL){
@@ -254,6 +292,31 @@ grafo_ret retiraAresta(t_grafo* g, int IDOrigem, int IDDestino){
 	retiraLista(origem->adjacentes, buscaLista(origem->adjacentes, IDDestino));
 	//verifica se a aresta foi removida
 	if(buscaLista(origem->adjacentes, IDDestino) != NULL){
+		return GRAFO_ERR;
+	}
+	return GRAFO_OK;
+}
+
+grafo_ret retiraArestaAnter(t_grafo* g, int IDOrigem, int IDDestino){
+	//assertivas de entrada
+	if(g == NULL){
+		return GRAFO_ERR;
+	}
+	else if(buscaVertice(g->vertices, IDOrigem) == NULL){
+		return GRAFO_ERR;
+	}
+	else if(buscaVertice(g->vertices, IDDestino) == NULL){
+		return GRAFO_ERR;
+	}
+
+	t_vertix* origem;
+	//encontra o vertice de origem
+	origem = buscaVertice(g->vertices, IDOrigem);
+	
+	//retira da lista de adjacencia a celula com IDDESTINO
+	retiraLista(origem->antecessores, buscaLista(origem->antecessores, IDDestino));
+	//verifica se a aresta foi removida
+	if(buscaLista(origem->antecessores, IDDestino) != NULL){
 		return GRAFO_ERR;
 	}
 	return GRAFO_OK;
@@ -284,6 +347,31 @@ void imprimeGrafo(t_grafo* g){
 		printf("Origens: ");
 		imprimeLista(g->origens);
 		printf("\n");
+}
+
+TipoLista* getOrigens(t_grafo *g){
+	return g->origens;
+}
+
+t_vertix* getVertices(t_grafo* g){
+	return g->vertices;
+}
+
+int getTempo(t_grafo *g){
+	return g->tempo_atual;
+}
+
+grafo_ret setTempo(t_grafo *g, int tempo){
+	if(g == NULL){
+		return GRAFO_ERR;
+	}
+	else if(tempo < 0){
+		return GRAFO_ERR;
+	}
+
+	g->tempo_atual = tempo;
+
+	return GRAFO_OK;
 }
 
 //--------------------------------
@@ -334,6 +422,7 @@ t_vertix* buscaVerticeMinimo(t_grafo* g){
 
 	return MIN;
 }
+
 void Relax(t_grafo* g, t_vertix* u, t_vertix* v){
 	if(v->caminho > u->caminho + peso(g, u->propriedades.ID, v->propriedades.ID)){
 		v->caminho = u->caminho + peso(g, u->propriedades.ID, v->propriedades.ID);
@@ -382,29 +471,4 @@ int menorCaminho(t_grafo *g, int IDOrigem, int IDDestino){
 	}
 
 	return(destino->caminho);
-}
-
-TipoLista* getOrigens(t_grafo *g){
-	return g->origens;
-}
-
-t_vertix* getVertices(t_grafo* g){
-	return g->vertices;
-}
-
-int getTempo(t_grafo *g){
-	return g->tempo_atual;
-}
-
-grafo_ret setTempo(t_grafo *g, int tempo){
-	if(g == NULL){
-		return GRAFO_ERR;
-	}
-	else if(tempo < 0){
-		return GRAFO_ERR;
-	}
-
-	g->tempo_atual = tempo;
-
-	return GRAFO_OK;
 }

@@ -21,7 +21,7 @@
 
 	//Lista de adjacencia
 	typedef struct t_vertix{
-		TipoLista* adjacentes;
+		TipoLista* adjacentes, *antecessores;
 		t_vertix *prox, *anter;
 		t_vertix *pai;       //vetice de onde veio para funções de busca, ou Djikstra
 		t_prop propriedades;
@@ -50,7 +50,9 @@
 	//grafo_ret imprimeGrafoArq(t_grafo* g, char *nomeArq);   // Gera um arquivo de saida como especificado com o grafo
 
 	grafo_ret insereAresta(t_grafo* g, int IDOrigem, int IDDestino, int peso);   // Insere uma aresta
-	grafo_ret retiraAresta(t_grafo* g, int IDOrigem, int IDDestino);            // Retira a aresta desejada
+	grafo_ret retiraAresta(t_grafo* g, int IDOrigem, int IDDestino);             // Retira a aresta desejada
+	grafo_ret insereArestaAnter(t_grafo* g, int IDOrigem, int IDDestino, int peso);   // Insere uma aresta de antecessores
+	grafo_ret retiraArestaAnter(t_grafo* g, int IDOrigem, int IDDestino);             // Retira a aresta de antecessores desejada
 	int menorCaminho(t_grafo *g, int IDOrigem, int IDDestino);
 
 	TipoLista* getOrigens(t_grafo *g);

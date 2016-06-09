@@ -306,4 +306,13 @@ void montaGrafoTeste(t_grafo* g){
 	insereAresta(g, 5, 4, 1);
 	insereAresta(g, 5, 6, 1);
 	insereAresta(g, 6, 6, 1);
+	insereArestaAnter(g, 1, 2, 1);
+	insereArestaAnter(g, 1, 3, 1);
+	insereArestaAnter(g, 3, 1, 1);
+	insereArestaAnter(g, 2, 4, 1);
+	insereArestaAnter(g, 3, 2, 1);
+	insereArestaAnter(g, 4, 3, 1);
+	insereArestaAnter(g, 5, 4, 1);
+	insereArestaAnter(g, 5, 6, 1);
+	insereArestaAnter(g, 6, 6, 1);
 }

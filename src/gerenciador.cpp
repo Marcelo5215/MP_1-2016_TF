@@ -47,13 +47,14 @@ t_grafo* leitura_arquivo(char *arq){
         }                    
                 
         insereVertice(g, prop_lido);
-        if(inicio == 0){
+        if(lista == 0){
             insereOrigem(g, id);
         }
         //o laco abaixo le todos os pre requisitos do vertice lido
             for(i=0; i<lista; i++){                    
                 fscanf(fp, " %d", &requisito);
-                insereAresta(g, prop_lido.ID, requisito, 0);
+                insereAresta(g, requisito, prop_lido.ID, 0);
+                insereArestaAnter(g, prop_lido.ID, requisito, 0);
             }
     }
 
@@ -144,7 +145,8 @@ man_ret insereTarefa(t_grafo *g, char* tarefa){
     for(i = 0 ; i < pre ; i++){
         campo = strtok(NULL, " '");
         reqID = atoi(campo);
-        insereAresta(g, prop.ID, reqID, 0);
+        insereAresta(g, reqID, prop.ID, 0);
+        insereArestaAnter(g, prop.ID, reqID, 0);
     }
 
     return MAN_OK;
