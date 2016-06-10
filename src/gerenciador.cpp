@@ -180,13 +180,29 @@ man_ret startMan(){
 	fechaInterface();
 }
 
+man_ret calcTrueInic(t_grafo *g){
+	
+}
+
+int verificaAntecessores(t_grafo *g, t_vertix *v){ //retorna true se todos os antecessores foram concluidos e false cc
+	int i, flag;
+	t_vertix v_aux;
+	for(i = 0; i < tamanhoLista(v->antecessores); i++){
+		item_ante = buscaListaInd(v->antecessores, i);
+		v_aux = buscaVertice(g, item_ante.ID);
+		if (v_aux.esta_concluida == false){
+			return false;
+		}		
+	}
+	return true;
+}
+
 man_ret manager(char* nome_arq, int tempo){
 	t_grafo* g;
 	TipoLista *l_concluidas, *l_atual; //l_concluidas-> lista de tarefas ja concluidas e l_atual-> lista de tarefas ja iniciadas mas nao concluidas
 	t_vertix* v, v_sucessor;
-	t_item item_add, item_atual;
-	Celula* cel_atual, cel_sucessor, cel_ante;
-	int i,j;
+	t_item item_add, item_suc, item_aux;
+	int i,j,k;
 	
 	l_concluidas = criaLista();
 	l_atual = criaLista();
@@ -195,16 +211,18 @@ man_ret manager(char* nome_arq, int tempo){
 	
 	g = leitura_arquivo(nome_arq);
 	
-	for(v = getOrigens(g); v != NULL; v = v->prox){
+	for(i = 0; i < tamanhoLista(getOrigens(g)); i++){
+		item_aux = buscaListaInd(getOrigens(g), i);
+		v = buscaVertice(g, item_aux.ID);
 		if(v->propriedades.inicio <= tempo){
 			if(v->propriedades.inicio + v->propriedades.duracao <= tempo){
 				item_add.ID = v->propriedades.ID;
-				item_add.peso = 0; //placeholder
+				item_add.peso = v->propriedades.duracao;
 				if(insereLista(l_concluidas, item_add) == LISTA_ERR){
 					return MAN_ERR;
 				} else {
 					v->propriedades.esta_concluida = true;
-				} //utilizar lista de arestas (buscar vertix na l_vertices quando preciso) ou criar lista de vertices?
+				}
 			} else {
 				if(insereLista(l_atual, item_add) == LISTA_ERR){
 					return MAN_ERR;
@@ -213,20 +231,33 @@ man_ret manager(char* nome_arq, int tempo){
 		}//if
 	}//for
 	
-	for(cel_atual = l_concluidas->inicio; cel_atual != NULL; cel_atual = cel_atual->prox){
-		v = buscaVertice(g, cel_atual->item.ID); //busca vertice no grafo com a ID igual a celula na lista de concluidos
+	for(i = 0; i < tamanhoLista(l_concluidas); i++){
+		item_aux = buscaListaInd(l_concluidas, i);
+		v = buscaVertice(g, item_aux.ID); //busca vertice no grafo com a ID igual a celula na lista de concluidos
 		if(v == NULL){
 			return MAN_ERR;
 		}
-		for(cel_sucessor = v->adjacentes->inicio; cel_sucessor != NULL; cel_sucessor  = cel_sucessor->prox){
-			item_atual = cel_sucessor->item;
-			v_sucessor = buscaVertice(g, item_atual.ID);
-			if(v == NULL){
+		for(j = 0; j < tamanhoLista(v->adjacentes); j++){
+			item_suc = buscaListaInd(v->adjacentes, i);
+			v_sucessor = buscaVertice(g, item_suc.ID)
+			if(v_sucessor == NULL){
 				return MAN_ERR;
 			}
-			for(cel_ante = v_sucessor->antecessores->inicio; cel_ante != NULL; cel_ante = cel_ante->prox){
-				
-			}//for antecessores			
+			if (verificaAntecessores(g, v_sucessor)){
+				if(v->propriedades.true_inicio <= tempo){
+					item_add.ID = v->propriedades.ID;
+					item_add.peso = v->propriedades.true_inicio + v->propriedades.duracao;
+					if(v->propriedades.true_inicio + v->propriedades.duracao <= tempo){
+						if(insereLista(l_concluidas, item_add) == LISTA_ERR){
+							return MAN_ERR;
+						}
+					} else {
+						if(insereLista(l_atual, item_add) == LISTA_ERR){
+							return MAN_ERR;
+						}
+					}
+				}
+			}	
 		}//for sucessores
 	}//for lista_concluidos
 }

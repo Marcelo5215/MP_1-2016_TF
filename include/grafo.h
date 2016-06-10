@@ -17,6 +17,7 @@
 		bool esta_concluida;
 		int inicio;          //tempo de comeco da tarefa
 		int duracao;         //tempo de duracao da tarefa
+		int true_inicio;
 	}t_prop;	
 
 	//Lista de adjacencia
