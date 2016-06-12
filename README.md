@@ -3,7 +3,7 @@ Trabalho Final de MP(Métodos de Programação)
 
 ***Alunos:***
 Marcelo de Araújo Lopes Júnior - 150016794 08 - 30min 05 - 3h 06 - 2h  
-Davi Roubbouni de Carvalho Freitas - 150033010  
+Davi Roubbouni de Carvalho Freitas - 150033010  07 - 1h30min 08 - 1h40min 11 - 1h30min
 Pedro Henrique Pires Egler - 150044615  
 
 ***Instruções:***
@@ -15,6 +15,8 @@ Pedro Henrique Pires Egler - 150044615
 
 ***TO DO:***
 ```
+    *** Ajustar o diretorio GUI, make do src n funciona pq as funcoes estao em outro diretorio ***
+    
 	-(OK)Criar o MakeFile
 
 	Lista (COMPLETO)
@@ -41,6 +43,7 @@ Pedro Henrique Pires Egler - 150044615
         -(OK)Teste de Remoção, lista e grafo;;
         -(OK)Teste de Caminhos, grafo;
     	-Completar os testes;
+        - Testes para a função manager
 
     Interface
     	-TUDO;
