@@ -27,6 +27,8 @@ Pedro Henrique Pires Egler - 150044615
 	-(OK)Funções de adicionar, retirar e editar tarefas;
         -TUDO (quase);
         - Verificar a insercao do peso na leitura
+        - * retirei o campo true_inicio do vertice do grafo pq to utilizando o peso da lista como o "verdadeiro inicio";
+        creio q n vai ferrar nada *
 
     Grafo
     	grafo.c
