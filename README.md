@@ -8,9 +8,10 @@ Pedro Henrique Pires Egler - 150044615
 
 ***Instruções:***
 ```
-	$ cd src
-	$ make && make clean
-	$ ./gVertix
+	$ sh script.sh
+	$ cd bin
+	$ ./gui      ou     ./test
+	*ATENÇÃO* No lugar do arquivo digite tambem o diretorio onde ele está
 ```
 
 ***TO DO:***

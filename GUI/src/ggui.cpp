@@ -26,10 +26,80 @@ gui_ret inicializaInterface(){
     	init_pair(2,COLOR_GREEN,COLOR_WHITE);     //Tarefas
     	init_pair(3,COLOR_RED,COLOR_WHITE);       //Contador
     	init_pair(4,COLOR_GREEN,COLOR_BLACK);     //MENU 
+		init_pair(5,COLOR_BLACK,COLOR_WHITE);     //Fundo Gerenciador
     	return GUI_OK;
 	}
 	else
 		return GUI_ERR;
+}
+
+gui_ret imprimeTarefasNcurses(t_grafo *g, int tempo){
+	if(!esta_inicializada){
+		return GUI_ERR;
+	}
+
+	clear();
+	bkgd(COLOR_PAIR(5));
+   	box(stdscr, ACS_VLINE, ACS_HLINE);
+	int linha = 1, coluna = 2;
+
+
+
+	mvprintw(linha, coluna, "Todas as Tarefas:");
+	mvprintw(linha, src_cols - 20, "TEMPO : %d", tempo);
+	linha++;
+
+	t_vertix* AUX;
+	for(AUX = getVertices(g); AUX != NULL ;AUX = AUX->prox){
+		attron(COLOR_PAIR(2));
+	   	mvprintw(linha,coluna, AUX->propriedades.nome);
+		attroff(COLOR_PAIR(2));
+		refresh();
+		updateSrcParams();
+		linha++;
+	}
+	refresh();
+	getch();
+
+	return GUI_OK;
+}
+
+gui_ret imprimeTarefasNcurses(t_grafo* g, TipoLista *l_atual, TipoLista *l_concluidas, int tempo){
+	if(!esta_inicializada){
+		return GUI_ERR;
+	}
+	clear();
+	bkgd(COLOR_PAIR(5));
+   	box(stdscr, ACS_VLINE, ACS_HLINE);
+	int linha = 1, coluna = 2, i;
+
+	mvprintw(linha, src_cols - 20, "TEMPO : %d", tempo);
+	linha++;
+
+	//t_vertix* AUX;
+	t_item temp;
+	//imprime as tarefas concluidas
+	for(i = 0; i < tamanhoLista(l_concluidas) ; i++){
+		temp = buscaListaInd(l_concluidas, i);
+		attron(COLOR_PAIR(2));
+		mvprintw(linha,coluna, "%d",temp.ID);
+		refresh();
+		attroff(COLOR_PAIR(2));
+		linha++;
+	}
+	//imprime as tarefas ainda não concluidas mas iniciadas
+	for(i = 0; i < tamanhoLista(l_atual) ; i++){
+		temp = buscaListaInd(l_atual, i);
+		attron(COLOR_PAIR(5));
+		mvprintw(linha,coluna, "%d", temp.ID);
+		refresh();
+		attroff(COLOR_PAIR(5));
+		linha++;
+	}
+	refresh();
+	getch();
+
+	return GUI_OK;
 }
 
 // gui_ret imprimeGrafoNcurses(t_grafo *g){
@@ -39,8 +109,8 @@ gui_ret inicializaInterface(){
 //Apresenta o menu ao usuário e retorna uma 
 //string com o nome do arquivo
 //==========================================
-char* imprimeMenuNcurses(){
-	static char saida[31];
+gui_ret imprimeMenuNcurses(char * nome_arq, int * tempo){
+	char temp[31];
 	int opt = 0;
 	//===================================
 	// 1. Criar Tarefas de um Arquivo
@@ -48,7 +118,7 @@ char* imprimeMenuNcurses(){
 	// 3. Sair
 	//===================================
 	if(!esta_inicializada){
-		return NULL;
+		return GUI_ERR;
 	}
 	bkgd(COLOR_PAIR(1));
 	attron(COLOR_PAIR(4));
@@ -59,8 +129,8 @@ char* imprimeMenuNcurses(){
    		box(stdscr, ACS_VLINE, ACS_HLINE);
 	    mvprintw(1,3,"MENU:");
 	    mvprintw(2,6,"1. Criar Tarefas de um Arquivo");
-	    mvprintw(3,6,"2. Iniciar Gerenciador");
-	    mvprintw(4,6,"3. Sair");
+	    mvprintw(3,6,"2. Definir tempo que deseja visualizar.");
+	    mvprintw(4,6,"3. Sair e iniciar Gerenciador");
 	    mvprintw(5,6,"Digite sua opção:");
 	    refresh(); 
 	    opt = getch(); 
@@ -71,14 +141,15 @@ char* imprimeMenuNcurses(){
    				box(stdscr, ACS_VLINE, ACS_HLINE);
 				mvprintw(1, 3, "Digite o nome do arquivo:");
 				refresh();
-				getstr(saida);
+				getstr(nome_arq);
 	            break;
 	        case 50:
 	        	clear();
    				box(stdscr, ACS_VLINE, ACS_HLINE);
-	        	mvprintw(1, 3, "OP 2.");
+	        	mvprintw(1, 3, "Digite o numero desejado:");
 				refresh();
-	    		opt = getch(); 
+	    		getstr(temp);
+	    		*tempo = atoi(temp);
 	            break;
 	        case 51: 
 	            break;
@@ -93,18 +164,21 @@ char* imprimeMenuNcurses(){
 	}
 
 	attroff(COLOR_PAIR(4));
-	return saida;
+	return GUI_OK;
 }
 
 void updateSrcParams(){
 	//"atualiza" os parametros da tela
-		getmaxyx(stdscr, src_rows, src_cols);
+	endwin();
+	initscr();
+	getmaxyx(stdscr, src_rows, src_cols);
 }
 
 gui_ret fechaInterface(){
 	if(!esta_inicializada){
 		return GUI_ERR;
 	}
+	clear();
 	endwin();
 	return GUI_OK;
 }

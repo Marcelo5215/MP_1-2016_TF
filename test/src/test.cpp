@@ -189,7 +189,7 @@ TEST(Graph_Tests, Tracks){
 }
 
 TEST(File_Tests, Reading){
-	t_grafo *g = leitura_arquivo((char*)"entrada.txt");
+	t_grafo *g = leitura_arquivo((char*)"../test/src/entrada.txt");
 	t_grafo *g0 = NULL;
 
 	//testa a consistencia da funcao para uma string valida
@@ -199,20 +199,20 @@ TEST(File_Tests, Reading){
 }
 
 TEST(File_Tests, Writing){
-	t_grafo *g = leitura_arquivo((char*)"entrada.txt");
+	t_grafo *g = leitura_arquivo((char*)"../test/src/entrada.txt");
 	t_grafo *g0 = NULL;
 
 	//testa a consistencia da funcao para um grafo vazio
-	ASSERT_EQ(MAN_ERR, escrita_arquivo(g0, (char*)"saida.txt"));
+	ASSERT_EQ(MAN_ERR, escrita_arquivo(g0, (char*)"../test/src/saida.txt"));
 	//testa a consistencia da funcao para uma string valida
 	ASSERT_EQ(MAN_ERR, escrita_arquivo(g,(char*)NULL));
 	//testa a funcao com casos validos
-	ASSERT_NE(MAN_ERR, escrita_arquivo(g, (char*)"saida.txt"));
+	ASSERT_NE(MAN_ERR, escrita_arquivo(g, (char*)"../test/src/saida.txt"));
 	EXPECT_EQ(GRAFO_OK, limpaGrafo(g));
 }
 
 TEST(Manager, Inserting){
-	t_grafo* tarefa = leitura_arquivo((char*)"entrada.txt");
+	t_grafo* tarefa = leitura_arquivo((char*)"../test/src/entrada.txt");
 	t_grafo *g0 = NULL;
 	ASSERT_NE(g0, tarefa);
 
@@ -221,13 +221,13 @@ TEST(Manager, Inserting){
 	EXPECT_EQ(MAN_ERR, insereTarefa(g0, (char*)"103 'quarta tarefa' 1 1 1 1 105"));  // inserindo tarefa em um grafo nulo
 	EXPECT_EQ(MAN_ERR, insereTarefa(tarefa, (char*)NULL));  // inserindo tarefa em uma string nula
 
-	ASSERT_NE(MAN_ERR, escrita_arquivo(tarefa, (char*)"saida.txt"));
+	ASSERT_NE(MAN_ERR, escrita_arquivo(tarefa, (char*)"../test/src/saida.txt"));
 
 	EXPECT_EQ(GRAFO_OK, limpaGrafo(tarefa));
 }
 
 TEST(Manager, Removing){
-	t_grafo* tarefa = leitura_arquivo((char*)"entrada.txt");
+	t_grafo* tarefa = leitura_arquivo((char*)"../test/src/entrada.txt");
 	t_grafo *g0 = NULL;
 	ASSERT_NE(g0, tarefa);
 
@@ -235,13 +235,13 @@ TEST(Manager, Removing){
 	EXPECT_EQ(MAN_ERR, retiraTarefa(tarefa, 100));  // retirando tarefa inexistente
 	EXPECT_EQ(MAN_ERR, retiraTarefa(g0, 101));  // inserindo tarefa em uma string nula
 
-	ASSERT_NE(MAN_ERR, escrita_arquivo(tarefa, (char*)"saida.txt"));
+	ASSERT_NE(MAN_ERR, escrita_arquivo(tarefa, (char*)"../test/src/saida.txt"));
 
 	EXPECT_EQ(GRAFO_OK, limpaGrafo(tarefa));
 }
 
 TEST(Manager, Editing){
-	t_grafo* tarefa = leitura_arquivo((char*)"entrada.txt");
+	t_grafo* tarefa = leitura_arquivo((char*)"../test/src/entrada.txt");
 	t_grafo *g0 = NULL;
 	ASSERT_NE(g0, tarefa);
 
@@ -251,21 +251,21 @@ TEST(Manager, Editing){
 	EXPECT_EQ(MAN_ERR, editaTarefa(tarefa, 112, (char*)"120 'vigesima tarefa' 20 0 8 0"));  // tentando modificar a tarefa para uma ja existente
 	
 
-	ASSERT_NE(MAN_ERR, escrita_arquivo(tarefa, (char*)"saida.txt"));
+	ASSERT_NE(MAN_ERR, escrita_arquivo(tarefa, (char*)"../test/src/saida.txt"));
 
 	EXPECT_EQ(GRAFO_OK, limpaGrafo(tarefa));
 }
 
 // TEST(Graph_Tests, Writing){
-// 	t_grafo* g = criaGrafoArq((char*)"entrada.txt");
+// 	t_grafo* g = criaGrafoArq((char*)"../test/src/entrada.txt");
 // 	t_grafo* test = NULL;
 // 	ASSERT_NE(test, g);
-// 	ASSERT_EQ(GRAFO_OK, imprimeGrafoArq(g, (char*)"saida.txt"));
+// 	ASSERT_EQ(GRAFO_OK, imprimeGrafoArq(g, (char*)"../test/src/saida.txt"));
 // 	EXPECT_EQ(GRAFO_OK , limpaGrafo(g));
 // }
 
 // TEST(Graph_Tests, Connected){
-// 	t_grafo* g = criaGrafoArq((char*)"entrada.txt");
+// 	t_grafo* g = criaGrafoArq((char*)"../test/src/entrada.txt");
 // 	t_grafo* test = NULL;
 // 	ASSERT_NE(test, g);
 // 	EXPECT_EQ(false, eConexo(g));
