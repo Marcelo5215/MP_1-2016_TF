@@ -185,9 +185,10 @@ man_ret startMan(){
     l_atual = criaLista();
     l_concluidas = criaLista();
 
-    g = leitura_arquivo((char*)"entrada.txt");
+    g = leitura_arquivo((char*)"../test/src/entrada.txt");
     //resetar a propriedade esta_concluida de todos os vertices
-    manager(g, tempo, l_atual, l_concluidas);
+    if(manager(g, tempo, l_atual, l_concluidas)==MAN_ERR)
+        return MAN_ERR;
 
     return MAN_OK;
 }
@@ -208,7 +209,10 @@ int verificaAntecessores(t_grafo *g, t_vertix *v){ //retorna true se todos os an
 }
 
 man_ret manager(t_grafo *g, int tempo, TipoLista *l_atual, TipoLista *l_concluidas){
-    if (l_concluidas == NULL || l_atual == NULL || g) return MAN_ERR;
+    if (l_concluidas == NULL || l_atual == NULL || g == NULL){
+        printf("oi1\n");
+        return MAN_ERR;
+    }
 
     //TipoLista *l_concluidas, *l_atual; //l_concluidas-> lista de tarefas ja concluidas e l_atual-> lista de tarefas ja iniciadas mas nao concluidas
     t_vertix* v, *v_sucessor;
@@ -242,7 +246,7 @@ man_ret manager(t_grafo *g, int tempo, TipoLista *l_atual, TipoLista *l_concluid
             return MAN_ERR; //assertiva de saida
         }
         for(j = 0; j < tamanhoLista(v->adjacentes); j++){ //trabalha com os sucessores de cada vertice dos concluidos
-            item_suc = buscaListaInd(v->adjacentes, i);
+            item_suc = buscaListaInd(v->adjacentes, j);
             v_sucessor = buscaVertice(g, item_suc.ID);
             if(v_sucessor == NULL){
                 return MAN_ERR; //assertiva de saida
@@ -253,22 +257,29 @@ man_ret manager(t_grafo *g, int tempo, TipoLista *l_atual, TipoLista *l_concluid
                     item_add.ID = v_sucessor->propriedades.ID;
                     item_add.peso = true_inicio + v_sucessor->propriedades.duracao;
                     if(true_inicio + v_sucessor->propriedades.duracao <= tempo){
-                        if(insereLista(l_concluidas, item_add) == LISTA_ERR){
-                            return MAN_ERR;
-                        } else{
-                            v_sucessor->propriedades.esta_concluida = true;
+                        if(buscaLista(l_concluidas, item_add.ID)==NULL){ //evitar a insercao de duplicados
+                            if(insereLista(l_concluidas, item_add) == LISTA_ERR){
+                                return MAN_ERR;
+                            } else{
+                                v_sucessor->propriedades.esta_concluida = true;
+                            }
                         }
-
                     } else {
-                        if(insereLista(l_atual, item_add) == LISTA_ERR){
-                            return MAN_ERR;
-                        } 
+                        if(buscaLista(l_atual, item_add.ID)==NULL){ //evitar a insercao de indices duplicados
+                            if(insereLista(l_atual, item_add) == LISTA_ERR){
+                                return MAN_ERR;
+                            } 
+                        } //if interno
                     } //else
                 } //if 2
             }   //if 1
         }//for sucessores
     }//for lista_concluidos
-
+    printf("Atuais: ");
+    imprimeLista(l_atual);
+    printf("\n");
+    printf("Concluidas: ");
+    imprimeLista(l_concluidas);
     return MAN_OK;
 }
 
@@ -291,8 +302,8 @@ int get_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca){
     int maior = v->propriedades.inicio, compara;
         for(i=0; i< tamanhoLista(v->antecessores); i++){
             item_atual = buscaListaInd(v->antecessores, i);
-            aux = buscaListaInd(lista_concluida, item_atual.ID);
-            compara = buscaListaInd(lista_concluida, aux.ID).peso; //pega o peso do antecessor do vertice tratado
+            aux = buscaListaInd(lista_concluida, get_indice(lista_concluida, item_atual.ID));
+            compara = buscaListaInd(lista_concluida, get_indice(lista_concluida,aux.ID)).peso; //pega o peso do antecessor do vertice tratado
             
             if(compara > maior){
                 maior = compara;

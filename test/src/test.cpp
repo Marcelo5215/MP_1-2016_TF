@@ -256,6 +256,11 @@ TEST(Manager, Editing){
 	EXPECT_EQ(GRAFO_OK, limpaGrafo(tarefa));
 }
 
+TEST(Manager, Man){
+		EXPECT_EQ(MAN_OK, startMan());
+
+}
+
 // TEST(Graph_Tests, Writing){
 // 	t_grafo* g = criaGrafoArq((char*)"../test/src/entrada.txt");
 // 	t_grafo* test = NULL;

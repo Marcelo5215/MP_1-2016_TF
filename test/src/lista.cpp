@@ -31,9 +31,10 @@ TipoLista* criaLista(){
 
 //insere um elemento a lista, levando em consideração uma célula cabeça.
 lista_ret insereLista(TipoLista *lista, t_item X){
-	if(lista == NULL){
+	if(lista == NULL){ //assertiva de entrada
 		return LISTA_ERR;
 	}
+	
 	lista->final->prox = (Celula*)malloc(sizeof(Celula));
 	lista->final->prox->anter = lista->final;
 	lista->final = lista->final->prox;

@@ -16,7 +16,6 @@ Pedro Henrique Pires Egler - 150044615
 
 ***TO DO:***
 ```
-    *** Ajustar o diretorio GUI, make do src n funciona pq as funcoes estao em outro diretorio ***
     
 	-(OK)Criar o MakeFile
 
