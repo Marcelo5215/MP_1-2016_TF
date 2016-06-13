@@ -27,5 +27,6 @@
 	int tamanhoLista(TipoLista* lista);
 	void imprimeLista(TipoLista* lista);
 	void imprimeLista_arq(TipoLista* lista, FILE *fp);
+	int get_indice(TipoLista *lista, int ID); //calcula o indice do ID na lista
 
 #endif

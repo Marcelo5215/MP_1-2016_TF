@@ -130,3 +130,17 @@ t_item buscaListaInd(TipoLista *lista, int ind){
 
 	return o;
 }
+
+int get_indice(TipoLista *lista, int ID){
+	int ind_desejado = 0;
+	Celula *AUX;
+	for(AUX = lista->inicio->prox; AUX != NULL ; AUX = AUX->prox){
+		if(AUX->item.ID == ID){
+			return ind_desejado;
+		}
+		else{
+		ind_desejado++;
+		}
+	}
+	return -1;
+}
