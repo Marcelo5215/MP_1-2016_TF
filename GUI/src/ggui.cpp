@@ -23,18 +23,18 @@ gui_ret inicializaInterface(){
 		start_color();
 		//definição dos pares
 		init_pair(1,COLOR_WHITE,COLOR_BLACK);     //Fundo
-    	init_pair(2,COLOR_GREEN,COLOR_WHITE);     //Tarefas
-    	init_pair(3,COLOR_RED,COLOR_WHITE);       //Contador
+    	init_pair(2,COLOR_GREEN,COLOR_WHITE);     //Tarefas concluidas
+    	init_pair(3,COLOR_RED,COLOR_WHITE);       //Tarefas nao começadas
     	init_pair(4,COLOR_GREEN,COLOR_BLACK);     //MENU 
-		init_pair(5,COLOR_BLACK,COLOR_WHITE);     //Fundo Gerenciador
+		init_pair(5,COLOR_BLACK,COLOR_WHITE);     //Fundo Gerenciador, contador
     	return GUI_OK;
 	}
 	else
 		return GUI_ERR;
 }
 
-gui_ret imprimeTarefasNcurses(t_grafo *g, int tempo){
-	if(!esta_inicializada){
+int imprimeTarefasNcurses(t_grafo *g){
+	if(!esta_inicializada || g == NULL){
 		return GUI_ERR;
 	}
 
@@ -42,29 +42,37 @@ gui_ret imprimeTarefasNcurses(t_grafo *g, int tempo){
 	bkgd(COLOR_PAIR(5));
    	box(stdscr, ACS_VLINE, ACS_HLINE);
 	int linha = 1, coluna = 2;
-
-
+	char op[11];
 
 	mvprintw(linha, coluna, "Todas as Tarefas:");
-	mvprintw(linha, src_cols - 20, "TEMPO : %d", tempo);
 	linha++;
 
 	t_vertix* AUX;
 	for(AUX = getVertices(g); AUX != NULL ;AUX = AUX->prox){
 		attron(COLOR_PAIR(2));
-	   	mvprintw(linha,coluna, AUX->propriedades.nome);
+	   	mvprintw(linha,coluna, "ID:%d %s Esta concluida: %d", AUX->propriedades.ID, 
+	   			AUX->propriedades.nome, AUX->propriedades.esta_concluida);
 		attroff(COLOR_PAIR(2));
 		refresh();
 		updateSrcParams();
 		linha++;
 	}
 	refresh();
-	getch();
+	attron(COLOR_PAIR(1));
+	mvprintw(linha+3,coluna, "Mais opções:     1 : Voltar");
+	mvprintw(linha+4,coluna+17, "2 : Visualizar todas as tarefas");
+	mvprintw(linha+5,coluna+17, "3 : Mais opções na fase 2, ex: editor de tarefas");
+	mvprintw(linha+6,coluna+17, "4 : Sair");
+	mvprintw(linha+7,coluna+17, "Digite sua opção:");
+	refresh();
+	getstr(op);
+	attroff(COLOR_PAIR(1));
 
-	return GUI_OK;
+
+	return atoi(op);
 }
 
-gui_ret imprimeTarefasNcurses(t_grafo* g, TipoLista *l_atual, TipoLista *l_concluidas, int tempo){
+int imprimeTarefasNcurses(t_grafo* g, TipoLista *l_atual, TipoLista *l_concluidas, int tempo){
 	if(!esta_inicializada){
 		return GUI_ERR;
 	}
@@ -72,6 +80,7 @@ gui_ret imprimeTarefasNcurses(t_grafo* g, TipoLista *l_atual, TipoLista *l_concl
 	bkgd(COLOR_PAIR(5));
    	box(stdscr, ACS_VLINE, ACS_HLINE);
 	int linha = 1, coluna = 2, i;
+	char op[11];
 
 	mvprintw(linha, src_cols - 20, "TEMPO : %d", tempo);
 	linha++;
@@ -101,18 +110,40 @@ gui_ret imprimeTarefasNcurses(t_grafo* g, TipoLista *l_atual, TipoLista *l_concl
 		attroff(COLOR_PAIR(5));
 		linha++;
 	}
-	refresh();
-	getch();
 
-	return GUI_OK;
+	mvprintw(linha, coluna, "Não Começadas: ");
+	linha++;
+	t_vertix* aux;
+	for (aux = getVertices(g) ; aux != NULL; aux = aux->prox){
+		if(buscaLista(l_atual, aux->propriedades.ID) != NULL || buscaLista(l_concluidas, aux->propriedades.ID) != NULL){
+			continue;
+		}
+		attron(COLOR_PAIR(3));
+		mvprintw(linha,coluna, "%d", aux->propriedades.ID);
+		linha++;
+		attroff(COLOR_PAIR(3));
+		refresh();
+	}
+
+	attron(COLOR_PAIR(1));
+	mvprintw(linha+3,coluna, "Mais opções:     1 : selecionar outro tempo");
+	mvprintw(linha+4,coluna+17, "2 : visualizar todas as tarefas");
+	mvprintw(linha+5,coluna+17, "3 : MAIS opções na fase 2, ex: editor de tarefas");
+	mvprintw(linha+6,coluna+17, "4 : Sair");
+	mvprintw(linha+7,coluna+17, "Digite sua opção:");
+	refresh();
+	getstr(op);
+	attroff(COLOR_PAIR(1));
+
+	return atoi(op);
 }
 
 // gui_ret imprimeGrafoNcurses(t_grafo *g){
 // }
 
 //==========================================
-//Apresenta o menu ao usuário e retorna uma 
-//string com o nome do arquivo
+//Apresenta o menu ao usuário e solicita nome do arquivo
+//e o tempo de inicio 
 //==========================================
 gui_ret imprimeMenuNcurses(char * nome_arq, int * tempo){
 	char temp[31];
@@ -172,6 +203,7 @@ gui_ret imprimeMenuNcurses(char * nome_arq, int * tempo){
 	return GUI_OK;
 }
 
+//
 void updateSrcParams(){
 	//"atualiza" os parametros da tela
 	endwin();
@@ -186,4 +218,29 @@ gui_ret fechaInterface(){
 	clear();
 	endwin();
 	return GUI_OK;
+}
+
+//informa de possiveis erros 
+int intERROR(){
+	clear();
+	char op[11];
+	updateSrcParams();
+	mvprintw(src_rows/4, src_cols/4, "OPCAO INVALIDA, OU TEMPORARIAMENTE NAO IMPLEMENTADA.");
+	mvprintw(src_rows/4 +1, src_cols/4, "Selecione outra : ");
+	refresh();
+	getstr(op);
+
+	return atoi(op);
+}
+
+//solicita um tempo 
+int getUserTempo(){
+	clear();
+	updateSrcParams();
+	char temp[30];
+	mvprintw(src_rows/4, 2, "Digite o tempo desejado: ");
+	refresh();
+	getstr(temp);
+
+	return atoi(temp);
 }

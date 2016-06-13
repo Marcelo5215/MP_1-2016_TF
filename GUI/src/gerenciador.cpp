@@ -20,7 +20,9 @@ t_grafo* leitura_arquivo(char *arq){
     FILE* fp = fopen(arq, "r");
 
     if(fp == NULL){
-        printf("Erro na abertura do arquivo!\n");
+        fechaInterface();
+        printf("%s Erro na abertura do arquivo!\n", arq);
+        exit(EXIT_FAILURE);
         return NULL;
     }
 
@@ -180,24 +182,48 @@ man_ret editaTarefa(t_grafo *g, int IDMod, char tarefaNova[]){
 man_ret startMan(){
     t_grafo *g;
     char nome_arq[101];
-    int tempo;
+    int tempo = 0, op = 1, flag = false;
     TipoLista *l_atual, *l_concluidas;
-    l_atual = criaLista();
-    l_concluidas = criaLista();
     inicializaInterface();
-
     imprimeMenuNcurses(nome_arq, &tempo);
-
     g = leitura_arquivo(nome_arq);
-    //resetar a propriedade esta_concluida de todos os vertices
-    manager(g, tempo, l_atual, l_concluidas);
-    imprimeTarefasNcurses(g, l_atual, l_concluidas, tempo);
-    imprimeTarefasNcurses(g, tempo);
-    
-    
+
+    while(op != 4){
+        l_atual = criaLista();
+        l_concluidas = criaLista();
+        switch(op){
+            case 1:
+                if(flag){
+                    tempo = getUserTempo();
+                    flag = false;
+                }
+                manager(g, tempo, l_atual, l_concluidas);
+                op = imprimeTarefasNcurses(g, l_atual, l_concluidas, tempo);
+                if(op == 1){
+                    flag = true;
+                }
+                break;
+            case 2:
+                manager(g, tempo, l_atual, l_concluidas);
+                op = imprimeTarefasNcurses(g);
+                break;
+            case 3:
+                op = intERROR();
+                break;
+            case 4:
+                break;
+            default:
+                op = intERROR();
+                break;
+        }
+        
+        limpaLista(l_atual);
+        limpaLista(l_concluidas);
+
+    }
+
+
     fechaInterface();
-    limpaLista(l_atual);
-    limpaLista(l_concluidas);
     limpaGrafo(g);
     return MAN_OK;
 }

@@ -16,8 +16,10 @@
 	void updateSrcParams();
 	gui_ret imprimeMenuNcurses(char* nome_arq, int *tempo);
 	gui_ret fechaInterface();
-	gui_ret imprimeTarefasNcurses(t_grafo *g, int tempo);
-	gui_ret imprimeTarefasNcurses(t_grafo* g, TipoLista *l_atual, TipoLista *l_concluidas, int tempo);
+	int imprimeTarefasNcurses(t_grafo *g);
+	int imprimeTarefasNcurses(t_grafo* g, TipoLista *l_atual, TipoLista *l_concluidas, int tempo);
+	int intERROR();
+	int getUserTempo();
 
 	
 
