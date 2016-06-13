@@ -350,14 +350,23 @@ void imprimeGrafo(t_grafo* g){
 }
 
 TipoLista* getOrigens(t_grafo *g){
+	if(g == NULL){ //assertiva de entrada
+		return NULL;
+	}
 	return g->origens;
 }
 
 t_vertix* getVertices(t_grafo* g){
+	if(g == NULL){ //assertiva de entrada
+		return NULL;
+	}
 	return g->vertices;
 }
 
 int getTempo(t_grafo *g){
+	if(g == NULL){ //assertiva de entrada
+		return -1;
+	}
 	return g->tempo_atual;
 }
 

@@ -79,6 +79,8 @@ gui_ret imprimeTarefasNcurses(t_grafo* g, TipoLista *l_atual, TipoLista *l_concl
 	//t_vertix* AUX;
 	t_item temp;
 	//imprime as tarefas concluidas
+	mvprintw(linha, coluna, "Concluidos: ");
+	linha++;
 	for(i = 0; i < tamanhoLista(l_concluidas) ; i++){
 		temp = buscaListaInd(l_concluidas, i);
 		attron(COLOR_PAIR(2));
@@ -87,7 +89,10 @@ gui_ret imprimeTarefasNcurses(t_grafo* g, TipoLista *l_atual, TipoLista *l_concl
 		attroff(COLOR_PAIR(2));
 		linha++;
 	}
+
 	//imprime as tarefas ainda não concluidas mas iniciadas
+	mvprintw(linha, coluna, "Em andamento: ");
+	linha++;
 	for(i = 0; i < tamanhoLista(l_atual) ; i++){
 		temp = buscaListaInd(l_atual, i);
 		attron(COLOR_PAIR(5));
