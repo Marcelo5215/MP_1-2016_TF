@@ -145,7 +145,7 @@ int imprimeTarefasNcurses(t_grafo* g, TipoLista *l_atual, TipoLista *l_concluida
 //Apresenta o menu ao usuário e solicita nome do arquivo
 //e o tempo de inicio 
 //==========================================
-gui_ret imprimeMenuNcurses(char * nome_arq, int * tempo){
+gui_ret imprimeMenuNcurses(char * nome_arq, char* nome_arq_saida,int * tempo){
 	char temp[31];
 	int opt = 0;
 	//===================================
@@ -159,15 +159,16 @@ gui_ret imprimeMenuNcurses(char * nome_arq, int * tempo){
 	bkgd(COLOR_PAIR(1));
 	attron(COLOR_PAIR(4));
 
-    while(opt != 51){
+    while(opt != 52){
 	    
 	    clear();
    		box(stdscr, ACS_VLINE, ACS_HLINE);
 	    mvprintw(1,3,"MENU:");
-	    mvprintw(2,6,"1. Criar Tarefas de um Arquivo");
-	    mvprintw(3,6,"2. Definir tempo que deseja visualizar.");
-	    mvprintw(4,6,"3. Sair e iniciar Gerenciador");
-	    mvprintw(5,6,"Digite sua opção:");
+	    mvprintw(3,6,"1. Criar Tarefas de um Arquivo");
+	    mvprintw(4,6,"2. Definir tempo que deseja visualizar.");
+	    mvprintw(5,6,"3. Nome do arquivo de saida.");
+	    mvprintw(6,6,"4. Sair e iniciar Gerenciador");
+	    mvprintw(7,6,"Digite sua opção:");
 	    refresh(); 
 	    opt = getch(); 
 
@@ -188,6 +189,13 @@ gui_ret imprimeMenuNcurses(char * nome_arq, int * tempo){
 	    		*tempo = atoi(temp);
 	            break;
 	        case 51: 
+	        	clear();
+   				box(stdscr, ACS_VLINE, ACS_HLINE);
+				mvprintw(1, 3, "Digite o nome do arquivo de saida:");
+				refresh();
+				getstr(nome_arq_saida);
+	            break;
+	        case 52: 
 	            break;
 	        default:
 				clear();

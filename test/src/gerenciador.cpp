@@ -179,7 +179,6 @@ man_ret editaTarefa(t_grafo *g, int IDMod, char tarefaNova[]){
 //inicia o gerenciador
 man_ret startMan(){
     t_grafo *g;
-    char nome_arq[31];
     int tempo = 8;
     TipoLista *l_atual, *l_concluidas;
     l_atual = criaLista();

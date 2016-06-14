@@ -181,12 +181,15 @@ man_ret editaTarefa(t_grafo *g, int IDMod, char tarefaNova[]){
 //inicia o gerenciador
 man_ret startMan(){
     t_grafo *g;
-    char nome_arq[101];
-    int tempo = 0, op = 1, flag = false;
+    char nome_arq[101], nome_arq_saida[101];
+    int tempo = -1, op = 1, flag = false;
     TipoLista *l_atual, *l_concluidas;
     inicializaInterface();
-    imprimeMenuNcurses(nome_arq, &tempo);
+    imprimeMenuNcurses(nome_arq,nome_arq_saida, &tempo);
     g = leitura_arquivo(nome_arq);
+
+    if(tempo == -1)
+        flag = true;
 
     while(op != 4){
         l_atual = criaLista();
@@ -222,10 +225,17 @@ man_ret startMan(){
 
     }
 
-
-    fechaInterface();
-    limpaGrafo(g);
-    return MAN_OK;
+    if(strlen(nome_arq_saida) < 2){
+        fechaInterface();
+        limpaGrafo(g);
+        return MAN_OK;
+    }
+    else{
+        escrita_arquivo(g, nome_arq_saida);
+        fechaInterface();
+        limpaGrafo(g);
+        return MAN_OK;
+    }
 }
 
 
