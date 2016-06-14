@@ -256,7 +256,30 @@ TEST(Manager, Editing){
 	EXPECT_EQ(GRAFO_OK, limpaGrafo(tarefa));
 }
 
-TEST(Manager, Man){
+TEST(Manager, First_Born){
+	t_grafo* g = leitura_arquivo((char*)"../test/src/entrada.txt");
+	t_grafo *g0 = NULL;
+
+	TipoLista *l_atual, *l_concluidas;
+    l_atual = criaLista();
+    l_concluidas = criaLista();
+
+
+	ASSERT_NE(g0, g);
+
+	EXPECT_EQ(MAN_ERR, manager(g0, 5, l_atual, l_concluidas)); //grafo null
+	EXPECT_EQ(MAN_ERR, manager(g, -1, l_atual, l_concluidas)); //tempo invalido
+	EXPECT_EQ(MAN_ERR, manager(g, 5, (TipoLista*)NULL, l_concluidas)); //primeira lista null
+	EXPECT_EQ(MAN_ERR, manager(g, 5, l_atual, (TipoLista*)NULL)); //segunda lista null
+	EXPECT_EQ(MAN_OK, manager(g, 0, l_atual, l_concluidas)); //a partir de 0 eh valido
+	limpaLista(l_atual); limpaLista(l_concluidas);
+	l_atual = criaLista();
+    l_concluidas = criaLista();
+	EXPECT_EQ(MAN_OK, manager(g, 12, l_atual, l_concluidas)); //tempo normal
+
+}
+
+TEST(Manager, Start_Man){
 		EXPECT_EQ(MAN_OK, startMan());
 
 }

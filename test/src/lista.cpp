@@ -22,6 +22,8 @@ struct TipoLista_P{
 TipoLista* criaLista(){
 	TipoLista *lista = (TipoLista*)malloc(sizeof(TipoLista));
 	lista->inicio =(Celula*)malloc(sizeof(Celula));
+	lista->inicio->prox = NULL;
+	lista->inicio->anter = NULL;
 	lista->final = lista->inicio;
 	lista->final->prox = NULL;
 	lista->final->anter = NULL;  
@@ -76,7 +78,7 @@ Celula* buscaLista(TipoLista* lista, int ID){
 	return NULL;
 }
 
-// limpa as celula cabeça que restará após a execução do programa, e pode ser usada pra limpa uma lista inteira
+// limpa as celula cabeça que restará após a execução do programa, e pode ser usada pra limpar uma lista inteira
 lista_ret limpaLista(TipoLista *lista){
 	if(lista == NULL){
 		return LISTA_ERR;

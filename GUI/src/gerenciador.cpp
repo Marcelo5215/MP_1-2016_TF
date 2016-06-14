@@ -244,8 +244,7 @@ int verificaAntecessores(t_grafo *g, t_vertix *v){ //retorna true se todos os an
 }
 
 man_ret manager(t_grafo *g, int tempo, TipoLista *l_atual, TipoLista *l_concluidas){
-    if (l_concluidas == NULL || l_atual == NULL || g == NULL){
-        printf("oi1\n");
+    if (l_concluidas == NULL || l_atual == NULL || g == NULL || tempo<0){
         return MAN_ERR;
     }
 
@@ -258,9 +257,9 @@ man_ret manager(t_grafo *g, int tempo, TipoLista *l_atual, TipoLista *l_concluid
         item_aux = buscaListaInd(getOrigens(g), i);
         v = buscaVertice(g, item_aux.ID);
         if(v->propriedades.inicio <= tempo){
+            item_add.ID = v->propriedades.ID;
+            item_add.peso = v->propriedades.duracao + v->propriedades.inicio;
             if(v->propriedades.inicio + v->propriedades.duracao <= tempo){
-                item_add.ID = v->propriedades.ID;
-                item_add.peso = v->propriedades.duracao + v->propriedades.inicio;
                 if(insereLista(l_concluidas, item_add) == LISTA_ERR){
                     return MAN_ERR;
                 } else {
