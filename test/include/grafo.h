@@ -54,6 +54,7 @@
 	grafo_ret insereArestaAnter(t_grafo* g, int IDOrigem, int IDDestino, int peso);   // Insere uma aresta de antecessores
 	grafo_ret retiraArestaAnter(t_grafo* g, int IDOrigem, int IDDestino);             // Retira a aresta de antecessores desejada
 	int menorCaminho(t_grafo *g, int IDOrigem, int IDDestino);
+	grafo_ret achaCaminhoMin(t_grafo *g, int IDDestino);
 
 	TipoLista* getOrigens(t_grafo *g);
 	t_vertix* getVertices(t_grafo* g);
