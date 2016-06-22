@@ -1,8 +1,8 @@
 CXX = g++
-CXXFLAGS = -I$(IDIR) -g -Wall
+CXXFLAGS = -I$(IDIR) -g -Wall -ftest-coverage -fprofile-arcs
 IDIR = ../include
 ODIR = ../obj
-LIBS = -lgtest -lgtest_main -lpthread
+LIBS = -lgtest -lgtest_main -lpthread --coverage -lgcov
 
 _DEPS = lista.h grafo.h gerenciador.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))

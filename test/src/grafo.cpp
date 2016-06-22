@@ -1,8 +1,8 @@
 #include "grafo.h"
 
-//-------------------------------------------------------------
-//Funções pertencenttes apenas ao .c (Apenas declarações)     |
-//-------------------------------------------------------------
+///-------------------------------------------------------------
+///Funções pertencenttes apenas ao .c (Apenas declarações)     |
+///-------------------------------------------------------------
 void limpaVertices(t_grafo* g);   //TODO
 t_vertix* buscaVertice(t_vertix* v, int ID);
 t_vertix* buscaVerticeMinimo(t_grafo* g);
@@ -17,11 +17,11 @@ struct Grafo_P{
 	int tempo_atual;
 };
 
-//----------------------------------------
-//Funcoes para a Utilizacao do Grafo     |
-//----------------------------------------
+///----------------------------------------
+///Funcoes para a Utilizacao do Grafo     |
+///----------------------------------------
 
-//cria um grafo
+///Criacao de um grafo vazio
 t_grafo* criaGrafo(){
 	t_grafo* graph = (t_grafo*)malloc(sizeof(t_grafo));
 	graph->vertices = NULL;
@@ -29,7 +29,8 @@ t_grafo* criaGrafo(){
 	return graph;
 }
 
-//desaloca o grafo
+///Funcao que desaloca os componentes do grafo dado.
+/// pGrafo g - 
 grafo_ret limpaGrafo(t_grafo* g){
 	//assertiva de entrada
 	if(g == NULL){
@@ -41,7 +42,10 @@ grafo_ret limpaGrafo(t_grafo* g){
 	return GRAFO_OK;
 }
 
-//insere uma origem
+///Essa funcao insere na origem de um grafo um vertice (ja existente)
+///t_grafo *g - Grafo no qual sera inserido o elemento; Deve ser diferente de NULL
+///int ID - Item que será inserido no grafo;
+//		   Deve ser existente no conjunto de vertices e não existente no conjunto de origens.
 grafo_ret insereOrigem(t_grafo* g, int ID){
 	if(g == NULL){
 		return GRAFO_ERR;
@@ -66,7 +70,10 @@ grafo_ret insereOrigem(t_grafo* g, int ID){
 	return GRAFO_OK;
 }
 
-//retira a origem desejada do grafo
+///Essa funcao retira um elemento do conjunto de origens de um grafo
+///t_grafo *g - Grafo do qual sera retirado o elemento das origens; Deve ser diferente de NULL.
+///int ID - Item que será retirado do conjunto de origens do grafo;
+//		   Deve existir no conjunto de origens do grafo.
 grafo_ret retiraOrigem(t_grafo* g, int ID){
 	//assertivas de entrada
 	if(g == NULL || estaVazia(g->origens)){
@@ -87,6 +94,9 @@ grafo_ret retiraOrigem(t_grafo* g, int ID){
 	return GRAFO_OK;
 }
 
+///Essa funcao cria um vertice com as propriedades passadas pelo programador.
+///t_grafo *g - Grafo no qual sera criado o vertice; Deve ser diferente de NULL.
+///t_prop v - Propriedades que serao inseridas no vertice criado.
 t_vertix* criaVertice(t_grafo* g, t_prop v){
 	t_vertix* vert = (t_vertix*)malloc(sizeof(t_vertix));
 	if(vert == NULL){
@@ -102,6 +112,9 @@ t_vertix* criaVertice(t_grafo* g, t_prop v){
 	return vert;
 }
 
+///Essa funcao insere um vertice com as propriedades passadas pelo programador no grafo
+///t_grafo *g - Grafo no qual sera inserido o vertice; Deve ser diferente de NULL.
+///t_prop v - Propriedades que serao inseridas no novo vertice do grafo.
 grafo_ret insereVertice(t_grafo* g, t_prop v){
 	//assertivas de entrada
 	if(g == NULL){
@@ -136,6 +149,9 @@ grafo_ret insereVertice(t_grafo* g, t_prop v){
 	}
 }
 
+///Essa funcao retira um vertice do grafo com o ID igual ao passado.
+///t_grafo *g - Grafo do qual será retirado o vertice; Deve ser diferente de NULL.
+///int ID - ID do vertice a ser retirado, que será utlizado para buscá-lo no grafo. Caso nao haja um vertice com tal ID, retornar-se-a uma condicao de erro.
 grafo_ret retiraVertice(t_grafo* g, int ID){
 	//assertivas de entrada
 	if(g == NULL){
@@ -174,6 +190,7 @@ grafo_ret retiraVertice(t_grafo* g, int ID){
 	}
 
 	limpaLista(AUX->adjacentes);
+	limpaLista(AUX->antecessores);
 	free(AUX);
 	//assertiva de saida
 	if(buscaVertice(g->vertices, ID) != NULL){
@@ -183,7 +200,9 @@ grafo_ret retiraVertice(t_grafo* g, int ID){
 	return GRAFO_OK;
 }
 
-//busca o vertice com determinado ID, funcao privada a esse modulo
+///Funcao que busca o vertice com determinado ID; E uma funcao restrita a esse modulo
+///p_vertix V - Ponteiro para o inicio da busca da lista. Deve ser diferente de NULL;
+///int ID - Inteiro com o indice do vertice a ser buscado. Caso nao seja encontrado um vertice com o ID correspondente, retorna-se NULL.
 t_vertix* buscaVertice(t_vertix* v, int ID){
 	if(v == NULL){
 		return NULL;
@@ -197,11 +216,24 @@ t_vertix* buscaVertice(t_vertix* v, int ID){
 	return AUX;
 }
 
-//busca o vertice com determinado ID 
+///Funcao que busca o vertice com determinado ID; 
+///pGrafo g - Grafo no qual sera realizada a busca. Caso seja NULL, retorna NULL; 
+///int ID - Inteiro com o indice do vertice a ser buscado. Caso nao seja encontrado um vertice com o ID correspondente, retorna-se NULL.
 t_vertix* buscaVertice(t_grafo *g, int ID){
+	if(g==NULL){
+		return NULL;
+	}
 	return buscaVertice(g->vertices, ID);
 }
 
+///Funcao que insere uma aresta de sucessores no grafo com as caracteristicas passadas por parametro.
+///pGrafo g - Grafo no qual sera realizada a insercao. Caso seja NULL, retorna-se erro.
+///int IDOrigem - Inteiro com o indice do vertice a ser colocado como origem. 
+//			     Caso nao seja encontrado um vertice existente no grafo com o ID correspondente, retorna-se erro.
+///int IDDestino - Inteiro com o indice do vertice a ser colocado como origem. 
+//				  Caso nao seja encontrado um vertice existente no grafo com o ID correspondente ou o vertice destino
+//				  já tenha sido inserido no conjunto de arestas, tambem retorna-se erro.
+///int peso - Inteiro com o peso a ser inserido na aresta. Deve ser maior ou igual a 0 (zero).
 grafo_ret insereAresta(t_grafo *g, int IDOrigem, int IDDestino, int peso){
 	//assertivas de entrada
 	if(g == NULL){
@@ -237,6 +269,14 @@ grafo_ret insereAresta(t_grafo *g, int IDOrigem, int IDDestino, int peso){
 	}
 }
 
+///Funcao que insere uma aresta de antecessores no grafo com as caracteristicas passadas por parametro.
+///pGrafo g - Grafo no qual sera realizada a insercao. Caso seja NULL, retorna-se erro.
+///int IDOrigem - Inteiro com o indice do vertice a ser colocado como origem. 
+//			     Caso nao seja encontrado um vertice existente no grafo com o ID correspondente, retorna-se erro.
+///int IDDestino - Inteiro com o indice do vertice a ser colocado como origem. 
+//				  Caso nao seja encontrado um vertice existente no grafo com o ID correspondente ou o vertice destino
+//				  já tenha sido inserido no conjunto de arestas, tambem retorna-se erro.
+///int peso - Inteiro com o peso a ser inserido na aresta. Deve ser maior ou igual a 0 (zero).
 grafo_ret insereArestaAnter(t_grafo *g, int IDOrigem, int IDDestino, int peso){
 	//assertivas de entrada
 	if(g == NULL){
@@ -272,6 +312,12 @@ grafo_ret insereArestaAnter(t_grafo *g, int IDOrigem, int IDDestino, int peso){
 	}
 }
 
+///Funcao que retira uma aresta de sucessores no grafo com as caracteristicas passadas por parametro.
+///pGrafo g - Grafo no qual sera realizada a remocao. Caso seja NULL, retorna-se erro.
+///int IDOrigem - Inteiro com o indice do vertice origem a ser buscado. 
+//				 Caso nao seja encontrado um vertice existente no grafo com o ID correspondente, retorna-se erro.
+///int IDDestino - Inteiro com o indice do vertice destino a ser buscado. 
+//				  Caso nao seja encontrado um vertice existente no grafo com o ID correspondente, tambem retorna-se erro.
 grafo_ret retiraAresta(t_grafo* g, int IDOrigem, int IDDestino){
 	//assertivas de entrada
 	if(g == NULL){
@@ -297,6 +343,12 @@ grafo_ret retiraAresta(t_grafo* g, int IDOrigem, int IDDestino){
 	return GRAFO_OK;
 }
 
+///Funcao que retira uma aresta de antecessores no grafo com as caracteristicas passadas por parametro.
+///pGrafo g - Grafo no qual sera realizada a remocao. Caso seja NULL, retorna-se erro.
+///int IDOrigem - Inteiro com o indice do vertice origem a ser buscado. 
+//				 Caso nao seja encontrado um vertice existente no grafo com o ID correspondente, retorna-se erro.
+///int IDDestino - Inteiro com o indice do vertice destino a ser buscado. 
+//				  Caso nao seja encontrado um vertice existente no grafo com o ID correspondente, tambem retorna-se erro.
 grafo_ret retiraArestaAnter(t_grafo* g, int IDOrigem, int IDDestino){
 	//assertivas de entrada
 	if(g == NULL){
@@ -322,6 +374,8 @@ grafo_ret retiraArestaAnter(t_grafo* g, int IDOrigem, int IDDestino){
 	return GRAFO_OK;
 }
 
+///Essa funcao realiza a liberacao dos vertices do grafo, a fim de evitar o vazamento de memoria do programa.
+/// pGrafo g - grafo que tera os vertices liberados.
 void limpaVertices(t_grafo* g){
 	t_vertix* AUX = NULL;
 	t_vertix* AUXa;
@@ -330,13 +384,20 @@ void limpaVertices(t_grafo* g){
 			free(AUX);
 		}
 		limpaLista(AUXa->adjacentes);
+		limpaLista(AUXa->antecessores);
 		AUX = AUXa;
 	}
 	//na ultima iteracao o penultimo elemento AUX nao foi desalocado pois o looping sera terminado antes disso
 	free(AUX);
 }
 
+///Funcao que imprime os indices dos vertices do grafo, assim como os indices de suas arestas
+/// pGrafo - Grafo que tera seus elementos impressos; Caso seja NULL, a funcao termina antes de comecar a busca.
+
 void imprimeGrafo(t_grafo* g){
+	if(g==NULL){
+		return;
+	}
 	t_vertix* AUX;
 	for(AUX = g->vertices ; AUX != NULL; AUX = AUX->prox){
 		printf("%d  -> ", AUX->propriedades.ID);
@@ -349,18 +410,35 @@ void imprimeGrafo(t_grafo* g){
 		printf("\n");
 }
 
+///Funcao de encapsulamento para obter as origens do grafo.
+/// pGrafo g - Retorna NULL caso seja NULL.
 TipoLista* getOrigens(t_grafo *g){
+	if(g==NULL){
+		return NULL;
+	}
 	return g->origens;
 }
-
+///Funcao de encapsulamento para obter os vertices do grafo.
+/// pGrafo g - Retorna NULL caso seja NULL.
 t_vertix* getVertices(t_grafo* g){
+	if(g==NULL){
+		return NULL;
+	}
 	return g->vertices;
 }
 
+///Funcao de encapsulamento para obter o tempo atual do grafo.
+/// pGrafo g - Caso seja NULL, retorna o valor -1.
 int getTempo(t_grafo *g){
+	if(g==NULL){
+		return -1;
+	}
 	return g->tempo_atual;
 }
 
+///Funcao que altera o tempo atual do grafo.
+/// pGrafo g - Caso seja NULL, retorna o valor de erro.
+/// int tempo - Inteiro que sera inserido como o tempo atual do grafo. Caso seja menor que 0, retorna-se erro.
 grafo_ret setTempo(t_grafo *g, int tempo){
 	if(g == NULL){
 		return GRAFO_ERR;
@@ -374,10 +452,27 @@ grafo_ret setTempo(t_grafo *g, int tempo){
 	return GRAFO_OK;
 }
 
-//--------------------------------
-//Funcoes para utilizar Djikstra |
-//--------------------------------
+//define as tarefas como não concluidas
+grafo_ret zeraGrafo(t_grafo *g){
+	if (g ==NULL){
+		return GRAFO_ERR;
+	}
 
+	t_vertix* AUX;
+	for (AUX = getVertices(g); AUX != NULL; AUX = AUX->prox){
+		AUX->propriedades.esta_concluida =  false;
+	}
+
+	return GRAFO_OK;
+}
+
+///--------------------------------
+///Funcoes para utilizar Djikstra |
+///--------------------------------
+
+///Funcao principal do Djikstra, a qual realiza o algoritmo em si
+/// pGrafo g - Ponteiro para o grafo no qual sera realizado o algoritmo. Retorna-se erro caso seja NULL.
+/// int IDInicial - E um inteiro que contem o ID do vertice no qual o processo sera iniciado.
 grafo_ret Dijkstra(t_grafo* g, int IDInicial){
 	if(g == NULL){
 		return GRAFO_ERR;
@@ -405,6 +500,8 @@ grafo_ret Dijkstra(t_grafo* g, int IDInicial){
 	return GRAFO_OK;
 }
 
+///Essa funcao realiza a visita do vertice de valor do caminho minimo atual no grafo.
+/// pGrafo g - Ponteiro para o grafo no qual sera ocorrido essa busca.
 t_vertix* buscaVerticeMinimo(t_grafo* g){
 	t_vertix* AUX, *MIN = NULL;
 	int min = (int)INFINITY;
@@ -423,6 +520,10 @@ t_vertix* buscaVerticeMinimo(t_grafo* g){
 	return MIN;
 }
 
+///Essa funcao compara se o caminho ate um vertice de interesse e menor do que o caminho vertice atual.
+/// pGrafo g - Ponteiro para o grafo no qual ocorrera a comparacao
+/// pVertix u - Vertice atual que sera comparado
+/// pVertix v - Vertice de interesse que sera comparado com o atual
 void Relax(t_grafo* g, t_vertix* u, t_vertix* v){
 	if(v->caminho > u->caminho + peso(g, u->propriedades.ID, v->propriedades.ID)){
 		v->caminho = u->caminho + peso(g, u->propriedades.ID, v->propriedades.ID);
@@ -430,6 +531,10 @@ void Relax(t_grafo* g, t_vertix* u, t_vertix* v){
 	}
 }
 
+///A funcao peso retorna o peso da aresta entre o vertice origem e o vertice destino
+///pGrafo g - Ponteiro para o grafo no qual ocorrera a busca
+///int IDOrigem - ID do vertice origem da aresta buscada
+///int IDDestino - ID do vertice destino da aresta buscada
 int peso(t_grafo *g, int IDOrigem, int IDDestino){
 	t_vertix* AUX;
 	t_item interesse;
@@ -444,6 +549,10 @@ int peso(t_grafo *g, int IDOrigem, int IDDestino){
 	return -1;	
 }
 
+///Essa funcao retorna o menor caminho para chegar ao vertice de destino
+///pGrafo g - Ponteiro para o grafo no qual ocorrera a busca. Caso seja NULL, retorna-se -1.
+///int IDOrigem - ID do vertice origem da aresta buscada. Caso nao exista no grafo, retorna-se -1.
+///int IDDestino - ID do vertice destino da aresta buscada, onde ocorrera a obtencao do caminho. Caso nao exista no grafo, retorna-se -1.
 int menorCaminho(t_grafo *g, int IDOrigem, int IDDestino){
 	//assertivas de entrada
 	if(g == NULL){
@@ -473,10 +582,37 @@ int menorCaminho(t_grafo *g, int IDOrigem, int IDDestino){
 	return(destino->caminho);
 }
 
+///Funcao que utiliza o maior caminho do vertice destino as origens para impressao na interface grafica
+/// t_grafo *g - Grafo onde ocorrera o preocesso de busca. Retorna-se erro caso seja NULL.
+/// int IDDestino - Inteiro que representa o indice do destino para a impressao do seu caminho. Caso seja
+//					uma origem, imprime-se apenas o próprio vertice. Retorna-se erro caso nao pertenca ao
+//					grafo.
 grafo_ret achaCaminhoMin(t_grafo* g, int IDDestino){
+<<<<<<< HEAD
 	
 	for(i = 0; i < tamanhoLista)
 	t_vertix* destino = buscaVertice(g->vertices, IDDestino);
+=======
+	if(g==NULL){
+		return GRAFO_ERR;
+	}
+	if(buscaVertice(g, IDDestino)==NULL){
+		return GRAFO_ERR;
+	}
+	int IDOrigem = 0, max = 0, IDOrigemMax = 0, caminho = 0;
+	t_vertix *v;
+	t_item item_aux;
+
+	for(int i = 0; i < tamanhoLista(getOrigens(g)) ; i++){
+		IDOrigem = buscaListaInd(getOrigens(g), i).ID;
+		max = -2;
+        caminho = menorCaminho(g, IDOrigem, IDDestino);
+        if(caminho > max && caminho != -1){
+			max = caminho;
+			IDOrigemMax = IDOrigem;
+		}
+	}
+>>>>>>> 53a89389dd7d7ec31625842ba48c3258654682b1
 	
 	
 	return GRAFO_OK;

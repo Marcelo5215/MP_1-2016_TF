@@ -1,8 +1,8 @@
 #include "lista.h"
 
-//----------------------------------------
-//Estruturas da Lista                    |
-//----------------------------------------
+///----------------------------------------
+///Estruturas da Lista                    |
+///----------------------------------------
 
 struct Celula_P{
 	Celula* anter;
@@ -14,12 +14,12 @@ struct TipoLista_P{
 	Celula* inicio, *final;
 };
 
-//----------------------------------------
-//FUNCOES PARA A UTILIZACAO DA LISTA     |
-//----------------------------------------
+///----------------------------------------
+///FUNCOES PARA A UTILIZACAO DA LISTA     |
+///----------------------------------------
 
-//Cria uma lista duplamente encadeada vazia
-//Nao recebe parametros
+///Cria uma lista duplamente encadeada vazia
+///Nao recebe parametros
 TipoLista* criaLista(){
 	TipoLista *lista = (TipoLista*)malloc(sizeof(TipoLista));
 	lista->inicio =(Celula*)malloc(sizeof(Celula));
@@ -32,10 +32,10 @@ TipoLista* criaLista(){
 	return lista; 
 }
 
-//insere um elemento a lista, levando em consideração uma célula cabeça.
-//Parametros:
-//X = item a ser inserido 
-//lista = ponteiro pra lista a ser inserido o item
+///insere um elemento a lista, levando em consideração uma célula cabeça.
+///Parametros:
+///X = item a ser inserido 
+///lista = ponteiro pra lista a ser inserido o item
 lista_ret insereLista(TipoLista *lista, t_item X){
 	if(lista == NULL){ //assertiva de entrada
 		return LISTA_ERR;
@@ -49,10 +49,10 @@ lista_ret insereLista(TipoLista *lista, t_item X){
 	return LISTA_OK;
 }
 
-//retira um elemento da lista a partir de um ponteiro indicando o elemento a ser retirado
-//Parametros:
-//AUX = ponteiro da celula a ser retirada
-//lista = ponteiro pra lista de onde a celula sera retirada
+///retira um elemento da lista a partir de um ponteiro indicando o elemento a ser retirado
+///Parametros:
+///AUX = ponteiro da celula a ser retirada
+///lista = ponteiro pra lista de onde a celula sera retirada
 lista_ret retiraLista(TipoLista *lista, Celula *AUX){
 	if(AUX == NULL || lista == NULL){
 		return LISTA_ERR;
@@ -70,16 +70,16 @@ lista_ret retiraLista(TipoLista *lista, Celula *AUX){
 	return LISTA_OK;
 }
 
-//informa se a determinada lista esta vazia ou não
-//Parametros:
-//lista = ponteiro pra lista a ser analisada
+///informa se a determinada lista esta vazia ou não
+///Parametros:
+///lista = ponteiro pra lista a ser analisada
 int estaVazia(TipoLista *lista){ 
 	return (lista->inicio == lista->final);
 }
-//procura na lista o item desejado(X) e retorna um ponteiro para a Celula que contém ele
-//Parametros:
-//ID = numero de identificacao do item a ser buscado 
-//lista = ponteiro pra lista onde o item sera buscado
+///procura na lista o item desejado(X) e retorna um ponteiro para a Celula que contém ele
+///Parametros:
+///ID = numero de identificacao do item a ser buscado 
+///lista = ponteiro pra lista onde o item sera buscado
 Celula* buscaLista(TipoLista* lista, int ID){
 	Celula *AUX;
 	for(AUX = lista->inicio->prox; AUX != NULL ; AUX = AUX->prox){
@@ -90,9 +90,9 @@ Celula* buscaLista(TipoLista* lista, int ID){
 	return NULL;
 }
 
-// limpa as celula cabeça que restará após a execução do programa, e pode ser usada pra limpar uma lista inteira
-//Parametros:
-//lista = ponteiro pra lista a ser limpada
+/// limpa as celula cabeça que restará após a execução do programa, e pode ser usada pra limpar uma lista inteira
+///Parametros:
+///lista = ponteiro pra lista a ser limpada
 lista_ret limpaLista(TipoLista *lista){
 	if(lista == NULL){
 		return LISTA_ERR;
@@ -101,14 +101,15 @@ lista_ret limpaLista(TipoLista *lista){
 	for(AUX=lista->inicio->prox ; AUX!=NULL ; AUX=AUX->prox){
 		free(AUX->anter);
 	}
+	free(AUX);
 	free(lista->final);
 	free(lista);
 	return LISTA_OK;
 }
 
-//retorna a quantidade de elementos na lista
-//Parametros:
-//lista = ponteiro pra lista a ser analisada
+///retorna a quantidade de elementos na lista
+///Parametros:
+///lista = ponteiro pra lista a ser analisada
 int tamanhoLista(TipoLista* lista){
 	int tam = 0;
 	Celula *AUX;
@@ -118,8 +119,8 @@ int tamanhoLista(TipoLista* lista){
 	return tam;
 }
 
-//imprime elemento a elemento da lista no terminal
-//Parametros:
+///imprime elemento a elemento da lista no terminal
+///Parametros:
 //lista = ponteiro pra lista a ser impressa
 void imprimeLista(TipoLista* lista){
 	Celula *AUX;
@@ -128,10 +129,10 @@ void imprimeLista(TipoLista* lista){
 	}
 }
 
-//imprime elemento a elemento da lista em um arquivo
-//Parametros:
-//lista = ponteiro pra lista a ser impressa
-//fp = ponteiro para o arquivo onde a lista sera impressa
+///imprime elemento a elemento da lista em um arquivo
+///Parametros:
+///lista = ponteiro pra lista a ser impressa
+///fp = ponteiro para o arquivo onde a lista sera impressa
 void imprimeLista_arq(TipoLista* lista, FILE *fp){
 	Celula *AUX;
 	for(AUX = lista->inicio->prox; AUX != NULL ; AUX = AUX->prox){
@@ -139,10 +140,10 @@ void imprimeLista_arq(TipoLista* lista, FILE *fp){
 	}
 }
 
-//busca elemento pela posicao na lista
-//Parametros:
-//lista = ponteiro pra lista onde o elemento sera buscado
-//ind = posicao do elemento
+///busca elemento pela posicao na lista
+///Parametros:
+///lista = ponteiro pra lista onde o elemento sera buscado
+///ind = posicao do elemento
 t_item buscaListaInd(TipoLista *lista, int ind){
 	if(lista == NULL || ind > tamanhoLista(lista)){
 		printf("ERRO\n");
@@ -161,10 +162,10 @@ t_item buscaListaInd(TipoLista *lista, int ind){
 	return o;
 }
 
-//retorna indice de um elemento fornecido na lista
-//Parametros:
-//lista = ponteiro pra lista onde o elemento sera buscado
-//ID = ID do item a ser buscado na lista
+///retorna indice de um elemento fornecido na lista
+///Parametros:
+///lista = ponteiro pra lista onde o elemento sera buscado
+///ID = ID do item a ser buscado na lista
 int get_indice(TipoLista *lista, int ID){
 	int ind_desejado = 0;
 	Celula *AUX;

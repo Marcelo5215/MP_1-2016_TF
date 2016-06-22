@@ -1,18 +1,14 @@
 #include "gerenciador.h"
 
-//TODO
-    //VER PESO
-    //peso sera a duracao do vertice anterior (prerequisito)
-
-//TODO
 
 int get_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca);
 
-//----------------------------------------
-//Funcoes para manipulacao com arquivos  |
-//----------------------------------------
+///----------------------------------------
+///Funcoes para manipulacao com arquivos  |
+///----------------------------------------
 
-//cria um grafo a partir do arquivo passado
+///Funcao que cria um grafo a partir do arquivo passado
+/// char *arq - String contendo o nome do arquivo a ser lido. Caso seja NULL, a funcao retorna NULL.
 t_grafo* leitura_arquivo(char *arq){
     if (arq == NULL) //assertiva para manter a consistencia do grafo a ser criado
         return NULL;
@@ -66,7 +62,9 @@ t_grafo* leitura_arquivo(char *arq){
 }
 
 
-//escreve o grafo desejado no arquivo passado por parametro
+///Escreve o grafo desejado no arquivo passado por parametro
+/// t_grafo *g - Grafo a ser escrito no arquivo. Caso seja NULL, retorna-se erro.
+/// char *arq - Nome do arquivo no qual o grafo sera escrito. Caso seja NULL, retorna-se erro.
 man_ret escrita_arquivo(t_grafo *g, char *arq){
     //assertivas de entrada
     if(arq == NULL || g == NULL)
@@ -94,10 +92,14 @@ man_ret escrita_arquivo(t_grafo *g, char *arq){
     return MAN_OK;
 }
 
-//----------------------------------------
-//Funcoes para manipulacao de tarefas    |
-//----------------------------------------
+///----------------------------------------
+///Funcoes para manipulacao de tarefas    |
+///----------------------------------------
 
+/// Essa funcao insere uma tarefa no grafo passado por parametro (utilizada pela interface grafica).
+/// t_grafo *g - Grafo no qual a tarefa sera inserida. Caso seja NULL, retorna-se erro.
+/// char *tarefa - String contendo todas as caracteristicas da tarefas. Esses dados serao lidos
+///                pela funcao para a insercao correta no grafo. Caso seja NULL, retorna-se erro.
 man_ret insereTarefa(t_grafo *g, char* tarefa){
     if(g == NULL || tarefa == NULL){
         return MAN_ERR;
@@ -154,6 +156,9 @@ man_ret insereTarefa(t_grafo *g, char* tarefa){
     return MAN_OK;
 }
 
+///Funcao que retira uma tarefa do grafo (utilizada pela interface grafica) pelo ID do vertice.
+/// t_grafo *g - Grafo no qual ocorrera a remocao. Caso seja igual a NULL, retorna-se erro.
+/// int ID - ID da tarefa a ser retirada. Caso nao pertenca ao grafo dado, retorna-se erro.
 man_ret retiraTarefa(t_grafo *g, int ID){
     if(retiraVertice(g, ID) != GRAFO_OK){
         return MAN_ERR;
@@ -162,6 +167,11 @@ man_ret retiraTarefa(t_grafo *g, int ID){
     return MAN_OK;
 }
 
+///Funcao que permite a edicao de tarefas no grafo
+///t_grafo *g - Grafo no qual ocorrera a atualizcao. Caso seja igual a NULL, retorna-se erro.
+/// int IDMod - Inteiro contendo o indice da tarefa a ser editada. 
+/// char *tarefaNova - String contendo todos os dados da tarefa nova, a ser interpretados corretamente
+///                    pela funcao insereTarefa.
 man_ret editaTarefa(t_grafo *g, int IDMod, char tarefaNova[]){
     if(insereTarefa(g, tarefaNova) != MAN_OK){
         return MAN_ERR;
@@ -173,10 +183,13 @@ man_ret editaTarefa(t_grafo *g, int IDMod, char tarefaNova[]){
     return MAN_OK;
 }
 
-//----------------------------------------
-//Funcoes de interface                   |
-//----------------------------------------
-//inicia o gerenciador
+///----------------------------------------
+///Funcoes de interface                   |
+///----------------------------------------
+
+///Funcao que chama todas as funcoes usadas com o a interface grafica, sendo assim a "ponte",
+//ou o elemento de interface, entre o codigo elaborado e a interface grafica.
+///Nao recebe parametros
 man_ret startMan(){
     t_grafo *g;
     int tempo = 8;
@@ -189,11 +202,19 @@ man_ret startMan(){
     if(manager(g, tempo, l_atual, l_concluidas)==MAN_ERR)
         return MAN_ERR;
 
+    limpaLista(l_atual);
+    limpaLista(l_concluidas);
+    limpaGrafo(g);
     return MAN_OK;
 }
 
-
-int verificaAntecessores(t_grafo *g, t_vertix *v){ //retorna true se todos os antecessores foram concluidos e false cc
+/// Funcao que retorna o tipo booleano true se todos os antecessores ja tiverem sido concluidos. Caso contrario, retorna-se false
+/// t_grafo *g - Grafo no qual ocorrera a busca. Deve ser diferente de NULL, caso contrario retorna-se false.
+/// t_vertix *v - Vertice no qual sera verificado os antecessores. Deve ser diferente de NULL.
+int verificaAntecessores(t_grafo *g, t_vertix *v){ 
+    if(g==NULL || v == NULL){
+        return false; 
+    }
     int i;
     t_vertix *v_aux;
     t_item item_ante;
@@ -207,6 +228,11 @@ int verificaAntecessores(t_grafo *g, t_vertix *v){ //retorna true se todos os an
     return true;
 }
 
+///A funcao manager calcula, de acordo com o tempo, todas as tarefas ja concluidas e em andamento do grafo
+/// t_grafo *g - Grafo no qual serao executadas as operacoes. Deve ser diferente de NULL.
+/// int tempo - Inteiro que indica o tempo que se quer verificar o estado das tarefas. Deve ser maior que 0.
+/// TipoLista *l_atual - Lista que contem todas as tarefas em andamento. Deve ser diferente de NULL.
+/// TipoLista *l_concluidas - Lista que contem todas as tarefas concluidas no tempo passado. Deve ser diferente de NULL.
 man_ret manager(t_grafo *g, int tempo, TipoLista *l_atual, TipoLista *l_concluidas){
     if (l_concluidas == NULL || l_atual == NULL || g == NULL || tempo < 0){
         return MAN_ERR;
@@ -283,9 +309,13 @@ man_ret manager(t_grafo *g, int tempo, TipoLista *l_atual, TipoLista *l_concluid
     return MAN_OK;
 }
 
-//funcao que retorna o maior peso dos antecessores do vertice passado por parametro
+///Funcao que retorna o maior peso dos antecessores do vertice passado por parametro.
+/// t_grafo *g - Grafo no qual serao executadas as operacoes. Deve ser diferente de NULL.
+/// TipoLista *lista_concluida - Lista de tarefas concluidas para verificar a conclusao dos antecessores. Deve ser diferente de NULL.
+/// int ID_busca - Inteiro com o indice do vertice que tera o maior peso buscado. O indice deve corresponder
+//                 a um vertice pertencente ao grafo.
 int get_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca){
-    if(lista_concluida == NULL){ //assertiva de entrada
+    if(lista_concluida == NULL || g == NULL){ //assertiva de entrada
         return 0;
     }
     t_vertix *v = buscaVertice(g, ID_busca);
@@ -299,7 +329,9 @@ int get_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca){
     
     int i=0;
     t_item item_atual, aux;
-    int maior = v->propriedades.inicio, compara;
+    int maior = 0, compara = 0;
+
+        maior = v->propriedades.inicio;
         for(i=0; i< tamanhoLista(v->antecessores); i++){
             item_atual = buscaListaInd(v->antecessores, i);
             aux = buscaListaInd(lista_concluida, get_indice(lista_concluida, item_atual.ID));

@@ -276,11 +276,32 @@ TEST(Manager, First_Born){
 	l_atual = criaLista();
     l_concluidas = criaLista();
 	EXPECT_EQ(MAN_OK, manager(g, 12, l_atual, l_concluidas)); //tempo normal
+	limpaLista(l_atual); limpaLista(l_concluidas);
+	EXPECT_EQ(GRAFO_OK, limpaGrafo(g));
 
 }
 
 TEST(Manager, Start_Man){
 		EXPECT_EQ(MAN_OK, startMan());
+
+}
+
+TEST(Manager, Peso){
+	t_grafo* g = leitura_arquivo((char*)"../test/src/entrada.txt");
+	t_grafo *g0 = NULL;
+
+	TipoLista *lista_concluida;
+    lista_concluida = criaLista();
+    ASSERT_NE(g0, g);
+	EXPECT_EQ(0, get_maior_peso(g0, lista_concluida, 105));
+	EXPECT_EQ(0, get_maior_peso(g, (TipoLista*)NULL, 105));
+	EXPECT_EQ(0, get_maior_peso(g, lista_concluida, 109));
+	EXPECT_EQ(0, get_maior_peso(g, lista_concluida, 100));
+	EXPECT_EQ(7, get_maior_peso(g, lista_concluida, 105));
+
+	EXPECT_EQ(LISTA_OK, limpaLista(lista_concluida));
+	EXPECT_EQ(GRAFO_OK, limpaGrafo(g));
+
 
 }
 

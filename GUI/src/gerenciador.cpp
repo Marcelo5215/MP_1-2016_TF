@@ -191,7 +191,7 @@ man_ret startMan(){
     if(tempo == -1)
         flag = true;
 
-    while(op != 4){
+    while(op != 99){
         l_atual = criaLista();
         l_concluidas = criaLista();
         switch(op){
@@ -214,6 +214,9 @@ man_ret startMan(){
                 op = intERROR();
                 break;
             case 4:
+
+                break;
+            case 99:
                 break;
             default:
                 op = intERROR();
@@ -350,7 +353,7 @@ int get_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca){
             }
         }
 
-        return maior;
+    return maior;
 }
 
     

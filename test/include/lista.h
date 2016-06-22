@@ -8,8 +8,8 @@
 	typedef struct TipoLista_P TipoLista;
 
 	typedef  struct t_item{
-		int ID, peso;    //peso e o peso da aresta
-	                     //Identificador de tarefas ID
+		int ID, peso;    ///peso e o peso da aresta
+	                     ///Identificador de tarefas ID
 	}t_item;
 
 	typedef enum{
@@ -27,6 +27,6 @@
 	int tamanhoLista(TipoLista* lista);
 	void imprimeLista(TipoLista* lista);
 	void imprimeLista_arq(TipoLista* lista, FILE *fp);
-	int get_indice(TipoLista *lista, int ID); //calcula o indice do ID na lista
+	int get_indice(TipoLista *lista, int ID); ///calcula o indice do ID na lista
 
 #endif

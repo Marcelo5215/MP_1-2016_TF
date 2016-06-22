@@ -57,5 +57,6 @@
 
 	TipoLista* getOrigens(t_grafo *g);
 	t_vertix* getVertices(t_grafo* g);
+	grafo_ret zeraGrafo(t_grafo *g);
 
 #endif

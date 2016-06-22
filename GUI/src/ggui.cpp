@@ -4,6 +4,7 @@
 //Funcoes pertencentes apenas somente ao .c |
 //-------------------------------------------
 void updateSrcParams();
+void editorInterface(t_grafo* g);
 
 bool esta_inicializada = false;
 int src_rows;
@@ -60,9 +61,7 @@ int imprimeTarefasNcurses(t_grafo *g){
 	refresh();
 	attron(COLOR_PAIR(1));
 	mvprintw(linha+3,coluna, "Mais opções:     1 : Voltar");
-	mvprintw(linha+4,coluna+17, "2 : Visualizar todas as tarefas");
-	mvprintw(linha+5,coluna+17, "3 : Mais opções na fase 2, ex: editor de tarefas");
-	mvprintw(linha+6,coluna+17, "4 : Sair");
+	mvprintw(linha+6,coluna+17, "99 : Sair");
 	mvprintw(linha+7,coluna+17, "Digite sua opção:");
 	refresh();
 	getstr(op);
@@ -128,12 +127,16 @@ int imprimeTarefasNcurses(t_grafo* g, TipoLista *l_atual, TipoLista *l_concluida
 	attron(COLOR_PAIR(1));
 	mvprintw(linha+3,coluna, "Mais opções:     1 : selecionar outro tempo");
 	mvprintw(linha+4,coluna+17, "2 : visualizar todas as tarefas");
-	mvprintw(linha+5,coluna+17, "3 : MAIS opções na fase 2, ex: editor de tarefas");
-	mvprintw(linha+6,coluna+17, "4 : Sair");
+	mvprintw(linha+5,coluna+17, "3 : Editar Tarefas");
+	mvprintw(linha+6,coluna+17, "99 : Sair");
 	mvprintw(linha+7,coluna+17, "Digite sua opção:");
 	refresh();
 	getstr(op);
 	attroff(COLOR_PAIR(1));
+
+	if(atoi(op) == 3){
+		editorInterface(g);
+	}
 
 	return atoi(op);
 }
@@ -146,7 +149,7 @@ int imprimeTarefasNcurses(t_grafo* g, TipoLista *l_atual, TipoLista *l_concluida
 //e o tempo de inicio 
 //==========================================
 gui_ret imprimeMenuNcurses(char * nome_arq, char* nome_arq_saida,int * tempo){
-	char temp[31];
+	char temp[31], op[10];
 	int opt = 0;
 	//===================================
 	// 1. Criar Tarefas de um Arquivo
@@ -167,20 +170,21 @@ gui_ret imprimeMenuNcurses(char * nome_arq, char* nome_arq_saida,int * tempo){
 	    mvprintw(3,6,"1. Criar Tarefas de um Arquivo");
 	    mvprintw(4,6,"2. Definir tempo que deseja visualizar.");
 	    mvprintw(5,6,"3. Nome do arquivo de saida.");
-	    mvprintw(6,6,"4. Sair e iniciar Gerenciador");
+	    mvprintw(6,6,"99. Sair e iniciar Gerenciador");
 	    mvprintw(7,6,"Digite sua opção:");
 	    refresh(); 
-	    opt = getch(); 
+	    getstr(op); 
+	    opt = atoi(op);
 
 	    switch (opt){
-	        case 49:
+	        case 1:
 	        	clear();
    				box(stdscr, ACS_VLINE, ACS_HLINE);
 				mvprintw(1, 3, "Digite o nome do arquivo:");
 				refresh();
 				getstr(nome_arq);
 	            break;
-	        case 50:
+	        case 2:
 	        	clear();
    				box(stdscr, ACS_VLINE, ACS_HLINE);
 	        	mvprintw(1, 3, "Digite o numero desejado:");
@@ -188,14 +192,14 @@ gui_ret imprimeMenuNcurses(char * nome_arq, char* nome_arq_saida,int * tempo){
 	    		getstr(temp);
 	    		*tempo = atoi(temp);
 	            break;
-	        case 51: 
+	        case 3: 
 	        	clear();
    				box(stdscr, ACS_VLINE, ACS_HLINE);
 				mvprintw(1, 3, "Digite o nome do arquivo de saida:");
 				refresh();
 				getstr(nome_arq_saida);
 	            break;
-	        case 52: 
+	        case 99: 
 	            break;
 	        default:
 				clear();
@@ -226,6 +230,11 @@ gui_ret fechaInterface(){
 	clear();
 	endwin();
 	return GUI_OK;
+}
+
+
+void editorInterface(t_grafo* g){
+
 }
 
 //informa de possiveis erros 
