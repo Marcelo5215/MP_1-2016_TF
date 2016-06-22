@@ -58,5 +58,6 @@
 	
 	TipoLista* getOrigens(t_grafo *g);	///< Funcao de encapsulamento para obter origens de um grafo
 	t_vertix* getVertices(t_grafo* g);	///< Funcao de encapsulamento para obter vertices de um grafo
+	grafo_ret zeraGrafo(t_grafo *g);
 
 #endif

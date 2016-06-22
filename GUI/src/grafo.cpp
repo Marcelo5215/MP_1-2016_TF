@@ -383,6 +383,20 @@ grafo_ret setTempo(t_grafo *g, int tempo){
 	return GRAFO_OK;
 }
 
+//define as tarefas como não concluidas
+grafo_ret zeraGrafo(t_grafo *g){
+	if (g ==NULL){
+		return GRAFO_ERR;
+	}
+
+	t_vertix* AUX;
+	for (AUX = getVertices(g); AUX != NULL; AUX = AUX->prox){
+		AUX->propriedades.esta_concluida =  false;
+	}
+
+	return GRAFO_OK;
+}
+
 //--------------------------------
 //Funcoes para utilizar Djikstra |
 //--------------------------------
