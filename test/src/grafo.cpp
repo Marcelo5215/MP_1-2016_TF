@@ -466,6 +466,8 @@ grafo_ret zeraGrafo(t_grafo *g){
 	return GRAFO_OK;
 }
 
+
+
 ///--------------------------------
 ///Funcoes para utilizar Djikstra |
 ///--------------------------------
@@ -580,40 +582,4 @@ int menorCaminho(t_grafo *g, int IDOrigem, int IDDestino){
 	}
 
 	return(destino->caminho);
-}
-
-///Funcao que utiliza o maior caminho do vertice destino as origens para impressao na interface grafica
-/// t_grafo *g - Grafo onde ocorrera o preocesso de busca. Retorna-se erro caso seja NULL.
-/// int IDDestino - Inteiro que representa o indice do destino para a impressao do seu caminho. Caso seja
-//					uma origem, imprime-se apenas o próprio vertice. Retorna-se erro caso nao pertenca ao
-//					grafo.
-grafo_ret achaCaminhoMin(t_grafo* g, int IDDestino){
-<<<<<<< HEAD
-	
-	for(i = 0; i < tamanhoLista)
-	t_vertix* destino = buscaVertice(g->vertices, IDDestino);
-=======
-	if(g==NULL){
-		return GRAFO_ERR;
-	}
-	if(buscaVertice(g, IDDestino)==NULL){
-		return GRAFO_ERR;
-	}
-	int IDOrigem = 0, max = 0, IDOrigemMax = 0, caminho = 0;
-	t_vertix *v;
-	t_item item_aux;
-
-	for(int i = 0; i < tamanhoLista(getOrigens(g)) ; i++){
-		IDOrigem = buscaListaInd(getOrigens(g), i).ID;
-		max = -2;
-        caminho = menorCaminho(g, IDOrigem, IDDestino);
-        if(caminho > max && caminho != -1){
-			max = caminho;
-			IDOrigemMax = IDOrigem;
-		}
-	}
->>>>>>> 53a89389dd7d7ec31625842ba48c3258654682b1
-	
-	
-	return GRAFO_OK;
 }
