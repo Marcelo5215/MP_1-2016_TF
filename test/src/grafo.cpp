@@ -475,23 +475,9 @@ int menorCaminho(t_grafo *g, int IDOrigem, int IDDestino){
 
 grafo_ret achaCaminhoMin(t_grafo* g, int IDDestino){
 	
-	for(int i = 0; i < tamanhoLista(getOrigens(g)) ; i++){
-		IDOrigem = buscaListaInd(getOrigens(g), i);
-		max = -2;
-        caminho = menorCaminho(g, IDOrigem, IDDestino);
-        if(caminho > max && caminho != -1){
-			max = caminho;
-			IDOrigemMax = IDOrigem;
-		}
-	}
+	for(i = 0; i < tamanhoLista)
+	t_vertix* destino = buscaVertice(g->vertices, IDDestino);
 	
-	if (max == -2){ //vertice eh uma origem
-		//Imprime o vertice sozinho
-	} else{
-		menorCaminho(g, IDOrigemMax, IDDestino);
-		v = buscaVertice(g, item_aux.ID);
-		//imprime a partir de v e caminhando com v->pai
-	}
 	
 	return GRAFO_OK;
 }
