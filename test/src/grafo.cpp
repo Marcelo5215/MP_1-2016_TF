@@ -190,6 +190,7 @@ grafo_ret retiraVertice(t_grafo* g, int ID){
 	}
 
 	limpaLista(AUX->adjacentes);
+	limpaLista(AUX->antecessores);
 	free(AUX);
 	//assertiva de saida
 	if(buscaVertice(g->vertices, ID) != NULL){
@@ -383,6 +384,7 @@ void limpaVertices(t_grafo* g){
 			free(AUX);
 		}
 		limpaLista(AUXa->adjacentes);
+		limpaLista(AUXa->antecessores);
 		AUX = AUXa;
 	}
 	//na ultima iteracao o penultimo elemento AUX nao foi desalocado pois o looping sera terminado antes disso

@@ -202,6 +202,9 @@ man_ret startMan(){
     if(manager(g, tempo, l_atual, l_concluidas)==MAN_ERR)
         return MAN_ERR;
 
+    limpaLista(l_atual);
+    limpaLista(l_concluidas);
+    limpaGrafo(g);
     return MAN_OK;
 }
 
@@ -326,7 +329,9 @@ int get_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca){
     
     int i=0;
     t_item item_atual, aux;
-    int maior = v->propriedades.inicio, compara;
+    int maior = 0, compara = 0;
+
+        maior = v->propriedades.inicio;
         for(i=0; i< tamanhoLista(v->antecessores); i++){
             item_atual = buscaListaInd(v->antecessores, i);
             aux = buscaListaInd(lista_concluida, get_indice(lista_concluida, item_atual.ID));

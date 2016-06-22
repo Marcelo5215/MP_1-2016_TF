@@ -101,6 +101,7 @@ lista_ret limpaLista(TipoLista *lista){
 	for(AUX=lista->inicio->prox ; AUX!=NULL ; AUX=AUX->prox){
 		free(AUX->anter);
 	}
+	free(AUX);
 	free(lista->final);
 	free(lista);
 	return LISTA_OK;
