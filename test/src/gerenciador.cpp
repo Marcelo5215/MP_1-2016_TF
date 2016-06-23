@@ -305,10 +305,7 @@ man_ret manager(t_grafo *g, int tempo, TipoLista *l_atual, TipoLista *l_concluid
             }   //if 1
         }//for sucessores
     }//for lista_concluidos
-    printf("Atuais: ");
-    printf("\n");
-    printf("Concluidas: ");
-    printf("\n");
+   
     return MAN_OK;
 }
 

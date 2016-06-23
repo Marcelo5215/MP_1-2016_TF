@@ -179,3 +179,21 @@ int get_indice(TipoLista *lista, int ID){
 	}
 	return -1;
 }
+
+///Edita o peso da celula especificada 
+///@param lista lista na qual o ID se encontra
+///@param ID indentificador da lista
+///@param peso peso a ser inserido
+lista_ret editaCelulaPeso(TipoLista *lista, int ID, int peso){
+	if(lista == NULL || peso < 0){
+		return LISTA_ERR;
+	}
+	Celula *AUX;
+
+	AUX = buscaLista(lista, ID);
+	if(AUX == NULL)
+		return LISTA_ERR;
+	AUX->item.peso = peso;
+
+	return LISTA_OK;
+}

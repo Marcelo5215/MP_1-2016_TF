@@ -22,6 +22,8 @@
 	char* getTarefa(t_vertix *v);
 	int verificaAntecessores(t_grafo *g, t_vertix *v); /// Verifica se todos os antecessores ja foram concluidos
 	int get_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca); ///Retorna o maior peso (tempo de termino) dos antecessores
-
+	man_ret achaCaminhoMin(t_grafo* g, int IDDestino);
+	t_item get_item_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca);
+	man_ret imprimeCaminho(t_grafo* g, int IDDestino);
 
 #endif

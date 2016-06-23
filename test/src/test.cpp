@@ -90,6 +90,36 @@ TEST(List_Tests, Removing){
 	EXPECT_EQ(LISTA_OK, limpaLista(lista));
 }
 
+TEST(List_Tests, Editing){
+	TipoLista* lista = criaLista();
+	TipoLista* null = NULL;
+	ASSERT_NE(null, lista);
+
+	//elemento auxiliar a ser inserido
+	t_item AUX;
+	AUX.ID = 1;
+	AUX.peso = 0;
+	EXPECT_EQ(LISTA_OK, insereLista(lista, AUX));
+	AUX.ID = 2;
+	EXPECT_EQ(LISTA_OK, insereLista(lista, AUX));
+	AUX.ID = 3;
+	EXPECT_EQ(LISTA_OK, insereLista(lista, AUX));
+
+	EXPECT_EQ(LISTA_OK, editaCelulaPeso(lista, 1, 9));
+	EXPECT_EQ( 9, buscaListaInd(lista, 0).peso);
+	EXPECT_EQ(LISTA_OK, editaCelulaPeso(lista, 2, 3));
+	EXPECT_EQ( 3, buscaListaInd(lista, 1).peso);
+	EXPECT_EQ(LISTA_OK, editaCelulaPeso(lista, 3, 4));
+	EXPECT_EQ( 4, buscaListaInd(lista, 2).peso);
+
+
+	EXPECT_EQ(LISTA_ERR, editaCelulaPeso(lista, 131, 0));
+	EXPECT_EQ(LISTA_ERR, editaCelulaPeso(lista, 131, -1));
+
+
+	EXPECT_EQ(LISTA_OK, limpaLista(lista));
+}
+
 void montaGrafoTeste(t_grafo* g);
 
 TEST(Graph_Tests, Creating){

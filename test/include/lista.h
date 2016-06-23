@@ -20,6 +20,7 @@
 	TipoLista* criaLista();
 	lista_ret insereLista(TipoLista *lista, t_item X);
 	lista_ret retiraLista(TipoLista *lista, Celula *AUX);
+	lista_ret editaCelulaPeso(TipoLista *lista, int ID, int peso);
 	int estaVazia(TipoLista *lista);
 	lista_ret limpaLista(TipoLista *lista);
 	Celula* buscaLista(TipoLista* lista, int ID);
