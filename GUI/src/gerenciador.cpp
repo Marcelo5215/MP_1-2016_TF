@@ -136,7 +136,6 @@ man_ret insereTarefa(t_grafo *g, char* tarefa){
     if(campo == NULL) return MAN_ERR;
     prop.duracao = atoi(campo);
 
-
     if(insereVertice(g, prop) != GRAFO_OK){
         return MAN_ERR; 
     }
@@ -146,8 +145,16 @@ man_ret insereTarefa(t_grafo *g, char* tarefa){
     if(campo == NULL) return MAN_ERR;
     pre = atoi(campo);
 
+    if(pre == 0){
+        insereOrigem(g, prop.ID);
+    }
+
+
     for(i = 0 ; i < pre ; i++){
         campo = strtok(NULL, " '");
+        if(campo == NULL){
+            return MAN_ERR;
+        }
         reqID = atoi(campo);
         insereAresta(g, reqID, prop.ID, 0);
         insereArestaAnter(g, prop.ID, reqID, 0);
@@ -194,6 +201,7 @@ man_ret startMan(){
     while(op != 99){
         l_atual = criaLista();
         l_concluidas = criaLista();
+        zeraGrafo(g);
         switch(op){
             case 1:
                 if(flag){
@@ -211,10 +219,8 @@ man_ret startMan(){
                 op = imprimeTarefasNcurses(g);
                 break;
             case 3:
-                op = intERROR();
-                break;
-            case 4:
-
+                editorInterface(g);
+                op = 1;
                 break;
             case 99:
                 break;

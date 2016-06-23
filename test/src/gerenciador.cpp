@@ -146,6 +146,10 @@ man_ret insereTarefa(t_grafo *g, char* tarefa){
     if(campo == NULL) return MAN_ERR;
     pre = atoi(campo);
 
+    if(pre == 0){
+        insereOrigem(g, prop.ID);
+    }
+
     for(i = 0 ; i < pre ; i++){
         campo = strtok(NULL, " '");
         reqID = atoi(campo);

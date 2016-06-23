@@ -20,6 +20,7 @@
 	int imprimeTarefasNcurses(t_grafo* g, TipoLista *l_atual, TipoLista *l_concluidas, int tempo);
 	int intERROR();
 	int getUserTempo();
+	void editorInterface(t_grafo *g);
 
 	
 

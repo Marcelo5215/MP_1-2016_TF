@@ -51,8 +51,9 @@ int imprimeTarefasNcurses(t_grafo *g){
 	t_vertix* AUX;
 	for(AUX = getVertices(g); AUX != NULL ;AUX = AUX->prox){
 		attron(COLOR_PAIR(2));
-	   	mvprintw(linha,coluna, "ID:%d %s Esta concluida: %d", AUX->propriedades.ID, 
-	   			AUX->propriedades.nome, AUX->propriedades.esta_concluida);
+	   	mvprintw(linha,coluna, "ID:%d %s Concluida: %d Tempo de inicio: %d Duracao: %d", AUX->propriedades.ID, 
+	   			AUX->propriedades.nome, AUX->propriedades.esta_concluida, AUX->propriedades.inicio,
+	   			AUX->propriedades.duracao);
 		attroff(COLOR_PAIR(2));
 		refresh();
 		updateSrcParams();
@@ -60,9 +61,8 @@ int imprimeTarefasNcurses(t_grafo *g){
 	}
 	refresh();
 	attron(COLOR_PAIR(1));
-	mvprintw(linha+3,coluna, "Mais opções:     1 : Voltar");
-	mvprintw(linha+6,coluna+17, "99 : Sair");
-	mvprintw(linha+7,coluna+17, "Digite sua opção:");
+	mvprintw(linha+3,coluna, "1 : Voltar");
+	mvprintw(linha+4,coluna, "Digite sua opção:");
 	refresh();
 	getstr(op);
 	attroff(COLOR_PAIR(1));
@@ -134,10 +134,6 @@ int imprimeTarefasNcurses(t_grafo* g, TipoLista *l_atual, TipoLista *l_concluida
 	getstr(op);
 	attroff(COLOR_PAIR(1));
 
-	if(atoi(op) == 3){
-		editorInterface(g);
-	}
-
 	return atoi(op);
 }
 
@@ -162,7 +158,7 @@ gui_ret imprimeMenuNcurses(char * nome_arq, char* nome_arq_saida,int * tempo){
 	bkgd(COLOR_PAIR(1));
 	attron(COLOR_PAIR(4));
 
-    while(opt != 52){
+    while(opt != 99){
 	    
 	    clear();
    		box(stdscr, ACS_VLINE, ACS_HLINE);
@@ -234,7 +230,81 @@ gui_ret fechaInterface(){
 
 
 void editorInterface(t_grafo* g){
+	int ID;
+	int coluna = 2, opt = 0;
+	char op[11], tarefa[501];
 
+	while(opt != 99){
+		clear();	
+		bkgd(COLOR_PAIR(5));
+   		box(stdscr, ACS_VLINE, ACS_HLINE);
+   		mvprintw(1, coluna, "1: Adicionar tarefa:"); 
+		mvprintw(2, coluna, "2: Remover tarefa:"); 
+		mvprintw(3, coluna, "3: Editar tarefa:"); 
+		mvprintw(4, coluna, "99: sair do editor"); 
+		mvprintw(5, coluna, "OPCAO: "); 
+		getstr(op);
+		opt = atoi(op);
+
+		switch(opt){
+			case 1:
+				clear();
+				attron(COLOR_PAIR(2));
+				mvprintw(1, coluna, "Digite a tarefa no formato especificado: ");
+				getstr(tarefa);
+				if(insereTarefa(g, tarefa) != MAN_OK){
+					attroff(COLOR_PAIR(2));
+					attron(COLOR_PAIR(3));
+					mvprintw(4, coluna, "OCORREU UM ERRO NA INSERCAO DA TAREFA!!!, Precione ENTER!");
+					getch();
+					attroff(COLOR_PAIR(3));
+					attron(COLOR_PAIR(2));
+				}
+				attroff(COLOR_PAIR(2));
+				break;
+			case 2:
+				clear();
+				attron(COLOR_PAIR(2));
+				mvprintw(1, coluna, "Digite o ID da tarefa a ser removida: ");
+				getstr(tarefa);
+				if(retiraTarefa(g, atoi(tarefa)) == MAN_ERR){
+					attroff(COLOR_PAIR(2));
+					attron(COLOR_PAIR(3));
+					mvprintw(4, coluna, "OCORREU UM ERRO NA REMOCAO DA TAREFA!!!, Precione ENTER!");
+					getch();
+					attroff(COLOR_PAIR(3));
+					attron(COLOR_PAIR(2));
+				}
+				attroff(COLOR_PAIR(2));
+				break;
+			case 3:
+				clear();
+				attron(COLOR_PAIR(2));
+				mvprintw(1, coluna, "Digite o ID da tarefa a ser editada: ");
+				getstr(tarefa);
+				ID = atoi(tarefa);
+				mvprintw(2, coluna, "Digite a nova tarefa no modelo especificado: ");
+				getstr(tarefa);
+				if(editaTarefa(g, ID ,tarefa)!= MAN_OK){
+					attroff(COLOR_PAIR(2));
+					attron(COLOR_PAIR(3));
+					mvprintw(4, coluna, "OCORREU UM ERRO NA EDICAO DA TAREFA!!!, Precione ENTER!");
+					getch();
+					attroff(COLOR_PAIR(3));
+					attron(COLOR_PAIR(2));
+				}
+				attroff(COLOR_PAIR(2));
+				break;
+			case 99:
+				break;
+			default:
+				opt = intERROR();
+				break;
+
+		}
+	}
+
+	return;
 }
 
 //informa de possiveis erros 
