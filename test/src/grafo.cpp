@@ -3,17 +3,17 @@
 ///-------------------------------------------------------------
 ///Funções pertencenttes apenas ao .c (Apenas declarações)     |
 ///-------------------------------------------------------------
-void limpaVertices(t_grafo* g);   //TODO
+void limpaVertices(t_grafo* g);   
 t_vertix* buscaVertice(t_vertix* v, int ID);
 t_vertix* buscaVerticeMinimo(t_grafo* g);
 void Relax(t_grafo* g, t_vertix* u, t_vertix* v);
 int peso(t_grafo *g, int IDOrigem, int IDDestino);
 grafo_ret Dijkstra(t_grafo* g, int IDInicial);
 
-//Cabeca do Grafo
+///Cabeca do Grafo
 struct Grafo_P{
 	TipoLista* origens;
-	t_vertix*  vertices; //vertice inicial
+	t_vertix*  vertices; ///< vertice inicial
 	int tempo_atual;
 };
 

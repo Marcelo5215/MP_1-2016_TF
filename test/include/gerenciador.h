@@ -1,3 +1,8 @@
+/**
+* @file gerenciador.h
+* @brief Modulo que contem as funcoes que os modulos da interface grafica utilizam.
+*/
+
 #ifndef H_ARQUIVO
 #define H_ARQUIVO
     #include <stdio.h>

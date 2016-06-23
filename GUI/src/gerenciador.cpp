@@ -362,4 +362,75 @@ int get_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca){
     return maior;
 }
 
+t_item get_item_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca){
+    t_item item_atual, aux, item_retorno;
+    item_retorno.peso = -1;
+    if(lista_concluida == NULL || g == NULL){ //assertiva de entrada
+        return item_retorno;
+    }
+    t_vertix *v = buscaVertice(g, ID_busca);
+
+    if (v==NULL){ //assertiva estrutural
+        return item_retorno;
+    }
+    
+    int i=0;
+    int maior = 0, compara = 0;
+    
+        for(i=0; i< tamanhoLista(v->antecessores); i++){
+            item_atual = buscaListaInd(v->antecessores, i);
+            aux = buscaListaInd(lista_concluida, get_indice(lista_concluida, item_atual.ID)); //pega o peso do antecessor do vertice tratado
+            compara = aux.peso;
+            if(compara > maior){
+                maior = compara;
+                item_retorno = aux; 
+            }
+        }
+
+        return item_retorno;
+}
+
+///Funcao que utiliza o maior caminho do vertice destino as origens 
+/// t_grafo *g - Grafo onde ocorrera o preocesso de busca. Retorna-se erro caso seja NULL.
+/// int IDDestino - Inteiro que representa o indice do destino para a impressao do seu caminho. Caso seja
+///                 uma origem, imprime-se apenas o próprio vertice. Retorna-se erro caso nao pertenca ao
+///                 grafo.
+man_ret achaCaminhoMin(t_grafo* g, int IDDestino){
+    if(g==NULL){
+        return MAN_ERR;
+    }
+    
+    if (buscaLista(getOrigens(g), IDDestino)!=NULL){ //se pertence à origem 
+        return MAN_OK;
+    }
+
+    t_vertix* destino = buscaVertice(g, IDDestino);
+    t_item maior = get_item_maior_peso(g, destino->antecessores, IDDestino);
+    t_vertix* v_pai = buscaVertice(g, maior.ID);
+    destino->pai = v_pai;
+    
+    achaCaminhoMin(g, maior.ID);
+    return MAN_OK;
+}
+
+man_ret imprimeCaminho(t_grafo* g, int IDDestino){
+    if(g==NULL){
+        return MAN_ERR;
+    }
+    
+    t_vertix* destino = buscaVertice(g, IDDestino);
+    
+    if(destino->pai == NULL){
+        if(buscaLista(getOrigens(g), destino->propriedades.ID)==NULL){
+            return MAN_ERR;
+        } else {
+            //imprime a origem
+        }
+    }
+    
+    //a partir de destino, imprimir com destino->pai
+    
+    
+    return MAN_OK;
+}
     
