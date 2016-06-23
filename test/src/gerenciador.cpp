@@ -416,5 +416,3 @@ man_ret imprimeCaminho(t_grafo* g, int IDDestino){
 	
 	return MAN_OK;
 }
-
-    
