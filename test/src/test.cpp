@@ -282,8 +282,7 @@ TEST(Manager, First_Born){
 }
 
 TEST(Manager, Start_Man){
-		EXPECT_EQ(MAN_OK, startMan());
-
+	EXPECT_EQ(MAN_OK, startMan());
 }
 
 TEST(Manager, Peso){
@@ -302,29 +301,7 @@ TEST(Manager, Peso){
 	EXPECT_EQ(LISTA_OK, limpaLista(lista_concluida));
 	EXPECT_EQ(GRAFO_OK, limpaGrafo(g));
 
-
 }
-
-// TEST(Graph_Tests, Writing){
-// 	t_grafo* g = criaGrafoArq((char*)"../test/src/entrada.txt");
-// 	t_grafo* test = NULL;
-// 	ASSERT_NE(test, g);
-// 	ASSERT_EQ(GRAFO_OK, imprimeGrafoArq(g, (char*)"../test/src/saida.txt"));
-// 	EXPECT_EQ(GRAFO_OK , limpaGrafo(g));
-// }
-
-// TEST(Graph_Tests, Connected){
-// 	t_grafo* g = criaGrafoArq((char*)"../test/src/entrada.txt");
-// 	t_grafo* test = NULL;
-// 	ASSERT_NE(test, g);
-// 	EXPECT_EQ(false, eConexo(g));
-// 	EXPECT_EQ(GRAFO_OK , limpaGrafo(g));
-
-// 	t_grafo* g1 = criaGrafoArq((char*)"entrada1.txt");
-// 	ASSERT_NE(test, g1);
-// 	EXPECT_EQ(true, eConexo(g1));
-// 	EXPECT_EQ(GRAFO_OK , limpaGrafo(g1));
-// }
 
 int main(int argc, char** argv){
 	
