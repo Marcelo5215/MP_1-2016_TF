@@ -4,12 +4,14 @@
 ///Estruturas da Lista                    |
 ///----------------------------------------
 
+///Conteudo da lista
 struct Celula_P{
 	Celula* anter;
 	t_item item;
 	Celula* prox;
 };
 
+///Cabeca da lista
 struct TipoLista_P{
 	Celula* inicio, *final;
 };

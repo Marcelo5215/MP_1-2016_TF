@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['final',['final',['../struct_tipo_lista___p.html#ab997c8bc222a433fb326e9b2634428c0',1,'TipoLista_P']]]
+  ['caminho',['caminho',['../structt__vertix.html#ad6094fc5b20daa74307f446b5cfee474',1,'t_vertix']]],
+  ['cor',['cor',['../structt__vertix.html#a745eeed95da585f53c378e3d8b1631d6',1,'t_vertix']]]
 ];

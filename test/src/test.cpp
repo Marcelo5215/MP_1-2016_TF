@@ -1,3 +1,8 @@
+/**
+* @file teste.cpp
+* @brief Modulo que contem o Roteiro de Testes utilizado pelo programa
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
