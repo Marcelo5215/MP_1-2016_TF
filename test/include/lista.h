@@ -12,6 +12,7 @@
 	typedef struct Celula_P Celula;
 	typedef struct TipoLista_P TipoLista;
 
+	///Conteudo de um elemento de uma lista duplamente encadeada.
 	typedef  struct t_item{
 		int ID;    ///< Peso e o peso da aresta
 	    int peso;  ///< Identificador de tarefas ID

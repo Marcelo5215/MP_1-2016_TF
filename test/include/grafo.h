@@ -15,16 +15,16 @@
 	//Estruturas do grafo                    |
 	//----------------------------------------
 	
-	
+	///Propriedades do vertice	
 	typedef struct t_prop{
 		char nome[101];      ///< nome da tarefa
 		int ID;              ///< identificador da tarefa
 		bool esta_concluida;
 		int inicio;          ///< tempo de comeco da tarefa
 		int duracao;         ///< tempo de duracao da tarefa
-	}t_prop; ///< propriedades do vertice	
+	}t_prop; 
 
-	
+	/// Definicao de uma estrutura do tipo vertice.
 	typedef struct t_vertix{
 		TipoLista* adjacentes, *antecessores;
 		t_vertix *prox, *anter;
@@ -32,7 +32,7 @@
 		t_prop propriedades;
 		int cor;
 		int caminho;         ///< peso total para chegar ao vertice
-	}t_vertix; ///< Lista de adjacencia
+	}t_vertix;
 
 	typedef struct Grafo_P t_grafo;
 
