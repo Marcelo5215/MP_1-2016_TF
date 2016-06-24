@@ -63,5 +63,7 @@
 	TipoLista* getOrigens(t_grafo *g);	///< Funcao de encapsulamento para obter origens de um grafo
 	t_vertix* getVertices(t_grafo* g);	///< Funcao de encapsulamento para obter vertices de um grafo
 	grafo_ret zeraGrafo(t_grafo *g);
+	int getTempo(t_grafo *g); ///< Obtencao do tempo
+	grafo_ret setTempo(t_grafo *g, int tempo); ///< Define o tempo
 
 #endif

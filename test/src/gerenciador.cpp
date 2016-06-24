@@ -27,7 +27,7 @@ t_grafo* leitura_arquivo(char *arq){
     char nome[101];
     int id = 0, inicio = 0, duracao = 0, lista = 0, lido=0, i =0, requisito;
 
-    while(fscanf(fp, "%d '%[^''']s", &id, nome)>0){ //le primeiro o id, depois a string (ate o char ')
+    while(fscanf(fp, "%d '%100[^''']s", &id, nome)>0){ //le primeiro o id, depois a string (ate o char ')
         fgetc(fp); fgetc(fp); //limpa o buffer pra ler o resto dos dados da linha
         fscanf(fp, "%d %d %d %d\n", &lido, &inicio, &duracao, &lista);
                 

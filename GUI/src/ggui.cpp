@@ -320,7 +320,6 @@ int imprimeCaminhoInterface(t_grafo* g, int IDDestino){
    	getstr(ID);
    	IDDestino = atoi(ID);
     
-    t_vertix* destino = buscaVertice(g, IDDestino);
     TipoLista *l_concluidas = criaLista();
     t_item item_aux, item_suc;
     t_item item_add;

@@ -173,13 +173,15 @@ grafo_ret retiraVertice(t_grafo* g, int ID){
 	//AUX e o vertice a ser retirado e AUXAnter o vertice antes dele
 	t_vertix* AUXAnter;
 	AUX = buscaVertice(g->vertices, ID);
-	//busca o vertice anterior
-	AUXAnter = AUX->anter;
-
+	
 	//se AUX for o ultimo
 	if(AUX == NULL){
 		return GRAFO_OK;
 	}
+	//busca o vertice anterior
+	AUXAnter = AUX->anter;
+
+	
 	//retira o elemento da lista
 	if(AUXAnter != NULL){
 		AUXAnter->prox = AUX->prox;
@@ -426,7 +428,7 @@ int getTempo(t_grafo *g){
 	return g->tempo_atual;
 }
 
-///Funcao que altera o tempo atual do grafo.
+///Funcao que permite a alteracao do tempo atual do grafo.
 /// @param g - Caso seja NULL, retorna o valor de erro.
 /// @param tempo - Inteiro que sera inserido como o tempo atual do grafo. Caso seja menor que 0, retorna-se erro.
 grafo_ret setTempo(t_grafo *g, int tempo){

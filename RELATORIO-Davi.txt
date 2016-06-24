@@ -1,0 +1,15 @@
+Data	|	Horas Trabalhadas	|	Tipo Tarefa		|	Descrição da Tarefa Realizada
+-------------------------------------------------------------------------------------------------------------------------
+05/06	|	1:00h				|	Estudar aulas e laboratórios relacionados/Projetar	|	Aprendizado sobre como utilizar os modulos implementados nos trabalhos anteriores de forma corretamente no trabalho. Observação da especificação para a correta implementação do Projeto.
+-------------------------------------------------------------------------------------------------------------------------
+07/06	|	1:30h				|	Codificar módulo / Redigir e revisar casos de teste |	Implementação das funções de leitura e escrita em um arquivo, e dos respectivos casos de teste para elas.
+-------------------------------------------------------------------------------------------------------------------------
+08/06	|	1:40h				|	Codificar módulo	|	Implementação da função que calcula as tarefas concluídas - dado um tempo pelo usuário na interface gráfica - e das suas funções auxiliares para seu correto funcionamento.
+-------------------------------------------------------------------------------------------------------------------------
+11/06	|	1:00h				|	Redigir e revisar casos de teste/ Revisar código do módulo				| Implementação dos casos de teste para as funções anteriores e revisão do código de funções com comportamento inesperado.
+-------------------------------------------------------------------------------------------------------------------------
+15/06	|	2:00h				|	Revisar especificações e projetos/Especificar as funções e módulos|	Elaboração das especificações das funções e módulos implementadas no programa para posterior documentação.
+-------------------------------------------------------------------------------------------------------------------------
+19/06	|	2:15h				| 	Depuração com valgrind/Rodar o CPPCheck/Instrumentar via gcov/Documentar com Doxygen	|	Utilização das especificações para a elaboração da documentação (e respectivo aprendizado com o Doxygen), assim como a depuração do código para evitar vazamentos de memória e pela porcentagem de "varredura" pelo gcov.
+-------------------------------------------------------------------------------------------------------------------------
+24/06	|	2:00h 				|	Revisar casos de teste/ Revisar código do módulo/Rodar o CPPCheck/Documentar com Doxygen | Ajustes dos detalhes finais do trabalho, incluindo detalhes na documentação do doxygen e verificação de avisos insesperados pelo cppcheck. Por fim, realizou-se mais alguns testes para assegurar a produção de um programa confiável.

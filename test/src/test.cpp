@@ -242,6 +242,17 @@ TEST(File_Tests, Reading){
 	EXPECT_EQ(GRAFO_OK, limpaGrafo(g));
 }
 
+/// Conjunto de testes que verifica o correto funcionamento da manipulacao do campo tempo do grafo.
+TEST(Graph_Tests, Time){
+	t_grafo *g = leitura_arquivo((char*)"../test/src/entrada.txt");
+
+	EXPECT_EQ(GRAFO_OK, setTempo(g, 5));
+	EXPECT_EQ(5, getTempo(g));
+	EXPECT_EQ(GRAFO_OK, setTempo(g, 0));
+	EXPECT_EQ(0, getTempo(g));
+	EXPECT_EQ(GRAFO_OK, limpaGrafo(g));
+}
+
 /// Conjunto de testes que verifica o correto funcionamento da escrita de um grafo em um arquivo corretamente.
 TEST(File_Tests, Writing){
 	t_grafo *g = leitura_arquivo((char*)"../test/src/entrada.txt");
