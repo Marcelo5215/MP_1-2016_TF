@@ -1,0 +1,12 @@
+Data	|	Horas Trabalhadas	|	Tipo Tarefa		       |	           Descrição da Tarefa Realizada
+
+31/05   |       0:11h                   | Criação do repositório               |  Criação de um repositório no github para a colaboração das tarefas e arquivo inicial com tarefas a serem feitas
+01/06   |       5:32h                   | Codificação e adptação do módulo     |  Adaptação e criação do módulo grafo e lista
+05/05   |       2:16h                   | Criação de testes                    |  Criados  os testes para os módulos grafo e lista, e finalizados os módulos
+06/06   |       1:05h                   | Depuração dos módulos                |  Depurados os módulos lista e grafo
+07/06   |       2:00h                   | Codificação do módulo                |  Adicionaadas as funções de edição de tarefas, adição, edição e remoção.
+08/06   |       3:00h                   | Codificação de módulo e Depuração    |  Criação do módulo para interface Gráfica ggui, e depuração do módulo gerenciador
+12/06   |       0:20h                   | Depuração                            |  Corrigidos alguns bugs presentes na interface Gráfica
+14/06   |       1:23h                   | Codificação do módulo e estudo       |  Adicionadas funções para a interface Gráfica e estudo de slides
+22/06   |       2:00h                   | Depuração e codificação              |  Correção de bugs nos módulos gerenciador e ggui, e criação de novas funções para a interface, para a edição de tarefas
+24/06   |       2:31h                   | Codificação do módulo e documentação |  Adicionada a funcionabilidade de caminhos na interface, correção de bugs, e criação deste relatorio

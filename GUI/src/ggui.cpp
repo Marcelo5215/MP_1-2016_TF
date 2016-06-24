@@ -313,12 +313,20 @@ int imprimeCaminhoInterface(t_grafo* g, int IDDestino){
         return 1;
     }
     char ID[15], op[15];
-    clear();
-    bkgd(COLOR_PAIR(5));
-   	box(stdscr, ACS_VLINE, ACS_HLINE);
-   	mvprintw(2, 2, "Digite o ID da tarefa que deseja saber o caminho: ");
-   	getstr(ID);
-   	IDDestino = atoi(ID);
+    do{
+	    clear();
+	    bkgd(COLOR_PAIR(5));
+	   	box(stdscr, ACS_VLINE, ACS_HLINE);
+	   	mvprintw(2, 2, "Digite o ID da tarefa que deseja saber o caminho: ");
+	   	getstr(ID);
+	   	IDDestino = atoi(ID);
+	   	if (buscaVertice(g, IDDestino) == NULL){
+			attron(COLOR_PAIR(3));
+	   		mvprintw(4, 2, "ERRO AO PROCURAR CAMINHO, VERIFIQUE SE A ENTRADA E VALIDA.");
+	   		getch();
+			attroff(COLOR_PAIR(3));
+		}
+	}while(buscaVertice(g, IDDestino) == NULL);
     
     TipoLista *l_concluidas = criaLista();
     t_item item_aux, item_suc;
