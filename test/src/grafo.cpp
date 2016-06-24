@@ -1,8 +1,8 @@
 #include "grafo.h"
 
-///-------------------------------------------------------------
-///Funções pertencenttes apenas ao .c (Apenas declarações)     |
-///-------------------------------------------------------------
+//-------------------------------------------------------------
+//Funções pertencenttes apenas ao .c (Apenas declarações)     |
+//-------------------------------------------------------------
 void limpaVertices(t_grafo* g);   
 t_vertix* buscaVertice(t_vertix* v, int ID);
 t_vertix* buscaVerticeMinimo(t_grafo* g);
@@ -12,14 +12,14 @@ grafo_ret Dijkstra(t_grafo* g, int IDInicial);
 
 ///Cabeca do Grafo
 struct Grafo_P{
-	TipoLista* origens;
-	t_vertix*  vertices; ///< vertice inicial
-	int tempo_atual;
+	TipoLista* origens; ///< Conjunto de vertice de origem (pelo ID)
+	t_vertix*  vertices; ///< Vertice inicial
+	int tempo_atual; ///< Tempo corrente do grafo
 };
 
-///----------------------------------------
-///Funcoes para a Utilizacao do Grafo     |
-///----------------------------------------
+//----------------------------------------
+//Funcoes para a Utilizacao do Grafo     |
+//----------------------------------------
 
 ///Criacao de um grafo vazio
 t_grafo* criaGrafo(){
@@ -383,7 +383,6 @@ void limpaVertices(t_grafo* g){
 
 ///Funcao que imprime os indices dos vertices do grafo, assim como os indices de suas arestas
 /// @param - Grafo que tera seus elementos impressos; Caso seja NULL, a funcao termina antes de comecar a busca.
-
 void imprimeGrafo(t_grafo* g){
 	if(g==NULL){
 		return;
@@ -459,9 +458,9 @@ grafo_ret zeraGrafo(t_grafo *g){
 
 
 
-///--------------------------------
-///Funcoes para utilizar Djikstra |
-///--------------------------------
+//--------------------------------
+//Funcoes para utilizar Djikstra |
+//--------------------------------
 
 ///Funcao principal do Djikstra, a qual realiza o algoritmo em si
 /// @param g - Ponteiro para o grafo no qual sera realizado o algoritmo. Retorna-se erro caso seja NULL.

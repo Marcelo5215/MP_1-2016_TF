@@ -1,3 +1,8 @@
+/**
+* @file grafo.h
+* @brief Modulo que contem as funcoes para o funcionamento correto da estrutura de dados do tipo grafo.
+*/
+
 #ifndef H_GRAFO
 #define H_GRAFO
 	#include <stdio.h>
@@ -6,9 +11,9 @@
 	#include <math.h>
 	#include "lista.h"
 
-	///----------------------------------------
-	///Estruturas do grafo                    |
-	///----------------------------------------
+	//----------------------------------------
+	//Estruturas do grafo                    |
+	//----------------------------------------
 	
 	
 	typedef struct t_prop{

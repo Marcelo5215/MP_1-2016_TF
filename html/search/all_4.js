@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['editacelulapeso',['editaCelulaPeso',['../lista_8h.html#ad23bd6ad672ea6337486bda057150c79',1,'editaCelulaPeso(TipoLista *lista, int ID, int peso):&#160;lista.cpp'],['../lista_8cpp.html#ad23bd6ad672ea6337486bda057150c79',1,'editaCelulaPeso(TipoLista *lista, int ID, int peso):&#160;lista.cpp']]],
   ['editatarefa',['editaTarefa',['../gerenciador_8h.html#a9e1977c42e109f7fcc984724f28a2308',1,'editaTarefa(t_grafo *g, int IDMod, char tarefaNova[]):&#160;gerenciador.cpp'],['../gerenciador_8cpp.html#a9e1977c42e109f7fcc984724f28a2308',1,'editaTarefa(t_grafo *g, int IDMod, char tarefaNova[]):&#160;gerenciador.cpp']]],
   ['escrita_5farquivo',['escrita_arquivo',['../gerenciador_8h.html#ad86a797bc29c115e9802806ecd926194',1,'escrita_arquivo(t_grafo *g, char *arq):&#160;gerenciador.cpp'],['../gerenciador_8cpp.html#ad86a797bc29c115e9802806ecd926194',1,'escrita_arquivo(t_grafo *g, char *arq):&#160;gerenciador.cpp']]],
   ['esta_5fconcluida',['esta_concluida',['../structt__prop.html#a79348c573bcc086caeba531ddc52f438',1,'t_prop']]],

@@ -4,12 +4,12 @@
 int get_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca);
 t_item get_item_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca);
 
-///----------------------------------------
-///Funcoes para manipulacao com arquivos  |
-///----------------------------------------
+//----------------------------------------
+//Funcoes para manipulacao com arquivos  |
+//----------------------------------------
 
 ///Funcao que cria um grafo a partir do arquivo passado
-/// char *arq - String contendo o nome do arquivo a ser lido. Caso seja NULL, a funcao retorna NULL.
+///@param arq - String contendo o nome do arquivo a ser lido. Caso seja NULL, a funcao retorna NULL.
 t_grafo* leitura_arquivo(char *arq){
     if (arq == NULL) //assertiva para manter a consistencia do grafo a ser criado
         return NULL;
@@ -64,8 +64,8 @@ t_grafo* leitura_arquivo(char *arq){
 
 
 ///Escreve o grafo desejado no arquivo passado por parametro
-/// t_grafo *g - Grafo a ser escrito no arquivo. Caso seja NULL, retorna-se erro.
-/// char *arq - Nome do arquivo no qual o grafo sera escrito. Caso seja NULL, retorna-se erro.
+///@param g - Grafo a ser escrito no arquivo. Caso seja NULL, retorna-se erro.
+///@param arq - Nome do arquivo no qual o grafo sera escrito. Caso seja NULL, retorna-se erro.
 man_ret escrita_arquivo(t_grafo *g, char *arq){
     //assertivas de entrada
     if(arq == NULL || g == NULL)
@@ -93,14 +93,13 @@ man_ret escrita_arquivo(t_grafo *g, char *arq){
     return MAN_OK;
 }
 
-///----------------------------------------
-///Funcoes para manipulacao de tarefas    |
-///----------------------------------------
+//----------------------------------------
+//Funcoes para manipulacao de tarefas    |
+//----------------------------------------
 
 /// Essa funcao insere uma tarefa no grafo passado por parametro (utilizada pela interface grafica).
-/// t_grafo *g - Grafo no qual a tarefa sera inserida. Caso seja NULL, retorna-se erro.
-/// char *tarefa - String contendo todas as caracteristicas da tarefas. Esses dados serao lidos
-///                pela funcao para a insercao correta no grafo. Caso seja NULL, retorna-se erro.
+/// @param g - Grafo no qual a tarefa sera inserida. Caso seja NULL, retorna-se erro.
+/// @param tarefa - String contendo todas as caracteristicas da tarefas. Esses dados serao lidos pela funcao para a insercao correta no grafo. Caso seja NULL, retorna-se erro.
 man_ret insereTarefa(t_grafo *g, char* tarefa){
     if(g == NULL || tarefa == NULL){
         return MAN_ERR;
@@ -162,8 +161,8 @@ man_ret insereTarefa(t_grafo *g, char* tarefa){
 }
 
 ///Funcao que retira uma tarefa do grafo (utilizada pela interface grafica) pelo ID do vertice.
-/// t_grafo *g - Grafo no qual ocorrera a remocao. Caso seja igual a NULL, retorna-se erro.
-/// int ID - ID da tarefa a ser retirada. Caso nao pertenca ao grafo dado, retorna-se erro.
+///@param g - Grafo no qual ocorrera a remocao. Caso seja igual a NULL, retorna-se erro.
+/// @param ID - ID da tarefa a ser retirada. Caso nao pertenca ao grafo dado, retorna-se erro.
 man_ret retiraTarefa(t_grafo *g, int ID){
     if(retiraVertice(g, ID) != GRAFO_OK){
         return MAN_ERR;
@@ -173,10 +172,9 @@ man_ret retiraTarefa(t_grafo *g, int ID){
 }
 
 ///Funcao que permite a edicao de tarefas no grafo
-///t_grafo *g - Grafo no qual ocorrera a atualizcao. Caso seja igual a NULL, retorna-se erro.
-/// int IDMod - Inteiro contendo o indice da tarefa a ser editada. 
-/// char *tarefaNova - String contendo todos os dados da tarefa nova, a ser interpretados corretamente
-///                    pela funcao insereTarefa.
+///@param g - Grafo no qual ocorrera a atualizcao. Caso seja igual a NULL, retorna-se erro.
+/// @param IDMod - Inteiro contendo o indice da tarefa a ser editada. 
+///@param tarefaNova - String contendo todos os dados da tarefa nova, a ser interpretados corretamente pela funcao insereTarefa.
 man_ret editaTarefa(t_grafo *g, int IDMod, char tarefaNova[]){
     if(insereTarefa(g, tarefaNova) != MAN_OK){
         return MAN_ERR;
@@ -188,12 +186,11 @@ man_ret editaTarefa(t_grafo *g, int IDMod, char tarefaNova[]){
     return MAN_OK;
 }
 
-///----------------------------------------
-///Funcoes de interface                   |
-///----------------------------------------
+//----------------------------------------
+//Funcoes de interface                   |
+//----------------------------------------
 
-///Funcao que chama todas as funcoes usadas com o a interface grafica, sendo assim a "ponte",
-//ou o elemento de interface, entre o codigo elaborado e a interface grafica.
+///Funcao que chama todas as funcoes usadas com o a interface grafica, sendo assim a "ponte", ou o elemento de interface, entre o codigo elaborado e a interface grafica.
 ///Nao recebe parametros
 man_ret startMan(){
     t_grafo *g;
@@ -214,8 +211,8 @@ man_ret startMan(){
 }
 
 /// Funcao que retorna o tipo booleano true se todos os antecessores ja tiverem sido concluidos. Caso contrario, retorna-se false
-/// t_grafo *g - Grafo no qual ocorrera a busca. Deve ser diferente de NULL, caso contrario retorna-se false.
-/// t_vertix *v - Vertice no qual sera verificado os antecessores. Deve ser diferente de NULL.
+/// @param g - Grafo no qual ocorrera a busca. Deve ser diferente de NULL, caso contrario retorna-se false.
+/// @param v - Vertice no qual sera verificado os antecessores. Deve ser diferente de NULL.
 int verificaAntecessores(t_grafo *g, t_vertix *v){ 
     if(g==NULL || v == NULL){
         return false; 
@@ -234,10 +231,10 @@ int verificaAntecessores(t_grafo *g, t_vertix *v){
 }
 
 ///A funcao manager calcula, de acordo com o tempo, todas as tarefas ja concluidas e em andamento do grafo
-/// t_grafo *g - Grafo no qual serao executadas as operacoes. Deve ser diferente de NULL.
-/// int tempo - Inteiro que indica o tempo que se quer verificar o estado das tarefas. Deve ser maior que 0.
-/// TipoLista *l_atual - Lista que contem todas as tarefas em andamento. Deve ser diferente de NULL.
-/// TipoLista *l_concluidas - Lista que contem todas as tarefas concluidas no tempo passado. Deve ser diferente de NULL.
+/// @param g - Grafo no qual serao executadas as operacoes. Deve ser diferente de NULL.
+/// @param  tempo - Inteiro que indica o tempo que se quer verificar o estado das tarefas. Deve ser maior que 0.
+/// @param  l_atual - Lista que contem todas as tarefas em andamento. Deve ser diferente de NULL.
+/// @param l_concluidas - Lista que contem todas as tarefas concluidas no tempo passado. Deve ser diferente de NULL.
 man_ret manager(t_grafo *g, int tempo, TipoLista *l_atual, TipoLista *l_concluidas){
     if (l_concluidas == NULL || l_atual == NULL || g == NULL || tempo < 0){
         return MAN_ERR;
@@ -310,10 +307,9 @@ man_ret manager(t_grafo *g, int tempo, TipoLista *l_atual, TipoLista *l_concluid
 }
 
 ///Funcao que retorna o maior peso dos antecessores do vertice passado por parametro.
-/// t_grafo *g - Grafo no qual serao executadas as operacoes. Deve ser diferente de NULL.
-/// TipoLista *lista_concluida - Lista de tarefas concluidas para verificar a conclusao dos antecessores. Deve ser diferente de NULL.
-/// int ID_busca - Inteiro com o indice do vertice que tera o maior peso buscado. O indice deve corresponder
-//                 a um vertice pertencente ao grafo.
+///@param  g - Grafo no qual serao executadas as operacoes. Deve ser diferente de NULL.
+///@param  lista_concluida - Lista de tarefas concluidas para verificar a conclusao dos antecessores. Deve ser diferente de NULL.
+///@param ID_busca - Inteiro com o indice do vertice que tera o maior peso buscado. O indice deve corresponder a um vertice pertencente ao grafo.
 int get_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca){
     if(lista_concluida == NULL || g == NULL){ //assertiva de entrada
         return 0;
@@ -345,6 +341,14 @@ int get_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca){
         return maior;
 }
 
+//----------------------------------------
+//Funcoes para obter caminho             |
+//----------------------------------------
+
+///Funcao analoga ao get_maior_peso; No entanto, retorna o item com maior peso dos antecessores.
+///@param  g - Grafo no qual serao executadas as operacoes. Deve ser diferente de NULL.
+///@param  lista_concluida - Lista de tarefas concluidas para verificar a conclusao dos antecessores. Deve ser diferente de NULL.
+///@param ID_busca - Inteiro com o indice do vertice que tera o maior peso buscado. O indice deve corresponder a um vertice pertencente ao grafo.
 t_item get_item_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca){
     t_item item_atual, aux, item_retorno;
     item_retorno.peso = -1;
@@ -374,11 +378,9 @@ t_item get_item_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca)
 }
 
 ///Funcao que utiliza o maior caminho do vertice destino as origens 
-/// t_grafo *g - Grafo onde ocorrera o preocesso de busca. Retorna-se erro caso seja NULL.
-/// int IDDestino - Inteiro que representa o indice do destino para a impressao do seu caminho. Caso seja
-///					uma origem, imprime-se apenas o próprio vertice. Retorna-se erro caso nao pertenca ao
-///					grafo.
-man_ret achaCaminhoMin(t_grafo* g, int IDDestino){
+///@param g - Grafo onde ocorrera o preocesso de busca. Retorna-se erro caso seja NULL.
+///@param  IDDestino - Inteiro que representa o indice do destino para a impressao do seu caminho. Caso seja uma origem, imprime-se apenas o próprio vertice. Retorna-se erro caso nao pertenca ao grafo.
+man_ret achaCaminhoMin(t_grafo* g, TipoLista *l_concluidas, int IDDestino){
 	if(g==NULL){
 		return MAN_ERR;
 	}
@@ -386,13 +388,14 @@ man_ret achaCaminhoMin(t_grafo* g, int IDDestino){
 	if (buscaLista(getOrigens(g), IDDestino)!=NULL){ //se pertence à origem 
         return MAN_OK;
     }
+    
 
 	t_vertix* destino = buscaVertice(g, IDDestino);
-	t_item maior = get_item_maior_peso(g, destino->antecessores, IDDestino);
+	t_item maior = get_item_maior_peso(g, l_concluidas, IDDestino);
 	t_vertix* v_pai = buscaVertice(g, maior.ID);
 	destino->pai = v_pai;
 	
-	achaCaminhoMin(g, maior.ID);
+	achaCaminhoMin(g, l_concluidas, maior.ID);
 	return MAN_OK;
 }
 
@@ -402,7 +405,50 @@ man_ret imprimeCaminho(t_grafo* g, int IDDestino){
 	}
 	
 	t_vertix* destino = buscaVertice(g, IDDestino);
-	
+    TipoLista *l_concluidas = criaLista();
+    t_item item_aux, item_suc;
+    t_item item_add;
+    t_vertix *v, *v_sucessor;
+    int true_inicio=0;
+    int i =0, j=0;
+
+    //Esses lacos criam a lista de concluidos com os pesos de todas as tarefas
+    for(i = 0; i < tamanhoLista(getOrigens(g)); i++){ //checagem das origens e insercao na lista de concluidos
+        item_aux = buscaListaInd(getOrigens(g), i);
+        v = buscaVertice(g, item_aux.ID);
+                item_add.ID = v->propriedades.ID;
+                item_add.peso = v->propriedades.duracao + v->propriedades.inicio;
+                if(insereLista(l_concluidas, item_add) == LISTA_ERR){
+                    return MAN_ERR;
+                } 
+    }//for
+    
+    for(i = 0; i < tamanhoLista(l_concluidas); i++){ //checagem e insercao para o resto dos vertices
+        item_aux = buscaListaInd(l_concluidas, i);
+        v = buscaVertice(g, item_aux.ID); //busca vertice no grafo com a ID igual a celula na lista de concluidos
+        if(v == NULL){
+            return MAN_ERR; //assertiva de saida
+        }
+        for(j = 0; j < tamanhoLista(v->adjacentes); j++){ //trabalha com os sucessores de cada vertice dos concluidos
+            item_suc = buscaListaInd(v->adjacentes, j);
+            v_sucessor = buscaVertice(g, item_suc.ID);
+            if(v_sucessor == NULL){
+                return MAN_ERR; //assertiva de saida
+            }
+                true_inicio = get_maior_peso(g, l_concluidas, item_suc.ID);
+                item_add.ID = v_sucessor->propriedades.ID;
+                item_add.peso = true_inicio + v_sucessor->propriedades.duracao;
+                    if(buscaLista(l_concluidas, item_add.ID)==NULL){ //evitar a insercao de duplicados
+                        if(insereLista(l_concluidas, item_add) == LISTA_ERR){
+                             return MAN_ERR;
+                        }
+                    }
+                    
+        }//for sucessores
+    }//for lista_concluidos
+	achaCaminhoMin(g,l_concluidas, IDDestino);
+    //fim dos lacos, prosseguir para a impressao
+
 	if(destino->pai == NULL){
 		if(buscaLista(getOrigens(g), destino->propriedades.ID)==NULL){
 			return MAN_ERR;

@@ -10,6 +10,7 @@
 #include "gerenciador.h"
 #include "gtest/gtest.h"
 
+/// Conjunto de testes que verifica a validade na criacao de listas
 TEST(List_Tests, Creating){
 	TipoLista* lista = criaLista();
 	TipoLista* null = NULL;
@@ -21,6 +22,7 @@ TEST(List_Tests, Creating){
 	EXPECT_EQ(LISTA_OK, limpaLista(lista));
 }
 
+/// Conjunto de testes que verifica a validade da insercao em listas
 TEST(List_Tests, Inserting){
 	TipoLista* lista = criaLista();
 	TipoLista* null = NULL;
@@ -63,6 +65,7 @@ TEST(List_Tests, Inserting){
 	EXPECT_EQ(LISTA_OK, limpaLista(lista));
 }
 
+/// Conjunto de testes que verifica a validade da remocao em listas
 TEST(List_Tests, Removing){
 	TipoLista* lista = criaLista();
 	TipoLista* null = NULL;
@@ -95,6 +98,7 @@ TEST(List_Tests, Removing){
 	EXPECT_EQ(LISTA_OK, limpaLista(lista));
 }
 
+/// Conjunto de testes que verifica a validade da edicao em listas
 TEST(List_Tests, Editing){
 	TipoLista* lista = criaLista();
 	TipoLista* null = NULL;
@@ -127,6 +131,7 @@ TEST(List_Tests, Editing){
 
 void montaGrafoTeste(t_grafo* g);
 
+/// Conjunto de testes que verifica a validade na criacao de grafos.
 TEST(Graph_Tests, Creating){
 	t_grafo* g = criaGrafo();
 	t_grafo* test = NULL;
@@ -138,6 +143,7 @@ TEST(Graph_Tests, Creating){
 	EXPECT_EQ(GRAFO_OK , limpaGrafo(g));
 }
 
+/// Conjunto de testes que verifica a validade de insercao em grafos.
 TEST(Graph_Tests, Inserting){
 	t_grafo* g = criaGrafo();
 	t_grafo* test = NULL;
@@ -171,6 +177,7 @@ TEST(Graph_Tests, Inserting){
 	EXPECT_EQ(GRAFO_OK , limpaGrafo(g));
 }
 
+/// Conjunto de testes que verifica a validade da remocao em grafos.
 TEST(Graph_Tests, Removing){
 	t_grafo* g = criaGrafo();
 	t_grafo* test = NULL;
@@ -201,6 +208,7 @@ TEST(Graph_Tests, Removing){
 	EXPECT_EQ(GRAFO_OK , limpaGrafo(g));
 }
 
+/// Conjunto de testes que verifica a validade das funcoes para o calculo do menor caminho
 TEST(Graph_Tests, Tracks){
 	t_grafo* g = criaGrafo();
 	t_grafo* null = NULL;
@@ -223,6 +231,7 @@ TEST(Graph_Tests, Tracks){
 	EXPECT_EQ(GRAFO_OK , limpaGrafo(g));
 }
 
+/// Conjunto de testes que verifica o correto funcionamento da leitura de um arquivo para a montagem de um grafo valido.
 TEST(File_Tests, Reading){
 	t_grafo *g = leitura_arquivo((char*)"../test/src/entrada.txt");
 	t_grafo *g0 = NULL;
@@ -233,6 +242,7 @@ TEST(File_Tests, Reading){
 	EXPECT_EQ(GRAFO_OK, limpaGrafo(g));
 }
 
+/// Conjunto de testes que verifica o correto funcionamento da escrita de um grafo em um arquivo corretamente.
 TEST(File_Tests, Writing){
 	t_grafo *g = leitura_arquivo((char*)"../test/src/entrada.txt");
 	t_grafo *g0 = NULL;
@@ -246,6 +256,7 @@ TEST(File_Tests, Writing){
 	EXPECT_EQ(GRAFO_OK, limpaGrafo(g));
 }
 
+/// Conjunto de testes que verifica a validade de insercao de tarefas que serao utilizadas pela interface grafica
 TEST(Manager, Inserting){
 	t_grafo* tarefa = leitura_arquivo((char*)"../test/src/entrada.txt");
 	t_grafo *g0 = NULL;
@@ -261,6 +272,7 @@ TEST(Manager, Inserting){
 	EXPECT_EQ(GRAFO_OK, limpaGrafo(tarefa));
 }
 
+/// Conjunto de testes que verifica a validade de remocao de tarefas que serao utilizadas pela interface grafica
 TEST(Manager, Removing){
 	t_grafo* tarefa = leitura_arquivo((char*)"../test/src/entrada.txt");
 	t_grafo *g0 = NULL;
@@ -275,6 +287,7 @@ TEST(Manager, Removing){
 	EXPECT_EQ(GRAFO_OK, limpaGrafo(tarefa));
 }
 
+/// Conjunto de testes que verifica a validade de edicao de tarefas que serao utilizadas pela interface grafica
 TEST(Manager, Editing){
 	t_grafo* tarefa = leitura_arquivo((char*)"../test/src/entrada.txt");
 	t_grafo *g0 = NULL;
@@ -291,6 +304,7 @@ TEST(Manager, Editing){
 	EXPECT_EQ(GRAFO_OK, limpaGrafo(tarefa));
 }
 
+/// Testes que checam o correto funcionamento da principal funcao utilizada pela funcao responsavel pela montagem do estado do grafo na interface grafica.
 TEST(Manager, First_Born){
 	t_grafo* g = leitura_arquivo((char*)"../test/src/entrada.txt");
 	t_grafo *g0 = NULL;
@@ -316,10 +330,12 @@ TEST(Manager, First_Born){
 
 }
 
+///Teste que verifica o funcionamento da funcao responsavel por inicializar o "cerebro" da interface.
 TEST(Manager, Start_Man){
 	EXPECT_EQ(MAN_OK, startMan());
 }
 
+///Conjunto de testes para verificar o correto funcionamento da funcao get_maior_peso, que verifica o maior peso dos antecessores de um vertice.
 TEST(Manager, Peso){
 	t_grafo* g = leitura_arquivo((char*)"../test/src/entrada.txt");
 	t_grafo *g0 = NULL;
@@ -345,8 +361,8 @@ int main(int argc, char** argv){
 	return RUN_ALL_TESTS();
 }
 
-//cria um grafo de teste
-//como as funcoes utilizao o ID do vertice(tarefa), não usaremos outros campos para os testes além de ID
+///Cria um grafo para a utilizacao em alguns conjuntos de testes.
+///Como as funcoes utilizam o ID do vertice(tarefa), não usaremos outros campos para os testes além do ID.
 void montaGrafoTeste(t_grafo* g){
 	t_prop prop;
 	prop.ID = 1;

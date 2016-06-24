@@ -5,5 +5,5 @@ digraph "Celula_P"
   Node1 [label="Celula_P",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node1 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" prox\nanter" ,fontname="Helvetica"];
   Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" item" ,fontname="Helvetica"];
-  Node2 [label="t_item",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structt__item.html",tooltip="Conteudo da lista de adjacencia de cada vertice. "];
+  Node2 [label="t_item",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structt__item.html"];
 }
