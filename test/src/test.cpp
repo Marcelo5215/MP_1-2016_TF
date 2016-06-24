@@ -335,6 +335,8 @@ TEST(Manager, Start_Man){
 	EXPECT_EQ(MAN_OK, startMan());
 }
 
+
+
 ///Conjunto de testes para verificar o correto funcionamento da funcao get_maior_peso, que verifica o maior peso dos antecessores de um vertice.
 TEST(Manager, Peso){
 	t_grafo* g = leitura_arquivo((char*)"../test/src/entrada.txt");
@@ -347,11 +349,18 @@ TEST(Manager, Peso){
 	EXPECT_EQ(0, get_maior_peso(g, (TipoLista*)NULL, 105));
 	EXPECT_EQ(0, get_maior_peso(g, lista_concluida, 109));
 	EXPECT_EQ(0, get_maior_peso(g, lista_concluida, 100));
-	EXPECT_EQ(7, get_maior_peso(g, lista_concluida, 105));
+	EXPECT_EQ(2, get_maior_peso(g, lista_concluida, 105));
 
 	EXPECT_EQ(LISTA_OK, limpaLista(lista_concluida));
 	EXPECT_EQ(GRAFO_OK, limpaGrafo(g));
 
+}
+
+///Teste para verificar o correto funcionamento das funcoes do descobrimento do maior caminho das tarefas
+TEST(Manager, Tracks){
+	t_grafo* g = leitura_arquivo((char*)"../test/src/entrada.txt");
+	EXPECT_EQ(MAN_OK, imprimeCaminho(g, 106));
+	EXPECT_EQ(GRAFO_OK, limpaGrafo(g));
 }
 
 int main(int argc, char** argv){

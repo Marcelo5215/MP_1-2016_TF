@@ -448,7 +448,6 @@ man_ret imprimeCaminho(t_grafo* g, int IDDestino){
     }//for lista_concluidos
 	achaCaminhoMin(g,l_concluidas, IDDestino);
     //fim dos lacos, prosseguir para a impressao
-
 	if(destino->pai == NULL){
 		if(buscaLista(getOrigens(g), destino->propriedades.ID)==NULL){
 			return MAN_ERR;
@@ -456,7 +455,12 @@ man_ret imprimeCaminho(t_grafo* g, int IDDestino){
 			//imprime a origem
 		}
 	}
-	
+    for( ; destino!=NULL; destino=destino->pai){
+        printf("Caminho: %d\n", destino->propriedades.ID);
+        if(buscaLista(getOrigens(g), destino->propriedades.ID)!=NULL){
+            break;
+        }
+    }
 	//a partir de destino, imprimir com destino->pai
 	
 	

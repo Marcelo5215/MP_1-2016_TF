@@ -108,6 +108,7 @@ t_vertix* criaVertice(t_grafo* g, t_prop v){
 	vert->prox = NULL;
 	vert->propriedades = v;
 	vert->anter = NULL;
+	vert->pai = NULL;
 
 	return vert;
 }
