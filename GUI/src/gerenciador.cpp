@@ -222,6 +222,10 @@ man_ret startMan(){
                 editorInterface(g);
                 op = 1;
                 break;
+            case 4:
+                op = imprimeCaminhoInterface(g, 0);
+
+                break;
             case 99:
                 break;
             default:
@@ -246,7 +250,6 @@ man_ret startMan(){
         return MAN_OK;
     }
 }
-
 
 int verificaAntecessores(t_grafo *g, t_vertix *v){ //retorna true se todos os antecessores foram concluidos e false cc
     int i;
@@ -333,10 +336,9 @@ man_ret manager(t_grafo *g, int tempo, TipoLista *l_atual, TipoLista *l_concluid
 }
 
 ///Funcao que retorna o maior peso dos antecessores do vertice passado por parametro.
-/// t_grafo *g - Grafo no qual serao executadas as operacoes. Deve ser diferente de NULL.
-/// TipoLista *lista_concluida - Lista de tarefas concluidas para verificar a conclusao dos antecessores. Deve ser diferente de NULL.
-/// int ID_busca - Inteiro com o indice do vertice que tera o maior peso buscado. O indice deve corresponder
-//                 a um vertice pertencente ao grafo.
+///@param  g - Grafo no qual serao executadas as operacoes. Deve ser diferente de NULL.
+///@param  lista_concluida - Lista de tarefas concluidas para verificar a conclusao dos antecessores. Deve ser diferente de NULL.
+///@param ID_busca - Inteiro com o indice do vertice que tera o maior peso buscado. O indice deve corresponder a um vertice pertencente ao grafo.
 int get_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca){
     if(lista_concluida == NULL || g == NULL){ //assertiva de entrada
         return 0;
@@ -368,6 +370,14 @@ int get_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca){
         return maior;
 }
 
+//----------------------------------------
+//Funcoes para obter caminho             |
+//----------------------------------------
+
+///Funcao analoga ao get_maior_peso; No entanto, retorna o item com maior peso dos antecessores.
+///@param  g - Grafo no qual serao executadas as operacoes. Deve ser diferente de NULL.
+///@param  lista_concluida - Lista de tarefas concluidas para verificar a conclusao dos antecessores. Deve ser diferente de NULL.
+///@param ID_busca - Inteiro com o indice do vertice que tera o maior peso buscado. O indice deve corresponder a um vertice pertencente ao grafo.
 t_item get_item_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca){
     t_item item_atual, aux, item_retorno;
     item_retorno.peso = -1;
@@ -397,11 +407,9 @@ t_item get_item_maior_peso(t_grafo *g, TipoLista *lista_concluida, int ID_busca)
 }
 
 ///Funcao que utiliza o maior caminho do vertice destino as origens 
-/// t_grafo *g - Grafo onde ocorrera o preocesso de busca. Retorna-se erro caso seja NULL.
-/// int IDDestino - Inteiro que representa o indice do destino para a impressao do seu caminho. Caso seja
-///                 uma origem, imprime-se apenas o próprio vertice. Retorna-se erro caso nao pertenca ao
-///                 grafo.
-man_ret achaCaminhoMin(t_grafo* g, int IDDestino){
+///@param g - Grafo onde ocorrera o preocesso de busca. Retorna-se erro caso seja NULL.
+///@param  IDDestino - Inteiro que representa o indice do destino para a impressao do seu caminho. Caso seja uma origem, imprime-se apenas o próprio vertice. Retorna-se erro caso nao pertenca ao grafo.
+man_ret achaCaminhoMin(t_grafo* g, TipoLista *l_concluidas, int IDDestino){
     if(g==NULL){
         return MAN_ERR;
     }
@@ -409,34 +417,15 @@ man_ret achaCaminhoMin(t_grafo* g, int IDDestino){
     if (buscaLista(getOrigens(g), IDDestino)!=NULL){ //se pertence à origem 
         return MAN_OK;
     }
+    
 
     t_vertix* destino = buscaVertice(g, IDDestino);
-    t_item maior = get_item_maior_peso(g, destino->antecessores, IDDestino);
+    t_item maior = get_item_maior_peso(g, l_concluidas, IDDestino);
     t_vertix* v_pai = buscaVertice(g, maior.ID);
     destino->pai = v_pai;
     
-    achaCaminhoMin(g, maior.ID);
+    achaCaminhoMin(g, l_concluidas, maior.ID);
     return MAN_OK;
 }
 
-man_ret imprimeCaminho(t_grafo* g, int IDDestino){
-    if(g==NULL){
-        return MAN_ERR;
-    }
-    
-    t_vertix* destino = buscaVertice(g, IDDestino);
-    
-    if(destino->pai == NULL){
-        if(buscaLista(getOrigens(g), destino->propriedades.ID)==NULL){
-            return MAN_ERR;
-        } else {
-            //imprime a origem
-        }
-    }
-    
-    //a partir de destino, imprimir com destino->pai
-    
-    
-    return MAN_OK;
-}
     

@@ -21,6 +21,7 @@
 	int intERROR();
 	int getUserTempo();
 	void editorInterface(t_grafo *g);
+	int imprimeCaminhoInterface(t_grafo* g, int IDDestino);
 
 	
 

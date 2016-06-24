@@ -23,11 +23,11 @@ gui_ret inicializaInterface(){
 		//possibilita o uso de cores
 		start_color();
 		//definição dos pares
-		init_pair(1,COLOR_WHITE,COLOR_BLACK);     //Fundo
-    	init_pair(2,COLOR_GREEN,COLOR_WHITE);     //Tarefas concluidas
-    	init_pair(3,COLOR_RED,COLOR_WHITE);       //Tarefas nao começadas
-    	init_pair(4,COLOR_GREEN,COLOR_BLACK);     //MENU 
-		init_pair(5,COLOR_BLACK,COLOR_WHITE);     //Fundo Gerenciador, contador
+		init_pair(1,COLOR_WHITE, COLOR_BLACK);     //Fundo
+    	init_pair(2,COLOR_GREEN, COLOR_WHITE);     //Tarefas concluidas
+    	init_pair(3,COLOR_RED, COLOR_WHITE);       //Tarefas nao começadas
+    	init_pair(4,COLOR_GREEN, COLOR_BLACK);     //MENU 
+		init_pair(5,COLOR_BLACK, COLOR_WHITE);     //Fundo Gerenciador, contador
     	return GUI_OK;
 	}
 	else
@@ -128,8 +128,9 @@ int imprimeTarefasNcurses(t_grafo* g, TipoLista *l_atual, TipoLista *l_concluida
 	mvprintw(linha+3,coluna, "Mais opções:     1 : selecionar outro tempo");
 	mvprintw(linha+4,coluna+17, "2 : visualizar todas as tarefas");
 	mvprintw(linha+5,coluna+17, "3 : Editar Tarefas");
-	mvprintw(linha+6,coluna+17, "99 : Sair");
-	mvprintw(linha+7,coluna+17, "Digite sua opção:");
+	mvprintw(linha+6,coluna+17, "4 : Procurar Caminho");
+	mvprintw(linha+7,coluna+17, "99 : Sair");
+	mvprintw(linha+8,coluna+17, "Digite sua opção:");
 	refresh();
 	getstr(op);
 	attroff(COLOR_PAIR(1));
@@ -155,6 +156,7 @@ gui_ret imprimeMenuNcurses(char * nome_arq, char* nome_arq_saida,int * tempo){
 	if(!esta_inicializada){
 		return GUI_ERR;
 	}
+	updateSrcParams();
 	bkgd(COLOR_PAIR(1));
 	attron(COLOR_PAIR(4));
 
@@ -227,7 +229,6 @@ gui_ret fechaInterface(){
 	endwin();
 	return GUI_OK;
 }
-
 
 void editorInterface(t_grafo* g){
 	int ID;
@@ -305,6 +306,91 @@ void editorInterface(t_grafo* g){
 	}
 
 	return;
+}
+
+int imprimeCaminhoInterface(t_grafo* g, int IDDestino){
+    if(g==NULL){
+        return 1;
+    }
+    char ID[15], op[15];
+    clear();
+    bkgd(COLOR_PAIR(5));
+   	box(stdscr, ACS_VLINE, ACS_HLINE);
+   	mvprintw(2, 2, "Digite o ID da tarefa que deseja saber o caminho: ");
+   	getstr(ID);
+   	IDDestino = atoi(ID);
+    
+    t_vertix* destino = buscaVertice(g, IDDestino);
+    TipoLista *l_concluidas = criaLista();
+    t_item item_aux, item_suc;
+    t_item item_add;
+    t_vertix *v, *v_sucessor;
+    int true_inicio=0;
+    int i =0, j=0;
+
+    //Esses lacos criam a lista de concluidos com os pesos de todas as tarefas
+    for(i = 0; i < tamanhoLista(getOrigens(g)); i++){ //checagem das origens e insercao na lista de concluidos
+        item_aux = buscaListaInd(getOrigens(g), i);
+        v = buscaVertice(g, item_aux.ID);
+                item_add.ID = v->propriedades.ID;
+                item_add.peso = v->propriedades.duracao + v->propriedades.inicio;
+                if(insereLista(l_concluidas, item_add) == LISTA_ERR){
+                    return 1;
+                }
+    }//for
+    
+    for(i = 0; i < tamanhoLista(l_concluidas); i++){ //checagem e insercao para o resto dos vertices
+        item_aux = buscaListaInd(l_concluidas, i);
+        v = buscaVertice(g, item_aux.ID); //busca vertice no grafo com a ID igual a celula na lista de concluidos
+        if(v == NULL){
+            return 1; //assertiva de saida
+        }
+        for(j = 0; j < tamanhoLista(v->adjacentes); j++){ //trabalha com os sucessores de cada vertice dos concluidos
+            item_suc = buscaListaInd(v->adjacentes, j);
+            v_sucessor = buscaVertice(g, item_suc.ID);
+            if(v_sucessor == NULL){
+                return 1; //assertiva de saida
+            }
+                true_inicio = get_maior_peso(g, l_concluidas, item_suc.ID);
+                item_add.ID = v_sucessor->propriedades.ID;
+                item_add.peso = true_inicio + v_sucessor->propriedades.duracao;
+                    if(buscaLista(l_concluidas, item_add.ID)==NULL){ //evitar a insercao de duplicados
+                        if(insereLista(l_concluidas, item_add) == LISTA_ERR){
+                             return 1;
+                        }
+                    }
+                    
+        }//for sucessores
+    }//for lista_concluidos
+    achaCaminhoMin(g,l_concluidas, IDDestino);
+    //fim dos lacos, prosseguir para a impressao
+
+    clear();
+   	box(stdscr, ACS_VLINE, ACS_HLINE);
+
+    int linha = 1, coluna = 2;
+    t_vertix* AUX = buscaVertice(g, IDDestino);
+    while(AUX != NULL){
+    	mvprintw(linha, coluna, "%d -- %s", AUX->propriedades.ID, AUX->propriedades.nome);
+    	linha++;
+    	AUX = AUX->pai;
+    }
+    AUX = buscaVertice(g, IDDestino);
+    mvprintw(linha, coluna, "Tempo para completar essa tarefa: %d",
+             get_maior_peso(g, l_concluidas, AUX->propriedades.ID) + AUX->propriedades.duracao);
+
+    attron(COLOR_PAIR(1));
+	mvprintw(linha+3,coluna, "Mais opções:     1 : selecionar outro tempo");
+	mvprintw(linha+4,coluna+17, "2 : visualizar todas as tarefas");
+	mvprintw(linha+5,coluna+17, "3 : Editar Tarefas");
+	mvprintw(linha+6,coluna+17, "4 : Procurar Caminho");
+	mvprintw(linha+7,coluna+17, "99 : Sair");
+	mvprintw(linha+8,coluna+17, "Digite sua opção:");
+	refresh();
+	getstr(op);
+	attroff(COLOR_PAIR(1));   
+ 
+    return atoi(op);
 }
 
 //informa de possiveis erros 
